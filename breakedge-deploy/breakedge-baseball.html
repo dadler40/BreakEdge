@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BreakEdge — ⚾ Baseball Break EV Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A1628;--gold:#F5A623;--green:#32C864;--red:#FF6B6B;--purple:#6C3FC5;--teal:#00C9C9;--orange:#E85D04;--white:#fff;--muted:#6B7A99;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1)}
+body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;padding:16px}
+.wrap{max-width:960px;margin:0 auto}
+.header{text-align:center;padding:16px 0 12px}
+.nav-links{display:flex;justify-content:center;gap:6px;margin-top:10px;flex-wrap:wrap}
+.nav-link{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--border);border-radius:3px}
+.nav-link.active{color:var(--gold);border-color:var(--gold)}
+.nav-link:hover:not(.active){color:var(--white);border-color:rgba(255,255,255,.3)}
+
+.prod-tabs{display:flex;gap:6px;margin:14px 0;flex-wrap:wrap}
+.prod-tab{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:8px 14px;border-radius:4px;border:1.5px solid var(--border);cursor:pointer;color:var(--muted);background:rgba(255,255,255,.03)}
+.prod-tab.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.prod-tab:not(.active):hover{border-color:var(--gold);color:var(--gold)}
+
+.controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.ctrl-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:7px 14px;border-radius:4px;border:1px solid var(--border);cursor:pointer;color:var(--muted);background:rgba(255,255,255,.04)}
+.ctrl-btn.active{background:rgba(245,166,35,.15);color:var(--gold);border-color:var(--gold)}
+.box-input{display:flex;align-items:center;gap:8px;margin-left:auto}
+.box-input label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.06em}
+.box-input input{width:60px;padding:7px 10px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none;text-align:center}
+.box-input input:focus{border-color:var(--gold)}
+
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px;margin-bottom:20px}
+.team-card{background:var(--card);border:1.5px solid var(--border);border-radius:7px;padding:13px 14px;cursor:pointer;transition:all .15s;position:relative}
+.team-card:hover{border-color:var(--gold);transform:translateY(-1px);background:rgba(245,166,35,.06)}
+.team-card.anomaly{border-color:rgba(255,107,107,.5)}
+.team-card.anomaly:hover{border-color:var(--red);background:rgba(255,107,107,.06)}
+.team-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--white);margin-bottom:3px}
+.team-ev{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:var(--gold);line-height:1;margin-bottom:4px}
+.team-note{font-size:10px;color:var(--muted);line-height:1.5}
+.anomaly-badge{position:absolute;top:8px;right:10px;font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--red);letter-spacing:.04em}
+.tier-dot{position:absolute;bottom:8px;right:10px;width:8px;height:8px;border-radius:50%}
+.tier-s{background:var(--green)}
+.tier-a{background:var(--gold)}
+.tier-b{background:var(--muted)}
+.tier-c{background:rgba(255,255,255,.2)}
+
+.eval-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.fg label{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:9px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--gold)}
+.fg select option{background:#1a2a3a}
+.eval-btn{width:100%;background:var(--gold);color:var(--navy);border:none;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;border-radius:5px;cursor:pointer;margin-top:12px;letter-spacing:.08em}
+.eval-btn:hover{background:#FFD166}
+.result-box{display:none;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:16px;margin-top:14px}
+.result-box.show{display:block}
+.zones{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.zone{padding:12px;border-radius:5px;text-align:center}
+.zone-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.zone-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1}
+.zone-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:3px}
+.zone-deal{background:rgba(50,200,100,.1);border:2px solid var(--green)}
+.zone-deal .zone-label{color:var(--green)}.zone-deal .zone-val{color:var(--green)}
+.zone-fair{background:rgba(245,166,35,.08);border:2px solid var(--gold)}
+.zone-fair .zone-label{color:var(--gold)}.zone-fair .zone-val{color:var(--gold)}
+.zone-hard{background:rgba(255,107,107,.08);border:2px solid var(--red)}
+.zone-hard .zone-label{color:var(--red)}.zone-hard .zone-val{color:var(--red)}
+.verdict{padding:10px 14px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+.verdict.stash{background:rgba(50,200,100,.15);border:2px solid var(--green);color:var(--green)}
+.verdict.pass{background:rgba(255,107,107,.12);border:2px solid var(--red);color:var(--red)}
+
+.data-note{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:6px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#8BAFC6;line-height:1.6}
+.prod-info{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:14px}
+.prod-info h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:8px}
+.prod-info p{font-size:12px;color:#8BAFC6;line-height:1.65}
+.prod-stat{display:inline-block;background:rgba(0,201,201,.1);border:1px solid rgba(0,201,201,.2);border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--teal);padding:2px 8px;margin:3px 3px 0 0}
+
+footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+footer a{color:var(--gold);text-decoration:none}
+
+@media(max-width:600px){.g3,.zones{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}.prod-tabs{gap:4px}.prod-tab{font-size:11px;padding:7px 10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div style="width:100%;max-width:900px;margin:0 auto 8px">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="100%" style="display:block">
+      <defs>
+        <linearGradient id="bgG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#0a1628"/><stop offset="50%" style="stop-color:#0d1e35"/><stop offset="100%" style="stop-color:#0a1628"/></linearGradient>
+        <linearGradient id="oG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF8C00"/><stop offset="100%" style="stop-color:#E85D04"/></linearGradient>
+        <linearGradient id="sG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#E0E0E0"/><stop offset="50%" style="stop-color:#FFFFFF"/><stop offset="100%" style="stop-color:#B0B0B0"/></linearGradient>
+        <linearGradient id="gT" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#FFD700"/><stop offset="100%" style="stop-color:#E8850A"/></linearGradient>
+        <filter id="sh"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/></filter>
+        <filter id="gl"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="900" height="220" fill="url(#bgG)"/>
+      <rect x="0" y="0" width="900" height="5" fill="#E85D04"/>
+      <rect x="0" y="215" width="900" height="5" fill="#E85D04"/>
+      <g opacity="0.05" fill="none" stroke="#FFFFFF" stroke-width="1.5"><polyline points="0,60 450,20 900,60"/><polyline points="0,90 450,45 900,90"/><polyline points="0,120 450,70 900,120"/><polyline points="0,150 450,95 900,150"/><polyline points="0,180 450,120 900,180"/></g>
+      <rect x="0" y="0" width="6" height="220" fill="#E85D04"/>
+      <g transform="translate(30,25)">
+        <path d="M 80 8 L 148 32 L 148 98 Q 148 148 80 170 Q 12 148 12 98 L 12 32 Z" fill="url(#oG)" filter="url(#sh)"/>
+        <path d="M 80 20 L 136 40 L 136 97 Q 136 140 80 158 Q 24 140 24 97 L 24 40 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+        <rect x="77" y="15" width="6" height="130" rx="2" fill="url(#sG)" transform="rotate(-30,80,80)" filter="url(#sh)"/>
+        <rect x="55" y="76" width="52" height="8" rx="3" fill="url(#sG)" transform="rotate(-30,80,80)"/>
+        <rect x="77" y="110" width="6" height="35" rx="2" fill="#8B4513" transform="rotate(-30,80,80)"/>
+        <polygon points="84,30 73,62 82,62 70,95 97,58 86,58 98,30" fill="rgba(255,255,255,0.85)" filter="url(#gl)"/>
+        <path d="M 10 158 L 150 158 L 138 180 L 80 186 L 22 180 Z" fill="#0d1e35" stroke="#E85D04" stroke-width="1.5"/>
+        <text x="80" y="176" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="20" letter-spacing="1" text-anchor="middle" fill="url(#gT)">BREAK</text>
+      </g>
+      <text x="220" y="128" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="100" letter-spacing="-2" fill="#FFFFFF" filter="url(#sh)">BREAK</text>
+      <text x="572" y="128" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="100" letter-spacing="-2" fill="url(#gT)" filter="url(#gl)">EDGE</text>
+      <text x="220" y="160" font-family="Arial,sans-serif" font-weight="700" font-size="13" letter-spacing="4" fill="#6B8CAD">BREAK SMARTER · BID SHARPER · KNOW YOUR EDGE</text>
+      <circle cx="858" cy="80" r="5" fill="#E85D04" opacity="0.9"/>
+      <circle cx="858" cy="110" r="5" fill="#E85D04" opacity="0.6"/>
+      <circle cx="858" cy="140" r="5" fill="#E85D04" opacity="0.3"/>
+      <rect x="894" y="0" width="6" height="220" fill="#E85D04"/>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">🏠 Home</a>
+    <a class="nav-link" href="breakedge-host.html">Host</a>
+    <a class="nav-link" href="breakedge-buyer.html">Buyer</a>
+    <a class="nav-link" href="breakedge-compare.html">⚡ Compare</a>
+    <a class="nav-link" href="breakedge-mixed.html">🎲 Mixed</a>
+    <a class="nav-link" href="breakedge-live.html">🔴 Live</a>
+    <a class="nav-link" href="breakedge-nba.html">🏀 NBA</a>
+    <a class="nav-link active" href="#">⚾ Baseball</a>
+    <a class="nav-link" href="breakedge-research.html">Research</a>
+    <a class="nav-link" href="breakedge-backtest.html">Backtest</a>
+  </div>
+</div>
+
+<!-- PRODUCT TABS -->
+<div class="prod-tabs">
+  <button class="prod-tab active" onclick="setProduct('chrome_plat')">⚾ Chrome Platinum</button>
+  <button class="prod-tab" onclick="setProduct('tier_one')">🥇 Tier One</button>
+  <button class="prod-tab" onclick="setProduct('dynasty')">👑 Dynasty</button>
+  <button class="prod-tab" onclick="setProduct('inception')">🔮 Inception</button>
+  <button class="prod-tab" onclick="setProduct('chrome_plat_6')">📦 Chrome Plat 6-Box</button>
+</div>
+
+<!-- PRODUCT INFO -->
+<div class="prod-info" id="prodInfo"></div>
+
+<!-- DATA NOTE -->
+<div class="data-note" id="dataNoteBox"></div>
+
+<!-- SLOT EVALUATOR -->
+<div class="eval-card">
+  <div class="card-title">Team Slot Evaluator</div>
+  <div class="g3">
+    <div class="fg">
+      <label>Team</label>
+      <select id="ev-team"></select>
+    </div>
+    <div class="fg">
+      <label>Price Asked ($)</label>
+      <input type="number" id="ev-price" placeholder="e.g. 150" min="1"/>
+    </div>
+    <div class="fg">
+      <label>Boxes in Break</label>
+      <input type="number" id="ev-boxes" value="12" min="1" max="24"/>
+    </div>
+  </div>
+  <button class="eval-btn" onclick="evaluate()">Evaluate This Slot →</button>
+  <div class="result-box" id="resultBox">
+    <div class="zones">
+      <div class="zone zone-deal"><div class="zone-label">🟢 Deal</div><div class="zone-val" id="rDeal">—</div><div class="zone-sub">Bid confidently</div></div>
+      <div class="zone zone-fair"><div class="zone-label">🟡 Fair</div><div class="zone-val" id="rFair">—</div><div class="zone-sub">At market</div></div>
+      <div class="zone zone-hard"><div class="zone-label">🔴 Hard No</div><div class="zone-val" id="rHard">—</div><div class="zone-sub">Let it go</div></div>
+    </div>
+    <div class="verdict" id="rVerdict"></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6" id="rNote"></div>
+  </div>
+</div>
+
+<!-- SORT CONTROLS -->
+<div class="controls">
+  <button class="ctrl-btn active" id="sort-ev" onclick="sortTeams('ev')">💰 Sort by Value</button>
+  <button class="ctrl-btn" id="sort-az" onclick="sortTeams('az')">🔤 Sort A–Z</button>
+  <div class="box-input">
+    <label>Boxes:</label>
+    <input type="number" id="box-count" value="12" min="1" max="24" oninput="renderGrid()"/>
+  </div>
+</div>
+
+<!-- TEAM GRID -->
+<div class="team-grid" id="teamGrid"></div>
+
+<footer>
+  BreakEdge Beta 🚀 · ⚾ Baseball Edition · <a href="mailto:adleranalyticsllc@gmail.com">adleranalyticsllc@gmail.com</a> · Calibrated from real PYT break data · June 2026
+</footer>
+</div>
+
+<script>
+// ── PRODUCTS ──
+const PRODUCTS = {
+  chrome_plat: {
+    name: "2026 Topps Chrome Platinum Baseball",
+    boxPrice: 140,
+    caseBoxes: 12,
+    note: "12 boxes/case · ~$140/box secondary · Primary calibration product · On-card chrome autos, refractors, superfractors · LAD >>  NYY = OAK hierarchy confirmed",
+    dataNote: "⚡ PRIMARY CALIBRATION — June 20, 2026 · Full 12-box case break, all 30 teams · Total case ~$4,185 · Average ~$140/slot · LAD anchors the market, OAK surprisingly strong at $300 (A's prospect pipeline). CHW floor in this product but anomaly in Tier One — see that tab.",
+    confidence: "HIGH",
+    tags: ["Chrome Autos", "Refractors", "Superfractors", "Wave Refractors"]
+  },
+  tier_one: {
+    name: "2026 Topps Tier One Baseball",
+    boxPrice: 280,
+    caseBoxes: 6,
+    note: "6 boxes/case · ~$280/box secondary · Premium hit-driven product · 2 on-card autos + 1 relic per box · Low card count = high upside per hit",
+    dataNote: "⚡ REAL DATA — June 23 + June 24 breaks (IDENTICAL pricing both days, high confidence). ⚠️ CHW ANOMALY: $260 = #3 behind LAD and NYY. White Sox carry: Colson Montgomery, Kyle Teel, Grant Taylor autos. Premium rookie chase in Tier One elevates normally-floor teams. Treat CHW as a buy in Tier One, but not in Chrome Platinum.",
+    confidence: "HIGH",
+    tags: ["On-Card Autos", "Autograph Relics", "Limited Lumber", "Bat Knobs", "On-Card Relics"]
+  },
+  dynasty: {
+    name: "2026 Topps Dynasty Baseball",
+    boxPrice: 450,
+    caseBoxes: 5,
+    note: "5 boxes/case · ~$400-500/box secondary · Ultra-premium · 1 hit per box, all on-card · Patch autos, logoman 1/1s, cut sigs · LAD is a massive case anchor",
+    dataNote: "⚡ REAL DATA — Full 5-box case confirmed. LAD $2,850 is the single biggest baseball slot across all products we track. NYY $1,450 strong. LAA $990 = Angels get a premium here (Ohtani legacy). OAK $700 strong (A's prospect RCs). ⚠️ CHW floor at $50 in Dynasty — complete inversion from Tier One.",
+    confidence: "HIGH",
+    tags: ["1/1 Logoman", "Patch Autos", "Cut Signatures", "Dynasty Materials"]
+  },
+  inception: {
+    name: "2026 Topps Inception Baseball",
+    boxPrice: 120,
+    caseBoxes: 8,
+    note: "8 boxes/case · ~$120/box secondary · On-card autos, short prints, parallel-heavy · Prospect-forward product · OAK dominates with A's pipeline",
+    dataNote: "⚠️ PARTIAL DATA — 5-team confirmed from one break (OAK $250, WSH $140, HOU $60, TEX $45, SDP $40). Remaining 25 teams estimated proportionally from Chrome Platinum hierarchy. OAK $250 is a notable outlier — A's prospects have real checklist depth in Inception. Treat non-confirmed teams as estimates.",
+    confidence: "MEDIUM",
+    tags: ["On-Card Autos", "Short Prints", "Inception Autos", "Parallels"]
+  },
+  chrome_plat_6: {
+    name: "2024 Topps Chrome Platinum Baseball (6-Box)",
+    boxPrice: 110,
+    caseBoxes: 6,
+    note: "6-box break (half case) · 2024 product · Main Street Break #1106 confirmed · LAD + NYY still top, but tighter spread than 12-box case",
+    dataNote: "⚡ REAL DATA — Main Street #1106 (6-box confirmed). Note: this is 2024 Topps Chrome Platinum, not 2026. Useful for product-type calibration. LAD $235 · NYY $210 much closer together in a 6-box vs 12-box (smaller sample = more compression). SEA $125 surprisingly high.",
+    confidence: "HIGH",
+    tags: ["Chrome Autos", "Refractors", "2024 Product"]
+  }
+};
+
+// ── TEAM DATA ──
+const TEAMS = {
+  chrome_plat: [
+    {id:"LAD",name:"Dodgers",ev:650,tier:"s",anomaly:false,note:"Ohtani + Glasnow autos · Deep checklist · Market anchor — LAD is the NYG of baseball"},
+    {id:"NYY",name:"Yankees",ev:300,tier:"s",anomaly:false,note:"Judge auto · Historic brand premium · Always top-3"},
+    {id:"OAK",name:"Athletics",ev:300,tier:"s",anomaly:false,note:"Lawrence Butler + A's prospect pipeline · Surprisingly strong for a rebuilding team"},
+    {id:"ATL",name:"Braves",ev:160,tier:"a",anomaly:false,note:"Acuña auto · Strider + deep roster depth"},
+    {id:"SEA",name:"Mariners",ev:150,tier:"a",anomaly:false,note:"Julio Rodriguez auto · Castillo · Strong roster depth"},
+    {id:"WSH",name:"Nationals",ev:180,tier:"a",anomaly:false,note:"CJ Abrams auto · Young core · Tier One much lower than Inception"},
+    {id:"BOS",name:"Red Sox",ev:130,tier:"a",anomaly:false,note:"Ceddanne Rafaela · Tanner Houck auto · Big market premium"},
+    {id:"KCR",name:"Royals",ev:120,tier:"a",anomaly:false,note:"Bobby Witt Jr. auto · Breakout team premium"},
+    {id:"PIT",name:"Pirates",ev:120,tier:"a",anomaly:false,note:"Paul Skenes auto · Top pitching prospect carries value"},
+    {id:"BAL",name:"Orioles",ev:120,tier:"a",anomaly:false,note:"Gunnar Henderson auto · Jackson Holliday RC · Top prospect org"},
+    {id:"CHC",name:"Cubs",ev:90,tier:"b",anomaly:false,note:"Brennen Davis RC · Historic brand always adds a floor"},
+    {id:"HOU",name:"Astros",ev:90,tier:"b",anomaly:false,note:"Yordan Alvarez auto · Dynasty holdover premium"},
+    {id:"NYM",name:"Mets",ev:90,tier:"b",anomaly:false,note:"Lindor auto · Soto · Big market, thin checklist"},
+    {id:"DET",name:"Tigers",ev:90,tier:"b",anomaly:false,note:"Jackson Jobe RC · Top pitching prospect"},
+    {id:"MIL",name:"Brewers",ev:75,tier:"b",anomaly:false,note:"Jackson Chourio auto · Burnes gone but Chourio carries"},
+    {id:"PHI",name:"Phillies",ev:75,tier:"b",anomaly:false,note:"Trea Turner auto · Harper premium fading"},
+    {id:"SFG",name:"Giants",ev:75,tier:"b",anomaly:false,note:"Jung Hoo Lee auto · Prospect depth"},
+    {id:"STL",name:"Cardinals",ev:75,tier:"b",anomaly:false,note:"Nolan Arenado auto · Wainwright legacy insert"},
+    {id:"LAA",name:"Angels",ev:70,tier:"b",anomaly:false,note:"Post-Ohtani · Nolan Schanuel RC · Lower without Shohei"},
+    {id:"TEX",name:"Rangers",ev:65,tier:"b",anomaly:false,note:"Wyatt Langford RC · WS premium fading, but still present"},
+    {id:"CIN",name:"Reds",ev:60,tier:"b",anomaly:false,note:"Elly De La Cruz auto · Speed premium in checklist"},
+    {id:"TOR",name:"Blue Jays",ev:55,tier:"b",anomaly:false,note:"Vladdy Jr. auto · Bichette · Canadian market premium"},
+    {id:"MIN",name:"Twins",ev:55,tier:"b",anomaly:false,note:"Byron Buxton auto · Royce Lewis"},
+    {id:"SDP",name:"Padres",ev:50,tier:"b",anomaly:false,note:"Tatis auto · Machado · Undervalued for market size"},
+    {id:"CLE",name:"Guardians",ev:40,tier:"c",anomaly:false,note:"Steven Kwan auto · Thin checklist for a winning team"},
+    {id:"CHW",name:"White Sox",ev:40,tier:"c",anomaly:false,note:"Floor in Chrome Platinum · See Tier One tab — anomaly at $260"},
+    {id:"ARI",name:"Diamondbacks",ev:30,tier:"c",anomaly:false,note:"Corbin Carroll auto · WS run premium fading"},
+    {id:"TBR",name:"Rays",ev:30,tier:"c",anomaly:false,note:"Analytically built roster · Few star autos in checklist"},
+    {id:"MIA",name:"Marlins",ev:20,tier:"c",anomaly:false,note:"Eury Perez RC · Rebuilding mode"},
+    {id:"COL",name:"Rockies",ev:20,tier:"c",anomaly:false,note:"Ezequiel Tovar RC · True floor — avoid unless near cost"},
+  ],
+  tier_one: [
+    {id:"LAD",name:"Dodgers",ev:350,tier:"s",anomaly:false,note:"Ohtani + Glasnow autos · Premium hit upside · Tier One anchor"},
+    {id:"NYY",name:"Yankees",ev:300,tier:"s",anomaly:false,note:"Judge auto · Brand premium · Identical June 23 + June 24 breaks"},
+    {id:"CHW",name:"White Sox",ev:260,tier:"s",anomaly:true,note:"⚠️ ANOMALY #3 overall. Colson Montgomery + Kyle Teel + Grant Taylor autos. Rookie chase in Tier One specifically. Floor in Chrome Platinum but premium here."},
+    {id:"MIL",name:"Brewers",ev:160,tier:"a",anomaly:false,note:"Jackson Chourio auto · Strong hit upside in Tier One format"},
+    {id:"OAK",name:"Athletics",ev:160,tier:"a",anomaly:false,note:"A's prospect pipeline · Butler + depth autos"},
+    {id:"BOS",name:"Red Sox",ev:150,tier:"a",anomaly:false,note:"Hit-driven product rewards deep rosters · Houck auto"},
+    {id:"PIT",name:"Pirates",ev:145,tier:"a",anomaly:false,note:"Skenes auto premium · On-card autos elevate pitching prospects"},
+    {id:"ATL",name:"Braves",ev:140,tier:"a",anomaly:false,note:"Acuña auto · Strider · Tier One rewards star power"},
+    {id:"KCR",name:"Royals",ev:140,tier:"a",anomaly:false,note:"Witt Jr. auto · Consistent top-10 in premium products"},
+    {id:"NYM",name:"Mets",ev:130,tier:"a",anomaly:false,note:"Lindor auto · Soto · Big market gets premium in Tier One"},
+    {id:"PHI",name:"Phillies",ev:130,tier:"a",anomaly:false,note:"Trea Turner auto · Harper still relevant in premium product"},
+    {id:"SEA",name:"Mariners",ev:130,tier:"a",anomaly:false,note:"Julio Rodriguez auto · Consistent top performer"},
+    {id:"CIN",name:"Reds",ev:125,tier:"a",anomaly:false,note:"Elly De La Cruz auto · Speed + flash = Tier One premium"},
+    {id:"DET",name:"Tigers",ev:95,tier:"b",anomaly:false,note:"Jackson Jobe RC · Pitching prospect premium in autos/relics"},
+    {id:"SFG",name:"Giants",ev:95,tier:"b",anomaly:false,note:"Jung Hoo Lee auto · Prospect depth carries"},
+    {id:"BAL",name:"Orioles",ev:90,tier:"b",anomaly:false,note:"Henderson auto · Holliday RC · Top org, mid-value in Tier One"},
+    {id:"CHC",name:"Cubs",ev:110,tier:"b",anomaly:false,note:"Historic brand + Cade Horton RC · Tier One rewards brand equity"},
+    {id:"LAA",name:"Angels",ev:110,tier:"b",anomaly:false,note:"Ohtani legacy in Tier One relics · Still relevant"},
+    {id:"WSH",name:"Nationals",ev:100,tier:"b",anomaly:false,note:"Abrams auto · MacKenzie Gore · Solid mid-tier"},
+    {id:"TOR",name:"Blue Jays",ev:70,tier:"b",anomaly:false,note:"Vladdy Jr. auto · Canadian brand floor"},
+    {id:"MIN",name:"Twins",ev:55,tier:"b",anomaly:false,note:"Buxton auto · Royce Lewis"},
+    {id:"SDP",name:"Padres",ev:55,tier:"b",anomaly:false,note:"Tatis auto · Machado relic upside in Tier One"},
+    {id:"TEX",name:"Rangers",ev:55,tier:"b",anomaly:false,note:"Langford RC · WS brand still present"},
+    {id:"COL",name:"Rockies",ev:50,tier:"b",anomaly:false,note:"Tovar RC · Coors factor doesn't help in autos"},
+    {id:"TBR",name:"Rays",ev:45,tier:"b",anomaly:false,note:"Thin star auto checklist · Analytically built teams don't break well"},
+    {id:"ARI",name:"Diamondbacks",ev:40,tier:"c",anomaly:false,note:"Carroll auto · WS premium fully faded"},
+    {id:"CLE",name:"Guardians",ev:35,tier:"c",anomaly:false,note:"Kwan auto · Small market, thin checklist"},
+    {id:"MIA",name:"Marlins",ev:30,tier:"c",anomaly:false,note:"Eury Perez RC · True floor even in Tier One"},
+    {id:"HOU",name:"Astros",ev:90,tier:"b",anomaly:false,note:"Yordan Alvarez auto · Dynasty holdover still commands respect"},
+    {id:"STL",name:"Cardinals",ev:75,tier:"b",anomaly:false,note:"Arenado auto · Wainwright cut sig upside in Tier One"},
+  ],
+  dynasty: [
+    {id:"LAD",name:"Dodgers",ev:2850,tier:"s",anomaly:false,note:"Ohtani 1/1 logoman + Glasnow patch auto · LAD is the unchallenged anchor · Best single slot in baseball"},
+    {id:"NYY",name:"Yankees",ev:1450,tier:"s",anomaly:false,note:"Judge patch auto · Brand history drives logoman + cut sig value"},
+    {id:"LAA",name:"Angels",ev:990,tier:"s",anomaly:false,note:"Ohtani legacy in patch autos/materials even post-trade · Angels get dynasty value from Shohei era"},
+    {id:"OAK",name:"Athletics",ev:700,tier:"s",anomaly:false,note:"A's prospect RCs in dynasty parallels · Lawrence Butler + pipeline"},
+    {id:"ATL",name:"Braves",ev:650,tier:"s",anomaly:false,note:"Acuña patch auto + Dynasty Materials · Strider + deep history"},
+    {id:"SEA",name:"Mariners",ev:650,tier:"s",anomaly:false,note:"Julio Rodriguez patch auto · Griffey Jr. dynasty cut sig upside"},
+    {id:"WSH",name:"Nationals",ev:650,tier:"a",anomaly:false,note:"Abrams + MacKenzie Gore dynasty autos · Young core in Dynasty is high ceiling"},
+    {id:"PIT",name:"Pirates",ev:500,tier:"a",anomaly:false,note:"Skenes dynasty patch auto · Pitching ace in Dynasty = premium hit"},
+    {id:"SFG",name:"Giants",ev:400,tier:"a",anomaly:false,note:"Jung Hoo Lee + dynasty history materials · Mays cut sig upside"},
+    {id:"BOS",name:"Red Sox",ev:375,tier:"a",anomaly:false,note:"Rafaela + deep history · Dynasty brand materials from storied franchise"},
+    {id:"KCR",name:"Royals",ev:375,tier:"a",anomaly:false,note:"Witt Jr. dynasty materials · Consistent performer across all products"},
+    {id:"PHI",name:"Phillies",ev:370,tier:"a",anomaly:false,note:"Turner + Harper dynasty materials · Passionate fanbase = secondary market demand"},
+    {id:"NYM",name:"Mets",ev:370,tier:"a",anomaly:false,note:"Lindor dynasty auto + Soto · Large market history"},
+    {id:"CHC",name:"Cubs",ev:370,tier:"a",anomaly:false,note:"Historic franchise cuts + Bryant dynasty materials · WS brand still strong"},
+    {id:"HOU",name:"Astros",ev:340,tier:"a",anomaly:false,note:"Yordan dynasty materials · Dynasty era cuts from Astros run"},
+    {id:"DET",name:"Tigers",ev:320,tier:"b",anomaly:false,note:"Jobe dynasty autos · Tiger franchise history cuts upside"},
+    {id:"BAL",name:"Orioles",ev:350,tier:"a",anomaly:false,note:"Henderson + Holliday dynasty parallels · Top org in Dynasty"},
+    {id:"MIL",name:"Brewers",ev:200,tier:"b",anomaly:false,note:"Chourio dynasty auto · Smaller market compresses Dynasty value"},
+    {id:"TEX",name:"Rangers",ev:225,tier:"b",anomaly:false,note:"Langford + WS run dynasty mats · Corey Seager cuts upside"},
+    {id:"SDP",name:"Padres",ev:230,tier:"b",anomaly:false,note:"Tatis dynasty materials · Machado history · Market-size compressed"},
+    {id:"STL",name:"Cardinals",ev:230,tier:"b",anomaly:false,note:"Arenado dynasty + Cards franchise history cuts"},
+    {id:"MIN",name:"Twins",ev:150,tier:"b",anomaly:false,note:"Buxton + Royce Lewis dynasty · Small market compression"},
+    {id:"COL",name:"Rockies",ev:80,tier:"c",anomaly:false,note:"Tovar RC in Dynasty · Altitude brand doesn't drive cuts value"},
+    {id:"CIN",name:"Reds",ev:120,tier:"c",anomaly:false,note:"Elly De La Cruz dynasty auto · Rose cut sig upside in Dynasty"},
+    {id:"CLE",name:"Guardians",ev:120,tier:"c",anomaly:false,note:"Kwan + history · Small market"},
+    {id:"MIA",name:"Marlins",ev:120,tier:"c",anomaly:false,note:"Perez RC · Marlins franchise history thin in Dynasty"},
+    {id:"TBR",name:"Rays",ev:120,tier:"c",anomaly:false,note:"Analytically built — few star names for Dynasty materials"},
+    {id:"TOR",name:"Blue Jays",ev:120,tier:"c",anomaly:false,note:"Vladdy Jr. dynasty auto · Canadian market"},
+    {id:"ARI",name:"Diamondbacks",ev:120,tier:"c",anomaly:false,note:"Carroll dynasty · WS run premium fully absorbed"},
+    {id:"CHW",name:"White Sox",ev:50,tier:"c",anomaly:false,note:"True floor in Dynasty · Prospect upside doesn't translate to Dynasty Materials format"},
+  ],
+  inception: [
+    {id:"OAK",name:"Athletics",ev:250,tier:"s",anomaly:false,note:"⭐ OAK #1 in Inception — A's prospect pipeline has deep on-card auto coverage. Lawrence Butler + depth. Real data confirmed."},
+    {id:"WSH",name:"Nationals",ev:140,tier:"s",anomaly:false,note:"Abrams auto · MacKenzie Gore · Young core drives Inception value. Real data confirmed."},
+    {id:"LAD",name:"Dodgers",ev:130,tier:"s",anomaly:false,note:"Ohtani + Glasnow · LAD drops to #3 in Inception — product rewards prospect depth over star brand"},
+    {id:"NYY",name:"Yankees",ev:90,tier:"a",anomaly:false,note:"Judge auto · Compressed vs 12-box — Inception's on-card autos thin the Yankees' advantage"},
+    {id:"TEX",name:"Rangers",ev:45,tier:"b",anomaly:false,note:"Langford RC auto · WS holdover · Real data confirmed"},
+    {id:"HOU",name:"Astros",ev:60,tier:"b",anomaly:false,note:"Yordan Alvarez auto · Real data confirmed ($60)"},
+    {id:"SDP",name:"Padres",ev:40,tier:"b",anomaly:false,note:"Tatis auto · Real data confirmed ($40)"},
+    {id:"ATL",name:"Braves",ev:45,tier:"b",anomaly:false,note:"Acuña auto · Estimated from Chrome Plat hierarchy"},
+    {id:"BAL",name:"Orioles",ev:40,tier:"b",anomaly:false,note:"Henderson + Holliday RC · Estimated"},
+    {id:"BOS",name:"Red Sox",ev:40,tier:"b",anomaly:false,note:"Rafaela + Houck · Estimated"},
+    {id:"CHC",name:"Cubs",ev:40,tier:"b",anomaly:false,note:"Horton RC · Estimated"},
+    {id:"CIN",name:"Reds",ev:40,tier:"b",anomaly:false,note:"Elly De La Cruz auto · Estimated"},
+    {id:"SFG",name:"Giants",ev:30,tier:"b",anomaly:false,note:"Jung Hoo Lee auto · Estimated"},
+    {id:"DET",name:"Tigers",ev:25,tier:"b",anomaly:false,note:"Jobe RC auto · Estimated"},
+    {id:"PHI",name:"Phillies",ev:25,tier:"b",anomaly:false,note:"Turner auto · Estimated"},
+    {id:"SEA",name:"Mariners",ev:25,tier:"b",anomaly:false,note:"Julio Rodriguez auto · Estimated"},
+    {id:"KCR",name:"Royals",ev:30,tier:"b",anomaly:false,note:"Witt Jr. auto · Estimated"},
+    {id:"LAA",name:"Angels",ev:30,tier:"b",anomaly:false,note:"Schanuel RC · Post-Ohtani · Estimated"},
+    {id:"NYM",name:"Mets",ev:30,tier:"b",anomaly:false,note:"Lindor auto · Estimated"},
+    {id:"MIL",name:"Brewers",ev:20,tier:"b",anomaly:false,note:"Chourio auto · Estimated"},
+    {id:"MIN",name:"Twins",ev:20,tier:"b",anomaly:false,note:"Buxton + Lewis · Estimated"},
+    {id:"STL",name:"Cardinals",ev:25,tier:"b",anomaly:false,note:"Arenado auto · Estimated"},
+    {id:"PIT",name:"Pirates",ev:60,tier:"a",anomaly:false,note:"Skenes RC auto — pitching prospects command premium in Inception · Estimated"},
+    {id:"TOR",name:"Blue Jays",ev:20,tier:"c",anomaly:false,note:"Vladdy Jr. auto · Estimated"},
+    {id:"CLE",name:"Guardians",ev:20,tier:"c",anomaly:false,note:"Kwan auto · Estimated"},
+    {id:"CHW",name:"White Sox",ev:20,tier:"c",anomaly:false,note:"Montgomery RC auto · Estimated — lower than Tier One despite same prospects"},
+    {id:"MIA",name:"Marlins",ev:20,tier:"c",anomaly:false,note:"Perez RC · Estimated"},
+    {id:"COL",name:"Rockies",ev:15,tier:"c",anomaly:false,note:"Tovar RC · Estimated"},
+    {id:"ARI",name:"Diamondbacks",ev:15,tier:"c",anomaly:false,note:"Carroll auto · Estimated"},
+    {id:"TBR",name:"Rays",ev:25,tier:"b",anomaly:false,note:"Thin star auto checklist · Estimated"},
+  ],
+  chrome_plat_6: [
+    {id:"LAD",name:"Dodgers",ev:235,tier:"s",anomaly:false,note:"✅ Real — Main Street #1106 · Much tighter vs 12-box — smaller sample compresses spread"},
+    {id:"NYY",name:"Yankees",ev:210,tier:"s",anomaly:false,note:"✅ Real — $210 vs $300 in 12-box. LAD and NYY nearly tied in 6-box format."},
+    {id:"SEA",name:"Mariners",ev:125,tier:"a",anomaly:false,note:"✅ Real — $125 · Julio Rodriguez auto pull variance elevated SEA in this break"},
+    {id:"OAK",name:"Athletics",ev:120,tier:"a",anomaly:false,note:"✅ Real — $120 · Consistent top performer across both formats"},
+    {id:"NYM",name:"Mets",ev:120,tier:"a",anomaly:false,note:"✅ Real — $120 · Big market premium more pronounced in smaller breaks"},
+    {id:"BOS",name:"Red Sox",ev:90,tier:"a",anomaly:false,note:"✅ Real — $90"},
+    {id:"LAA",name:"Angels",ev:85,tier:"a",anomaly:false,note:"✅ Real — $85 · Ohtani legacy materials still present in 2024 product"},
+    {id:"ATL",name:"Braves",ev:85,tier:"a",anomaly:false,note:"✅ Real — $85"},
+    {id:"WSH",name:"Nationals",ev:85,tier:"a",anomaly:false,note:"✅ Real — $85"},
+    {id:"KCR",name:"Royals",ev:85,tier:"a",anomaly:false,note:"✅ Real — $85"},
+    {id:"PIT",name:"Pirates",ev:80,tier:"a",anomaly:false,note:"✅ Real — $80"},
+    {id:"CHC",name:"Cubs",ev:75,tier:"b",anomaly:false,note:"✅ Real — $75"},
+    {id:"PHI",name:"Phillies",ev:65,tier:"b",anomaly:false,note:"✅ Real — $65"},
+    {id:"STL",name:"Cardinals",ev:65,tier:"b",anomaly:false,note:"✅ Real — $65"},
+    {id:"DET",name:"Tigers",ev:55,tier:"b",anomaly:false,note:"✅ Real — $55"},
+    {id:"BAL",name:"Orioles",ev:55,tier:"b",anomaly:false,note:"✅ Real — $55"},
+    {id:"CLE",name:"Guardians",ev:45,tier:"b",anomaly:false,note:"✅ Real — $45"},
+    {id:"SFG",name:"Giants",ev:45,tier:"b",anomaly:false,note:"✅ Real — $45"},
+    {id:"CIN",name:"Reds",ev:45,tier:"b",anomaly:false,note:"✅ Real — $45"},
+    {id:"TOR",name:"Blue Jays",ev:40,tier:"b",anomaly:false,note:"✅ Real — $40"},
+    {id:"MIL",name:"Brewers",ev:40,tier:"b",anomaly:false,note:"✅ Real — $40"},
+    {id:"HOU",name:"Astros",ev:40,tier:"b",anomaly:false,note:"✅ Real — $40"},
+    {id:"TBR",name:"Rays",ev:40,tier:"b",anomaly:false,note:"✅ Real — $40"},
+    {id:"TEX",name:"Rangers",ev:50,tier:"b",anomaly:false,note:"✅ Real — $50"},
+    {id:"MIN",name:"Twins",ev:35,tier:"b",anomaly:false,note:"✅ Real — $35"},
+    {id:"MIA",name:"Marlins",ev:30,tier:"c",anomaly:false,note:"✅ Real — $30"},
+    {id:"SDP",name:"Padres",ev:30,tier:"c",anomaly:false,note:"✅ Real — $30"},
+    {id:"COL",name:"Rockies",ev:30,tier:"c",anomaly:false,note:"✅ Real — $30"},
+    {id:"CHW",name:"White Sox",ev:30,tier:"c",anomaly:false,note:"✅ Real — $30 · Floor in 6-box Chrome Platinum (2024)"},
+    {id:"ARI",name:"Diamondbacks",ev:25,tier:"c",anomaly:false,note:"✅ Real — $25"},
+  ]
+};
+
+// ── STATE ──
+let currentProduct = 'chrome_plat';
+let sortMode = 'ev';
+
+// ── PRODUCT TABS ──
+function setProduct(key){
+  currentProduct = key;
+  document.querySelectorAll('.prod-tab').forEach((b,i)=>{
+    const keys = ['chrome_plat','tier_one','dynasty','inception','chrome_plat_6'];
+    b.classList.toggle('active', keys[i]===key);
+  });
+  const prod = PRODUCTS[key];
+  document.getElementById('prodInfo').innerHTML = `
+    <h4>${prod.name}</h4>
+    <p>${prod.note}</p>
+    <div style="margin-top:8px">
+      ${prod.tags.map(t=>`<span class="prod-stat">${t}</span>`).join('')}
+      <span class="prod-stat" style="background:rgba(50,200,100,.1);border-color:rgba(50,200,100,.2);color:var(--green)">~$${prod.boxPrice}/box</span>
+      <span class="prod-stat" style="background:rgba(255,107,107,.08);border-color:rgba(255,107,107,.2);color:var(--red)">${prod.caseBoxes} boxes/case</span>
+      <span class="prod-stat" style="background:rgba(108,63,197,.1);border-color:rgba(108,63,197,.2);color:#A78BF5">${prod.confidence} CONFIDENCE</span>
+    </div>`;
+  document.getElementById('dataNoteBox').textContent = prod.dataNote;
+  // update default box count
+  document.getElementById('box-count').value = prod.caseBoxes;
+  document.getElementById('ev-boxes').value = prod.caseBoxes;
+  populateTeamSelect();
+  renderGrid();
+}
+
+function populateTeamSelect(){
+  const sel = document.getElementById('ev-team');
+  const teams = [...TEAMS[currentProduct]].sort((a,b)=>a.name.localeCompare(b.name));
+  sel.innerHTML = teams.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+}
+
+// ── GRID ──
+function renderGrid(){
+  const boxes = +document.getElementById('box-count').value || PRODUCTS[currentProduct].caseBoxes;
+  const caseBoxes = PRODUCTS[currentProduct].caseBoxes;
+  let teams = [...TEAMS[currentProduct]];
+  if(sortMode === 'ev') teams.sort((a,b)=>b.ev-a.ev);
+  else teams.sort((a,b)=>a.name.localeCompare(b.name));
+  const grid = document.getElementById('teamGrid');
+  grid.innerHTML = teams.map(t=>{
+    const ev = Math.round(t.ev * (boxes / caseBoxes));
+    const tierColor = t.tier==='s'?'var(--green)':t.tier==='a'?'var(--gold)':t.tier==='b'?'var(--muted)':'rgba(255,255,255,.2)';
+    return `<div class="team-card${t.anomaly?' anomaly':''}" onclick="quickEval('${t.id}')">
+      ${t.anomaly?`<div class="anomaly-badge">⚠️ ANOMALY</div>`:''}
+      <div class="team-name">${t.name}</div>
+      <div class="team-ev">$${ev}</div>
+      <div class="team-note">${t.note}</div>
+      <div class="tier-dot" style="background:${tierColor}"></div>
+    </div>`;
+  }).join('');
+}
+
+function sortTeams(mode){
+  sortMode = mode;
+  document.getElementById('sort-ev').classList.toggle('active', mode==='ev');
+  document.getElementById('sort-az').classList.toggle('active', mode==='az');
+  renderGrid();
+}
+
+// ── EVALUATOR ──
+function quickEval(id){
+  document.getElementById('ev-team').value = id;
+  const boxes = +document.getElementById('box-count').value || PRODUCTS[currentProduct].caseBoxes;
+  document.getElementById('ev-boxes').value = boxes;
+  evaluate();
+  document.getElementById('resultBox').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function evaluate(){
+  const teamId = document.getElementById('ev-team').value;
+  const asked = +document.getElementById('ev-price').value;
+  const boxes = +document.getElementById('ev-boxes').value || PRODUCTS[currentProduct].caseBoxes;
+  const caseBoxes = PRODUCTS[currentProduct].caseBoxes;
+  const team = TEAMS[currentProduct].find(t=>t.id===teamId);
+  if(!team){ alert('Select a team'); return; }
+  if(!asked){ alert('Enter a price'); return; }
+
+  const baseEV = Math.round(team.ev * (boxes / caseBoxes));
+  const deal = Math.round(baseEV * 0.80);
+  const fair = baseEV;
+  const hard = Math.round(baseEV * 1.25);
+
+  document.getElementById('rDeal').textContent = `$${deal}`;
+  document.getElementById('rFair').textContent = `$${fair}`;
+  document.getElementById('rHard').textContent = `$${hard}`;
+
+  const verdict = document.getElementById('rVerdict');
+  const note = document.getElementById('rNote');
+  if(asked <= deal){
+    verdict.className = 'verdict stash';
+    verdict.textContent = `✅ Strong Buy — ${team.name} at $${asked} is well under EV`;
+  } else if(asked <= fair){
+    verdict.className = 'verdict stash';
+    verdict.textContent = `🟡 Fair value — ${team.name} at $${asked} is at or below market`;
+  } else if(asked <= hard){
+    verdict.className = 'verdict pass';
+    verdict.textContent = `⚠️ Stretch — $${asked} is above EV but within range`;
+  } else {
+    verdict.className = 'verdict pass';
+    verdict.textContent = `🔴 Pass — $${asked} is significantly over EV for ${team.name}`;
+  }
+  note.textContent = `${team.name} base EV (${boxes} boxes, ${PRODUCTS[currentProduct].name}): $${baseEV} · ${team.note}`;
+  document.getElementById('resultBox').classList.add('show');
+}
+
+// ── INIT ──
+setProduct('chrome_plat');
+</script>
+</body>
+</html>

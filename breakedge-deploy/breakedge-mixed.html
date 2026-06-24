@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BreakEdge — Mixed Break Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A1628;--gold:#F5A623;--green:#32C864;--red:#FF6B6B;--purple:#6C3FC5;--teal:#00C9C9;--orange:#E85D04;--pink:#E040FB;--white:#fff;--muted:#6B7A99;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1)}
+body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;padding:20px}
+.wrap{max-width:920px;margin:0 auto}
+.header{text-align:center;padding:22px 0 14px}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;text-transform:uppercase}
+.logo span{color:var(--gold)}
+.mode-badge{display:inline-block;background:rgba(224,64,251,.1);color:var(--pink);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 16px;border-radius:2px;margin-top:8px;border:1px solid var(--pink)}
+.nav-links{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.nav-link{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:3px}
+.nav-link.active{color:var(--pink);border-color:var(--pink)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px;margin-bottom:14px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--pink);margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.fg label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:10px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--pink)}
+.fg select option{background:#1a2a3a}
+.fg .hint{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* PRODUCT ROWS */
+.product-list{margin-bottom:14px}
+.product-row{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:8px;display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;align-items:end}
+.product-row .prod-num{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pink);margin-bottom:4px}
+.remove-btn{background:rgba(255,107,107,.15);color:var(--red);border:1px solid rgba(255,107,107,.3);padding:9px 12px;border-radius:4px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;white-space:nowrap;align-self:end}
+.add-btn{background:rgba(224,64,251,.1);color:var(--pink);border:1px solid rgba(224,64,251,.3);padding:9px 16px;border-radius:4px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;display:block}
+.add-btn:hover{background:rgba(224,64,251,.2)}
+
+.btn{width:100%;background:var(--pink);color:var(--white);border:none;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;text-transform:uppercase;border-radius:4px;cursor:pointer}
+
+/* TOTALS */
+.total-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.tbox{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;padding:14px;text-align:center}
+.tbox.pink{background:rgba(224,64,251,.1);border-color:var(--pink)}
+.tbox.green{background:rgba(50,200,100,.1);border-color:var(--green)}
+.tbox.gold{background:rgba(245,166,35,.1);border-color:var(--gold)}
+.tbox.red{background:rgba(255,107,107,.1);border-color:var(--red)}
+.tnum{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1}
+.tbox.pink .tnum{color:var(--pink)}.tbox.green .tnum{color:var(--green)}.tbox.gold .tnum{color:var(--gold)}.tbox.red .tnum{color:var(--red)}
+.tlbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:4px}
+
+/* VERDICT */
+.verdict{border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;text-transform:uppercase}
+.verdict.run{background:rgba(50,200,100,.12);border:2px solid var(--green);color:var(--green)}
+.verdict.caution{background:rgba(245,166,35,.12);border:2px solid var(--gold);color:var(--gold)}
+.verdict.pass{background:rgba(255,107,107,.12);border:2px solid var(--red);color:var(--red)}
+
+/* PRODUCT BREAKDOWN */
+.prod-breakdown{margin-bottom:14px}
+.pb-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:5px;margin-bottom:6px}
+.pb-swatch{width:10px;height:32px;border-radius:2px;flex-shrink:0}
+.pb-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;flex:1}
+.pb-cost{font-size:13px;color:var(--muted)}
+.pb-ev{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--gold);text-align:right;min-width:80px}
+.pb-pct{font-size:11px;color:var(--muted);text-align:right;min-width:50px}
+
+/* TEAM EV TABLE */
+.team-table{width:100%;border-collapse:collapse}
+.team-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.team-table td{font-size:13px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer}
+.team-table tr:hover td{background:rgba(255,255,255,.03)}
+.tier-s{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;background:rgba(50,200,100,.2);color:var(--green)}
+.tier-a{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;background:rgba(0,201,201,.2);color:var(--teal)}
+.tier-b{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;background:rgba(108,63,197,.2);color:#A78BF5}
+.ev-bar-wrap{width:80px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:4px}
+.ev-bar-fill{height:100%;border-radius:3px;background:var(--gold)}
+.ev-total-cell{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--gold)}
+
+/* COST BREAKDOWN */
+.brow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.brow:last-child{border:none;padding-top:10px}
+.brow span{color:#8BAFC6}.brow strong{color:var(--white)}
+.brow.tot span{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;color:var(--white)}
+.brow.tot strong{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--gold)}
+
+/* CAPTION */
+.caption-box{background:rgba(224,64,251,.06);border:1px solid rgba(224,64,251,.2);border-radius:6px;padding:16px;margin-top:14px}
+.caption-box h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);margin-bottom:8px}
+.caption-text{font-size:13px;color:#F0C0FF;line-height:1.7;white-space:pre-wrap}
+.copy-btn{background:var(--pink);color:var(--white);border:none;padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;border-radius:3px;cursor:pointer;margin-top:8px}
+
+.hidden{display:none}
+.footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.footer a{color:var(--pink);text-decoration:none}
+@media(max-width:600px){.g2,.g3,.total-strip{grid-template-columns:1fr 1fr}.product-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+  <div style="width:100%;max-width:900px;margin:0 auto 8px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a1628"/>
+      <stop offset="50%" style="stop-color:#0d1e35"/>
+      <stop offset="100%" style="stop-color:#0a1628"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8C00"/>
+      <stop offset="100%" style="stop-color:#E85D04"/>
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E0E0E0"/>
+      <stop offset="50%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#B0B0B0"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#E8850A"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="900" height="220" fill="url(#bgGrad)"/>
+
+  <!-- TOP + BOTTOM ORANGE BARS -->
+  <rect x="0" y="0" width="900" height="5" fill="#E85D04"/>
+  <rect x="0" y="215" width="900" height="5" fill="#E85D04"/>
+
+  <!-- CHEVRON PATTERN -->
+  <g opacity="0.05" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+    <polyline points="0,60 450,20 900,60"/>
+    <polyline points="0,90 450,45 900,90"/>
+    <polyline points="0,120 450,70 900,120"/>
+    <polyline points="0,150 450,95 900,150"/>
+    <polyline points="0,180 450,120 900,180"/>
+  </g>
+
+  <!-- LEFT ORANGE ACCENT BAR -->
+  <rect x="0" y="0" width="6" height="220" fill="#E85D04"/>
+
+  <!-- MINI SHIELD ICON (left side) -->
+  <g transform="translate(30, 25)">
+    <!-- Shield -->
+    <path d="M 80 8 L 148 32 L 148 98 Q 148 148 80 170 Q 12 148 12 98 L 12 32 Z"
+          fill="url(#orangeGrad)" filter="url(#shadow)"/>
+    <path d="M 80 20 L 136 40 L 136 97 Q 136 140 80 158 Q 24 140 24 97 L 24 40 Z"
+          fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+    <!-- Sword on shield -->
+    <rect x="77" y="15" width="6" height="130"
+          rx="2" fill="url(#silverGrad)"
+          transform="rotate(-30, 80, 80)" filter="url(#shadow)"/>
+    <rect x="55" y="76" width="52" height="8"
+          rx="3" fill="url(#silverGrad)"
+          transform="rotate(-30, 80, 80)"/>
+    <rect x="77" y="110" width="6" height="35"
+          rx="2" fill="#8B4513"
+          transform="rotate(-30, 80, 80)"/>
+    <!-- Lightning bolt -->
+    <polygon points="84,30 73,62 82,62 70,95 97,58 86,58 98,30"
+             fill="rgba(255,255,255,0.85)" filter="url(#glow)"/>
+    <!-- Banner -->
+    <path d="M 10 158 L 150 158 L 138 180 L 80 186 L 22 180 Z"
+          fill="#0d1e35" stroke="#E85D04" stroke-width="1.5"/>
+    <text x="80" y="176"
+          font-family="'Arial Black', Impact, sans-serif"
+          font-weight="900" font-size="20" letter-spacing="1"
+          text-anchor="middle" fill="url(#goldText)">BREAK</text>
+  </g>
+
+  <!-- MAIN TITLE -->
+  <!-- BREAK in white -->
+  <text x="220" y="128"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-weight="900"
+        font-size="100"
+        letter-spacing="-2"
+        fill="#FFFFFF"
+        filter="url(#shadow)">BREAK</text>
+
+  <!-- EDGE in orange/gold -->
+  <text x="572" y="128"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-weight="900"
+        font-size="100"
+        letter-spacing="-2"
+        fill="url(#goldText)"
+        filter="url(#glow)">EDGE</text>
+
+  <!-- TAGLINE -->
+  <text x="220" y="160"
+        font-family="Arial, sans-serif"
+        font-weight="700"
+        font-size="13"
+        letter-spacing="4"
+        fill="#6B8CAD">BREAK SMARTER · BID SHARPER · KNOW YOUR EDGE</text>
+
+  <!-- RIGHT ACCENT — three dots -->
+  <circle cx="858" cy="80" r="5" fill="#E85D04" opacity="0.9"/>
+  <circle cx="858" cy="110" r="5" fill="#E85D04" opacity="0.6"/>
+  <circle cx="858" cy="140" r="5" fill="#E85D04" opacity="0.3"/>
+
+  <!-- RIGHT BORDER -->
+  <rect x="894" y="0" width="6" height="220" fill="#E85D04"/>
+</svg>
+</div>
+  <div class="mode-badge">🎲 MIXED BREAK CALCULATOR</div>
+  <div class="nav-links">
+    <a class="nav-link" href="breakedge-host.html">Host</a>
+    <a class="nav-link" href="breakedge-buyer.html">Buyer</a>
+    <a class="nav-link" href="breakedge-compare.html">⚡ Compare</a>
+    <a class="nav-link active" href="#">🎲 Mixed</a>
+    <a class="nav-link" href="breakedge-live.html">🔴 Live</a>
+    <a class="nav-link" href="breakedge-nba.html">🏀 NBA</a>
+    <a class="nav-link" href="breakedge-research.html">Research</a>
+    <a class="nav-link" href="breakedge-backtest.html">Backtest</a>
+  </div>
+</div>
+
+<!-- BREAK SETUP -->
+<div class="card">
+  <div class="card-title">Break Setup</div>
+  <div class="g3">
+    <div class="fg">
+      <label>Break Format</label>
+      <select id="format">
+        <option value="team32">Team Break — 32 spots</option>
+        <option value="team64">Team Break — Double (64 spots)</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Platform Fee %</label>
+      <input type="number" id="fee" value="10" min="0" max="30"/>
+    </div>
+    <div class="fg">
+      <label>Shipping Per Spot ($)</label>
+      <input type="number" id="ship" value="8" min="0"/>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT STACK -->
+<div class="card">
+  <div class="card-title">Products in This Break</div>
+  <div class="product-list" id="productList"></div>
+  <button class="add-btn" onclick="addProduct()">+ Add Another Product</button>
+  <button class="btn" onclick="calculate()">🎲 Calculate Mixed Break</button>
+</div>
+
+<!-- RESULTS -->
+<div class="hidden" id="results">
+
+  <!-- TOTALS -->
+  <div class="total-strip">
+    <div class="tbox pink"><div class="tnum" id="r-totalcost">$0</div><div class="tlbl">Total Box Cost</div></div>
+    <div class="tbox gold"><div class="tnum" id="r-recspot">$0</div><div class="tlbl">Rec. Spot Price</div></div>
+    <div class="tbox" id="r-profitbox"><div class="tnum" id="r-profit">$0</div><div class="tlbl">Est. Profit</div></div>
+    <div class="tbox" id="r-marginbox"><div class="tnum" id="r-margin">0%</div><div class="tlbl">Margin</div></div>
+  </div>
+
+  <!-- HOST VERDICT -->
+  <div class="verdict" id="hostVerdict"></div>
+
+  <!-- PRODUCT CONTRIBUTION BREAKDOWN -->
+  <div class="card">
+    <div class="card-title">Product Contribution Breakdown</div>
+    <div class="prod-breakdown" id="prodBreakdown"></div>
+    <div style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6" id="mixNote"></div>
+  </div>
+
+  <!-- COST BREAKDOWN -->
+  <div class="card">
+    <div class="card-title">Full Cost Breakdown</div>
+    <div id="costBreakdown"></div>
+  </div>
+
+  <!-- TEAM EV TABLE -->
+  <div class="card">
+    <div class="card-title">Team EV Rankings — Combined Across All Products</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Each team's EV stacks across all products in the break. Click any row to copy spot price suggestion.</p>
+    <div style="overflow-x:auto">
+    <table class="team-table">
+      <thead><tr>
+        <th>Team</th>
+        <th>Tier</th>
+        <th>Combined EV</th>
+        <th>EV Distribution</th>
+        <th>Suggested Spot Price</th>
+        <th>Buyer Verdict</th>
+      </tr></thead>
+      <tbody id="teamTableBody"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- CAPTION -->
+  <div class="caption-box">
+    <h4>📱 Mixed Break Caption</h4>
+    <div class="caption-text" id="captionText"></div>
+    <button class="copy-btn" onclick="copyCaption()">Copy Caption</button>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--muted);line-height:1.6">
+    ⚠️ Mixed break EV estimates stack product EVs additively. Actual value depends on which products each team appears in. Verify with real sold comps before pricing spots.
+  </div>
+  BreakEdge Beta 🚀 &nbsp;|&nbsp; <a href="mailto:adleranalyticsllc@gmail.com">adleranalyticsllc@gmail.com</a> &nbsp;|&nbsp; Founding rate: $49/mo
+</div>
+</div>
+
+<script>
+// PRODUCTS DATABASE
+const PRODUCTS = {
+  cosmic:{
+    name:"2025 Topps Cosmic Chrome Football",
+    defaultCost:640,
+    color:"#6C3FC5",
+    autosPer:"1 auto per case (rare — inserts/parallels are the chase)",
+    topChase:"EQA Autos · Planetary Pursuit · SuperFractor 1/1",
+    // Team EV multipliers relative to base
+    teamEV:{
+      TEN:60,BUF:55,NYG:52,TB:52,JAX:50,SF:50,PHI:48,KC:48,CHI:48,NE:42,
+      BAL:42,CLE:45,LAC:40,DAL:34,CIN:32,IND:32,WSH:28,CAR:28,DEN:30,
+      DET:30,MIN:30,GB:28,HOU:26,MIA:26,PIT:26,ARI:22,LV:48,NO:16,
+      LAR:18,NYJ:18,SEA:18,ATL:16
+    }
+  },
+  chrome:{
+    name:"2025 Topps Chrome Football",
+    defaultCost:350,
+    color:"#00C9C9",
+    autosPer:"1 auto per Hobby box",
+    topChase:"Rookie Autos · PREM1ERE Patches · Tecmo Bowl SSPs · SuperFractor 1/1",
+    teamEV:{
+      TEN:40,BUF:42,NYG:44,TB:38,JAX:36,SF:38,PHI:40,KC:38,CHI:36,NE:34,
+      BAL:32,CLE:40,LAC:30,DAL:28,CIN:26,IND:28,WSH:24,CAR:24,DEN:22,
+      DET:24,MIN:22,GB:20,HOU:20,MIA:20,PIT:18,ARI:16,LV:38,NO:14,
+      LAR:14,NYJ:14,SEA:14,ATL:12
+    }
+  },
+  signature:{
+    name:"2025 Topps Signature Class Football",
+    defaultCost:430,
+    color:"#F5A623",
+    autosPer:"2 autos per Hobby box · 4 per Jumbo · Released June 5, 2026",
+    topChase:"Crystal Clear Autos · Chrome Autos · Legends of Their Class · HOF Signs · Supreme Signers · Dual /25 · Triple /25",
+    warning:"⚠️ No sold comps yet — released June 5, 2026. EV estimates based on Chrome proxy (0.7x) and auto frequency. Verify before pricing spots.",
+    teamEV:{
+      TEN:28,BUF:30,NYG:32,TB:28,JAX:24,SF:28,PHI:30,KC:28,CHI:26,NE:30,
+      BAL:22,CLE:30,LAC:20,DAL:24,CIN:18,IND:22,WSH:18,CAR:18,DEN:20,
+      DET:18,MIN:18,GB:20,HOU:15,MIA:15,PIT:16,ARI:13,LV:26,NO:11,
+      LAR:13,NYJ:11,SEA:11,ATL:10
+    }
+  },
+  finest:{
+    name:"2025 Topps Finest Football",
+    defaultCost:600,
+    color:"#E85D04",
+    autosPer:"2 autos per Hobby box",
+    topChase:"Finest Autographs · Dual Autos · SuperFractor 1/1 · Rookie Patch Autos",
+    warning:"⚠️ Limited comps. Dart Orange /25 listed at $3,000 (asking, not sold). Chrome is primary comp proxy.",
+    teamEV:{
+      TEN:38,BUF:40,NYG:42,TB:36,JAX:32,SF:36,PHI:38,KC:36,CHI:34,NE:36,
+      BAL:30,CLE:40,LAC:28,DAL:30,CIN:26,IND:30,WSH:24,CAR:24,DEN:26,
+      DET:24,MIN:24,GB:24,HOU:20,MIA:20,PIT:22,ARI:18,LV:36,NO:16,
+      LAR:18,NYJ:16,SEA:16,ATL:14
+    }
+  },
+  custom:{
+    name:"Custom Product",
+    defaultCost:300,
+    color:"#32C864",
+    autosPer:"Unknown",
+    topChase:"Custom",
+    teamEV:{
+      TEN:30,BUF:30,NYG:30,TB:30,JAX:30,SF:30,PHI:30,KC:30,CHI:30,NE:30,
+      BAL:30,CLE:30,LAC:30,DAL:30,CIN:30,IND:30,WSH:30,CAR:30,DEN:30,
+      DET:30,MIN:30,GB:30,HOU:30,MIA:30,PIT:30,ARI:30,LV:30,NO:30,
+      LAR:30,NYJ:30,SEA:30,ATL:30
+    }
+  }
+};
+
+const TEAMS_META = {
+  TEN:"Tennessee Titans",BUF:"Buffalo Bills",NYG:"New York Giants",TB:"Tampa Bay Buccaneers",
+  JAX:"Jacksonville Jaguars",SF:"San Francisco 49ers",PHI:"Philadelphia Eagles",KC:"Kansas City Chiefs",
+  CHI:"Chicago Bears",NE:"New England Patriots",BAL:"Baltimore Ravens",CLE:"Cleveland Browns",
+  LAC:"Los Angeles Chargers",DAL:"Dallas Cowboys",CIN:"Cincinnati Bengals",IND:"Indianapolis Colts",
+  WSH:"Washington Commanders",CAR:"Carolina Panthers",DEN:"Denver Broncos",DET:"Detroit Lions",
+  MIN:"Minnesota Vikings",GB:"Green Bay Packers",HOU:"Houston Texans",MIA:"Miami Dolphins",
+  PIT:"Pittsburgh Steelers",ARI:"Arizona Cardinals",LV:"Las Vegas Raiders",NO:"New Orleans Saints",
+  LAR:"Los Angeles Rams",NYJ:"New York Jets",SEA:"Seattle Seahawks",ATL:"Atlanta Falcons"
+};
+
+const SWATCH_COLORS = ["#6C3FC5","#00C9C9","#F5A623","#E85D04","#32C864","#E040FB","#FF6B6B","#4A86E8"];
+let productCount = 0;
+
+function addProduct(key="cosmic", cost=null){
+  productCount++;
+  const pid = "prod_"+productCount;
+  const prod = PRODUCTS[key];
+  const row = document.createElement('div');
+  row.className = 'product-row';
+  row.id = pid;
+  row.innerHTML = `
+    <div>
+      <div class="prod-num">Product ${productCount}</div>
+      <div class="fg">
+        <select id="${pid}_key" onchange="updateProdName('${pid}')">
+          <option value="cosmic" ${key==='cosmic'?'selected':''}>2025 Topps Cosmic Chrome Football</option>
+          <option value="chrome" ${key==='chrome'?'selected':''}>2025 Topps Chrome Football</option>
+          <option value="signature" ${key==='signature'?'selected':''}>2025 Topps Signature Class Football</option>
+          <option value="finest" ${key==='finest'?'selected':''}>2025 Topps Finest Football</option>
+          <option value="custom" ${key==='custom'?'selected':''}>Custom / Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg">
+      <label>Boxes</label>
+      <input type="number" id="${pid}_boxes" value="1" min="1" max="12"/>
+    </div>
+    <div class="fg">
+      <label>Box Cost ($)</label>
+      <input type="number" id="${pid}_cost" value="${cost||prod.defaultCost}" min="1"/>
+    </div>
+    <button class="remove-btn" onclick="removeProduct('${pid}')">✕</button>
+  `;
+  document.getElementById('productList').appendChild(row);
+}
+
+function updateProdName(pid){
+  const key = document.getElementById(pid+'_key').value;
+  document.getElementById(pid+'_cost').value = PRODUCTS[key].defaultCost;
+}
+
+function removeProduct(pid){
+  const el = document.getElementById(pid);
+  if(el) el.remove();
+}
+
+function getProducts(){
+  const rows = document.querySelectorAll('#productList .product-row');
+  const prods = [];
+  rows.forEach(r => {
+    const pid = r.id;
+    const key = document.getElementById(pid+'_key').value;
+    const boxes = +document.getElementById(pid+'_boxes').value || 1;
+    const cost = +document.getElementById(pid+'_cost').value || 300;
+    prods.push({key, boxes, cost, data:PRODUCTS[key]});
+  });
+  return prods;
+}
+
+function calculate(){
+  const prods = getProducts();
+  if(!prods.length){alert('Add at least one product.');return;}
+
+  const format = document.getElementById('format').value;
+  const spots = format==='team32' ? 32 : 64;
+  const feePct = +document.getElementById('fee').value || 10;
+  const shipPer = +document.getElementById('ship').value || 8;
+  const targetMargin = 0.20; // default 20%
+
+  // Total box cost
+  const totalBoxCost = prods.reduce((s,p)=>s + p.boxes*p.cost, 0);
+  const totalShip = spots * shipPer;
+
+  // Solve for 20% margin spot price
+  const fixedCost = totalBoxCost + totalShip;
+  const denom = 1 - (feePct/100) - targetMargin;
+  const recSpotRaw = denom > 0.01 ? (fixedCost/denom)/spots : fixedCost/spots * 1.5;
+  const recSpot = Math.ceil(recSpotRaw);
+
+  const actualGross = spots * recSpot;
+  const actualFees = actualGross * (feePct/100);
+  const actualCost = totalBoxCost + actualFees + totalShip;
+  const actualProfit = actualGross - actualCost;
+  const actualMargin = (actualProfit / actualGross) * 100;
+
+  // Display totals
+  document.getElementById('r-totalcost').textContent = '$'+totalBoxCost.toLocaleString();
+  document.getElementById('r-recspot').textContent = '$'+recSpot;
+  document.getElementById('r-profit').textContent = (actualProfit>=0?'+':'')+' $'+Math.abs(actualProfit).toFixed(0);
+  document.getElementById('r-margin').textContent = actualMargin.toFixed(1)+'%';
+
+  const pb = document.getElementById('r-profitbox');
+  const mb = document.getElementById('r-marginbox');
+  pb.className = 'tbox '+(actualMargin>=20?'green':actualMargin>=10?'gold':'red');
+  mb.className = 'tbox '+(actualMargin>=20?'green':actualMargin>=10?'gold':'red');
+
+  // Host verdict
+  const hv = document.getElementById('hostVerdict');
+  if(actualMargin>=20){hv.className='verdict run';hv.textContent='✅ Run It — '+actualMargin.toFixed(0)+'% margin at $'+recSpot+'/spot. Solid mixed break.';}
+  else if(actualMargin>=10){hv.className='verdict caution';hv.textContent='⚠️ Tight — '+actualMargin.toFixed(0)+'% margin. Consider raising to $'+(recSpot+2)+'/spot for buffer.';}
+  else{hv.className='verdict pass';hv.textContent='❌ Thin — Under 10% margin. Box costs are high relative to spot count. Add more boxes or raise prices.';}
+
+  // Product breakdown
+  const totalEV_base = prods.reduce((s,p)=>s + p.boxes*p.cost, 0);
+  const breakdown = document.getElementById('prodBreakdown');
+  breakdown.innerHTML = prods.map((p,i)=>{
+    const prodCost = p.boxes * p.cost;
+    const pct = Math.round((prodCost/totalBoxCost)*100);
+    const color = SWATCH_COLORS[i % SWATCH_COLORS.length];
+    return `<div class="pb-row">
+      <div class="pb-swatch" style="background:${color}"></div>
+      <div>
+        <div class="pb-name">${p.data.name}</div>
+        <div class="pb-cost">${p.boxes} box${p.boxes>1?'es':''} × $${p.cost} · ${p.data.autosPer}</div>
+        <div class="pb-cost" style="color:#8BAFC6;margin-top:2px">Chase: ${p.data.topChase}</div>
+      </div>
+      <div class="pb-ev">$${prodCost.toLocaleString()}</div>
+      <div class="pb-pct">${pct}% of cost</div>
+    </div>`;
+  }).join('');
+
+  // Mix note
+  const prodNames = prods.map(p=>p.data.name.replace('2025 Topps ',''));
+  document.getElementById('mixNote').textContent =
+    `Mixed break: ${prodNames.join(' + ')}. Each team gets cards from ALL ${prods.length} product${prods.length>1?'s':''}. EV is additive across products. High-value teams in Cosmic (TEN, NYG, BUF) also tend to be strong in Signature Class and Chrome.`;
+
+  // Cost breakdown
+  document.getElementById('costBreakdown').innerHTML = `
+    ${prods.map(p=>`<div class="brow"><span>${p.data.name} (${p.boxes}×$${p.cost})</span><strong>$${(p.boxes*p.cost).toLocaleString()}</strong></div>`).join('')}
+    <div class="brow"><span>Platform fees (${feePct}%)</span><strong>$${actualFees.toFixed(0)}</strong></div>
+    <div class="brow"><span>Shipping (${spots} × $${shipPer})</span><strong>$${totalShip.toFixed(0)}</strong></div>
+    <div class="brow"><span>Total cost</span><strong>$${actualCost.toFixed(0)}</strong></div>
+    <div class="brow"><span>Gross revenue (${spots} × $${recSpot})</span><strong>$${actualGross.toLocaleString()}</strong></div>
+    <div class="brow tot"><span>Net Profit</span><strong>${actualProfit>=0?'+':''} $${actualProfit.toFixed(0)} (${actualMargin.toFixed(1)}%)</strong></div>
+  `;
+
+  // Combined team EV table
+  const maxEV = Math.max(...Object.keys(TEAMS_META).map(k=>{
+    return prods.reduce((s,p)=>{
+      const base = p.data.teamEV[k] || 20;
+      return s + base * p.boxes;
+    }, 0);
+  }));
+
+  const teamRows = Object.keys(TEAMS_META).map(k=>{
+    const combinedEV = prods.reduce((s,p)=>{
+      const base = p.data.teamEV[k] || 20;
+      return s + base * p.boxes;
+    }, 0);
+    const tier = combinedEV >= 80 ? 's' : combinedEV >= 50 ? 'a' : 'b';
+    const suggestedSpot = Math.ceil(recSpot * (combinedEV / (totalBoxCost/spots*2)));
+    const buyVerdict = recSpot <= combinedEV*0.65 ? '✅ Buy' : recSpot <= combinedEV*0.85 ? '✅ Fair' : recSpot <= combinedEV ? '📦 Watch' : '❌ Pass';
+    const verdictColor = buyVerdict.includes('Buy')||buyVerdict.includes('Fair') ? 'var(--green)' : buyVerdict.includes('Watch') ? 'var(--gold)' : 'var(--red)';
+    return {k, name:TEAMS_META[k], combinedEV, tier, suggestedSpot, buyVerdict, verdictColor, barPct:Math.round((combinedEV/maxEV)*100)};
+  }).sort((a,b)=>b.combinedEV-a.combinedEV);
+
+  const tbody = document.getElementById('teamTableBody');
+  tbody.innerHTML = '';
+  teamRows.forEach(t=>{
+    const tr = document.createElement('tr');
+    const tierBadge = `<span class="tier-${t.tier}">${t.tier.toUpperCase()}</span>`;
+    tr.innerHTML = `
+      <td style="font-weight:600">${t.name}</td>
+      <td>${tierBadge}</td>
+      <td class="ev-total-cell">$${t.combinedEV}</td>
+      <td><div class="ev-bar-wrap"><div class="ev-bar-fill" style="width:${t.barPct}%"></div></div>${t.barPct}%</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--gold)">$${recSpot}</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:${t.verdictColor}">${t.buyVerdict}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Caption
+  const prodList = prods.map(p=>`📦 ${p.boxes}x ${p.data.name.replace('2025 Topps ','')}`).join('\n');
+  const hotTeams = teamRows.slice(0,5).map(t=>t.name.split(' ').slice(-1)[0]).join(', ');
+  document.getElementById('captionText').textContent = `🎲 MIXED BREAK — ${prods.length} PRODUCTS · ${spots} TEAM SPOTS!
+
+${prodList}
+
+💰 $${recSpot}/spot · Every team gets cards from ALL products!
+
+🔥 Hottest spots: ${hotTeams}
+🏆 Chase cards across ALL products:
+${prods.map(p=>`   ${p.data.name.replace('2025 Topps ','')}: ${p.data.topChase}`).join('\n')}
+
+Drop ❤️ to claim — let's rip!
+
+#CardBreaks #MixedBreak #NFLCards #Whatnot #ToppsFootball`;
+
+  document.getElementById('results').classList.remove('hidden');
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function copyCaption(){
+  navigator.clipboard.writeText(document.getElementById('captionText').textContent).then(()=>{
+    const b = document.querySelector('.copy-btn');
+    b.textContent = '✓ Copied!';
+    setTimeout(()=>b.textContent='Copy Caption', 2000);
+  });
+}
+
+// Init with Cosmic + Signature as defaults
+addProduct('cosmic', 640);
+addProduct('signature', 430);
+</script>
+</body>
+</html>

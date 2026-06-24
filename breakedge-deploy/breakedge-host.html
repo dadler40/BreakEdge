@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BreakEdge — Host Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A1628;--gold:#F5A623;--green:#32C864;--red:#FF6B6B;--purple:#6C3FC5;--teal:#00C9C9;--orange:#E85D04;--white:#fff;--muted:#6B7A99;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1)}
+body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;padding:16px}
+.wrap{max-width:900px;margin:0 auto}
+.header{text-align:center;padding:20px 0 12px}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;text-transform:uppercase}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.nav-link{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:3px}
+.nav-link.active{color:var(--green);border-color:var(--green)}
+
+/* MODE TABS */
+.mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:20px;border-radius:6px;overflow:hidden;border:1.5px solid var(--green)}
+.mode-tab{padding:12px;text-align:center;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;transition:all .15s;border:none;color:var(--muted);background:rgba(255,255,255,.03)}
+.mode-tab.active{background:var(--green);color:var(--navy)}
+.mode-tab:not(.active):hover{background:rgba(50,200,100,.08);color:var(--green)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--green);margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.fg label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:10px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--green)}
+.fg select option{background:#1a2a3a}
+.fg .hint{font-size:11px;color:var(--muted);margin-top:4px}
+.btn{width:100%;background:var(--green);color:var(--navy);border:none;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:4px}
+
+/* MARGIN SLIDER */
+.slider-wrap{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:14px}
+.slider-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.slider-row{display:flex;align-items:center;gap:10px}
+.slider-row input[type=range]{flex:1;accent-color:var(--green)}
+.slider-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--green);min-width:44px;text-align:right}
+.slider-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+
+/* RESULTS */
+.results-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.sbox{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;padding:14px 10px;text-align:center}
+.sbox.green{background:rgba(50,200,100,.1);border-color:var(--green)}
+.sbox.gold{background:rgba(245,166,35,.1);border-color:var(--gold)}
+.sbox.red{background:rgba(255,107,107,.1);border-color:var(--red)}
+.snum{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--green)}
+.sbox.gold .snum{color:var(--gold)}.sbox.red .snum{color:var(--red)}
+.slbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:4px}
+
+.verdict{border-radius:6px;padding:13px 16px;margin-bottom:14px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase}
+.verdict.run{background:rgba(50,200,100,.12);border:2px solid var(--green);color:var(--green)}
+.verdict.caution{background:rgba(245,166,35,.12);border:2px solid var(--gold);color:var(--gold)}
+.verdict.pass{background:rgba(255,107,107,.12);border:2px solid var(--red);color:var(--red)}
+
+.brow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.brow:last-child{border:none;padding-top:8px}
+.brow span{color:#8BAFC6}.brow strong{color:var(--white)}
+.brow.tot span{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:var(--white)}
+.brow.tot strong{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--gold)}
+
+/* SCENARIO TABLE */
+.scenario-table{width:100%;border-collapse:collapse}
+.scenario-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.scenario-table td{font-size:12px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04)}
+.scenario-table tr.rec td{background:rgba(50,200,100,.07)}
+.price-cell{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--gold)}
+.mg{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700}
+.mg-g{color:var(--green)}.mg-y{color:var(--gold)}.mg-r{color:var(--red)}
+.vg{color:var(--green);font-weight:700;font-size:12px}
+.vy{color:var(--gold);font-weight:700;font-size:12px}
+.vr{color:var(--red);font-weight:700;font-size:12px}
+
+/* TEAM EV GRID */
+.team-ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:8px}
+.tec{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:10px 12px}
+.tec.hot{border-color:var(--green);background:rgba(50,200,100,.06)}
+.tec.warm{border-color:var(--gold);background:rgba(245,166,35,.06)}
+.tec-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--white)}
+.tec-note{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4}
+.tec-tier{float:right;font-size:13px}
+
+/* PLAYER POOL */
+.pool-section{margin-bottom:14px}
+.tier-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:3px;display:inline-block;margin-bottom:8px}
+.ts{background:rgba(50,200,100,.2);color:var(--green)}
+.ta{background:rgba(245,166,35,.2);color:var(--gold)}
+.tb{background:rgba(108,63,197,.2);color:#A78BF5}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:12px;padding:3px 9px;border-radius:3px;border:1px solid var(--border);color:#D0DCF0}
+.chip.s{border-color:var(--green);color:var(--green);background:rgba(50,200,100,.08)}
+.chip.a{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.08)}
+.chip.rc{border-color:var(--purple);color:#A78BF5;background:rgba(108,63,197,.08)}
+
+/* CAPTION */
+.caption-box{background:rgba(50,200,100,.06);border:1px solid rgba(50,200,100,.2);border-radius:6px;padding:14px;margin-top:14px}
+.caption-box h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.caption-text{font-size:13px;color:#B0FFD0;line-height:1.7;white-space:pre-wrap}
+.copy-btn{background:var(--green);color:var(--navy);border:none;padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;border-radius:3px;cursor:pointer;margin-top:8px}
+
+.hidden{display:none}
+.footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.footer a{color:var(--green);text-decoration:none}
+@media(max-width:600px){.g2,.g3,.results-strip{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+  <div style="width:100%;max-width:900px;margin:0 auto 8px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a1628"/>
+      <stop offset="50%" style="stop-color:#0d1e35"/>
+      <stop offset="100%" style="stop-color:#0a1628"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8C00"/>
+      <stop offset="100%" style="stop-color:#E85D04"/>
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E0E0E0"/>
+      <stop offset="50%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#B0B0B0"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#E8850A"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="900" height="220" fill="url(#bgGrad)"/>
+
+  <!-- TOP + BOTTOM ORANGE BARS -->
+  <rect x="0" y="0" width="900" height="5" fill="#E85D04"/>
+  <rect x="0" y="215" width="900" height="5" fill="#E85D04"/>
+
+  <!-- CHEVRON PATTERN -->
+  <g opacity="0.05" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+    <polyline points="0,60 450,20 900,60"/>
+    <polyline points="0,90 450,45 900,90"/>
+    <polyline points="0,120 450,70 900,120"/>
+    <polyline points="0,150 450,95 900,150"/>
+    <polyline points="0,180 450,120 900,180"/>
+  </g>
+
+  <!-- LEFT ORANGE ACCENT BAR -->
+  <rect x="0" y="0" width="6" height="220" fill="#E85D04"/>
+
+  <!-- MINI SHIELD ICON (left side) -->
+  <g transform="translate(30, 25)">
+    <!-- Shield -->
+    <path d="M 80 8 L 148 32 L 148 98 Q 148 148 80 170 Q 12 148 12 98 L 12 32 Z"
+          fill="url(#orangeGrad)" filter="url(#shadow)"/>
+    <path d="M 80 20 L 136 40 L 136 97 Q 136 140 80 158 Q 24 140 24 97 L 24 40 Z"
+          fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+    <!-- Sword on shield -->
+    <rect x="77" y="15" width="6" height="130"
+          rx="2" fill="url(#silverGrad)"
+          transform="rotate(-30, 80, 80)" filter="url(#shadow)"/>
+    <rect x="55" y="76" width="52" height="8"
+          rx="3" fill="url(#silverGrad)"
+          transform="rotate(-30, 80, 80)"/>
+    <rect x="77" y="110" width="6" height="35"
+          rx="2" fill="#8B4513"
+          transform="rotate(-30, 80, 80)"/>
+    <!-- Lightning bolt -->
+    <polygon points="84,30 73,62 82,62 70,95 97,58 86,58 98,30"
+             fill="rgba(255,255,255,0.85)" filter="url(#glow)"/>
+    <!-- Banner -->
+    <path d="M 10 158 L 150 158 L 138 180 L 80 186 L 22 180 Z"
+          fill="#0d1e35" stroke="#E85D04" stroke-width="1.5"/>
+    <text x="80" y="176"
+          font-family="'Arial Black', Impact, sans-serif"
+          font-weight="900" font-size="20" letter-spacing="1"
+          text-anchor="middle" fill="url(#goldText)">BREAK</text>
+  </g>
+
+  <!-- MAIN TITLE -->
+  <!-- BREAK in white -->
+  <text x="220" y="128"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-weight="900"
+        font-size="100"
+        letter-spacing="-2"
+        fill="#FFFFFF"
+        filter="url(#shadow)">BREAK</text>
+
+  <!-- EDGE in orange/gold -->
+  <text x="572" y="128"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-weight="900"
+        font-size="100"
+        letter-spacing="-2"
+        fill="url(#goldText)"
+        filter="url(#glow)">EDGE</text>
+
+  <!-- TAGLINE -->
+  <text x="220" y="160"
+        font-family="Arial, sans-serif"
+        font-weight="700"
+        font-size="13"
+        letter-spacing="4"
+        fill="#6B8CAD">BREAK SMARTER · BID SHARPER · KNOW YOUR EDGE</text>
+
+  <!-- RIGHT ACCENT — three dots -->
+  <circle cx="858" cy="80" r="5" fill="#E85D04" opacity="0.9"/>
+  <circle cx="858" cy="110" r="5" fill="#E85D04" opacity="0.6"/>
+  <circle cx="858" cy="140" r="5" fill="#E85D04" opacity="0.3"/>
+
+  <!-- RIGHT BORDER -->
+  <rect x="894" y="0" width="6" height="220" fill="#E85D04"/>
+</svg>
+</div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#">Host</a>
+    <a class="nav-link" href="breakedge-buyer.html">Buyer</a>
+    <a class="nav-link" href="breakedge-compare.html">⚡ Compare</a>
+    <a class="nav-link" href="breakedge-mixed.html">🎲 Mixed</a>
+    <a class="nav-link" href="breakedge-live.html">🔴 Live</a>
+    <a class="nav-link" href="breakedge-nba.html">🏀 NBA</a>
+    <a class="nav-link" href="breakedge-research.html">Research</a>
+    <a class="nav-link" href="breakedge-backtest.html">Backtest</a>
+  </div>
+</div>
+
+<!-- MODE TABS -->
+<div class="mode-tabs">
+  <button class="mode-tab active" id="tab-team" onclick="setMode('team')">🏟️ Team Break</button>
+  <button class="mode-tab" id="tab-player" onclick="setMode('player')">🎯 Player Break</button>
+</div>
+
+<!-- TEAM BREAK INPUTS -->
+<div id="team-inputs">
+  <div class="card">
+    <div class="card-title">Team Break Setup</div>
+    <div class="g3">
+      <div class="fg"><label>Number of Boxes</label><input type="number" id="t-boxes" value="1" min="1" max="12"/></div>
+      <div class="fg"><label>Box Cost ($)</label><input type="number" id="t-boxcost" value="640" min="1"/><div class="hint">Cosmic Chrome Hobby = $640</div></div>
+      <div class="fg"><label>Format</label>
+        <select id="t-format">
+          <option value="32">32-Team Break</option>
+          <option value="64">Double Team (64 spots)</option>
+        </select>
+      </div>
+    </div>
+    <div class="g3">
+      <div class="fg"><label>Platform Fee %</label><input type="number" id="t-fee" value="10" min="0" max="30"/></div>
+      <div class="fg"><label>Shipping Per Spot ($)</label><input type="number" id="t-ship" value="8" min="0"/></div>
+      <div class="fg"><label>Spot Price ($)</label><input type="number" id="t-spot" value="30" min="1"/></div>
+    </div>
+    <div class="slider-wrap">
+      <div class="slider-title">Target Margin</div>
+      <div class="slider-row">
+        <span style="font-size:11px;color:var(--muted)">0%</span>
+        <input type="range" id="t-slider" min="0" max="40" value="20" oninput="document.getElementById('t-slval').textContent=this.value+'%'"/>
+        <span style="font-size:11px;color:var(--muted)">40%</span>
+        <div class="slider-val" id="t-slval">20%</div>
+      </div>
+      <div class="slider-labels"><span>Break-even</span><span>10%</span><span>Standard 20%</span><span>Healthy 30%</span><span>Premium 40%</span></div>
+    </div>
+    <button class="btn" onclick="calcTeam()">⚡ Calculate Team Break</button>
+  </div>
+</div>
+
+<!-- PLAYER BREAK INPUTS -->
+<div id="player-inputs" class="hidden">
+  <div class="card">
+    <div class="card-title">Player Break Setup</div>
+    <div class="g3">
+      <div class="fg"><label>Number of Boxes</label><input type="number" id="p-boxes" value="1" min="1" max="12"/></div>
+      <div class="fg"><label>Box Cost ($)</label><input type="number" id="p-boxcost" value="640" min="1"/></div>
+      <div class="fg"><label>Total Spots in Pool</label><input type="number" id="p-spots" value="50" min="2" max="200"/></div>
+    </div>
+    <div class="g3">
+      <div class="fg"><label>Platform Fee %</label><input type="number" id="p-fee" value="10" min="0" max="30"/></div>
+      <div class="fg"><label>Shipping Per Spot ($)</label><input type="number" id="p-ship" value="8" min="0"/></div>
+      <div class="fg"><label>Spot Price ($)</label><input type="number" id="p-spot" value="20" min="1"/></div>
+    </div>
+    <div class="slider-wrap">
+      <div class="slider-title">Target Margin</div>
+      <div class="slider-row">
+        <span style="font-size:11px;color:var(--muted)">0%</span>
+        <input type="range" id="p-slider" min="0" max="40" value="20" oninput="document.getElementById('p-slval').textContent=this.value+'%'"/>
+        <span style="font-size:11px;color:var(--muted)">40%</span>
+        <div class="slider-val" id="p-slval">20%</div>
+      </div>
+      <div class="slider-labels"><span>Break-even</span><span>10%</span><span>Standard 20%</span><span>Healthy 30%</span><span>Premium 40%</span></div>
+    </div>
+    <button class="btn" onclick="calcPlayer()">⚡ Calculate Player Break</button>
+  </div>
+</div>
+
+<!-- TEAM RESULTS -->
+<div id="team-results" class="hidden">
+  <div class="results-strip">
+    <div class="sbox gold"><div class="snum" id="tr-recspot">$0</div><div class="slbl">Rec. Spot Price</div></div>
+    <div class="sbox" id="tr-profitbox"><div class="snum" id="tr-profit">$0</div><div class="slbl">Net Profit</div></div>
+    <div class="sbox" id="tr-marginbox"><div class="snum" id="tr-margin">0%</div><div class="slbl">Margin</div></div>
+    <div class="sbox"><div class="snum" id="tr-be">$0</div><div class="slbl">Break-Even/Spot</div></div>
+  </div>
+  <div class="verdict" id="tr-verdict"></div>
+  <div class="card">
+    <div class="card-title">Cost Breakdown</div>
+    <div id="tr-breakdown"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Pricing Scenarios</div>
+    <div style="overflow-x:auto"><table class="scenario-table"><thead><tr><th>Price</th><th>Gross</th><th>Cost</th><th>Profit</th><th>Margin</th><th>Verdict</th></tr></thead><tbody id="tr-scen"></tbody></table></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Team EV Rankings — Where's the Value?</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">🟢 S-Tier &nbsp;🟡 A-Tier &nbsp;⬜ B-Tier</p>
+    <div class="team-ev-grid" id="tr-teamgrid"></div>
+  </div>
+  <div class="caption-box">
+    <h4>📱 Whatnot Caption</h4>
+    <div class="caption-text" id="tr-caption"></div>
+    <button class="copy-btn" onclick="copyIt('tr-caption',this)">Copy Caption</button>
+  </div>
+</div>
+
+<!-- PLAYER RESULTS -->
+<div id="player-results" class="hidden">
+  <div class="results-strip">
+    <div class="sbox gold"><div class="snum" id="pr-recspot">$0</div><div class="slbl">Rec. Spot Price</div></div>
+    <div class="sbox" id="pr-profitbox"><div class="snum" id="pr-profit">$0</div><div class="slbl">Net Profit</div></div>
+    <div class="sbox" id="pr-marginbox"><div class="snum" id="pr-margin">0%</div><div class="slbl">Margin</div></div>
+    <div class="sbox"><div class="snum" id="pr-be">$0</div><div class="slbl">Break-Even/Spot</div></div>
+  </div>
+  <div class="verdict" id="pr-verdict"></div>
+  <div class="card">
+    <div class="card-title">Cost Breakdown</div>
+    <div id="pr-breakdown"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Pricing Scenarios</div>
+    <div style="overflow-x:auto"><table class="scenario-table"><thead><tr><th>Price</th><th>Gross</th><th>Cost</th><th>Profit</th><th>Margin</th><th>Verdict</th></tr></thead><tbody id="pr-scen"></tbody></table></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Player Pool — Tier Reference</div>
+    <div class="pool-section">
+      <div class="tier-label ts">S-Tier — Premium Spots ($25-40)</div>
+      <div class="chips" style="margin-top:6px">
+        <span class="chip s">Cam Ward RC</span><span class="chip s">Ashton Jeanty RC</span><span class="chip s">Travis Hunter RC</span><span class="chip s">Jaxson Dart RC</span><span class="chip s">Tom Brady EQA</span><span class="chip s">Jerry Rice EQA</span><span class="chip s">Peyton Manning SFS</span><span class="chip s">Josh Allen EQA</span><span class="chip s">Patrick Mahomes EQA</span><span class="chip s">Emeka Egbuka RC</span><span class="chip s">Cam Skattebo RC</span><span class="chip s">Saquon Barkley EQA</span>
+      </div>
+    </div>
+    <div class="pool-section" style="margin-top:12px">
+      <div class="tier-label ta">A-Tier — Mid Spots ($12-24)</div>
+      <div class="chips" style="margin-top:6px">
+        <span class="chip a">Tetairoa McMillan RC</span><span class="chip a">Omarion Hampton RC</span><span class="chip a">TreVeyon Henderson RC</span><span class="chip a">Tyler Warren RC</span><span class="chip a">Shedeur Sanders RC</span><span class="chip a">Luther Burden III RC</span><span class="chip a">Caleb Williams</span><span class="chip a">Drake Maye</span><span class="chip a">Jayden Daniels</span><span class="chip a">George Kittle</span><span class="chip a">Jalen Hurts</span><span class="chip a">CJ Stroud</span>
+      </div>
+    </div>
+    <div class="pool-section" style="margin-top:12px">
+      <div class="tier-label tb">B-Tier — Value Spots ($5-11)</div>
+      <div class="chips" style="margin-top:6px">
+        <span class="chip rc">Matthew Golden RC</span><span class="chip rc">RJ Harvey RC</span><span class="chip rc">Mason Taylor RC</span><span class="chip rc">Kaleb Johnson RC</span><span class="chip rc">Tyler Shough RC</span><span class="chip rc">Dillon Gabriel RC</span><span class="chip rc">Jack Bech RC</span><span class="chip rc">Jaylin Lane RC</span><span class="chip">T.J. Watt</span><span class="chip">Myles Garrett</span><span class="chip">Travis Kelce</span>
+      </div>
+    </div>
+  </div>
+  <div class="caption-box">
+    <h4>📱 Player Break Caption</h4>
+    <div class="caption-text" id="pr-caption"></div>
+    <button class="copy-btn" onclick="copyIt('pr-caption',this)">Copy Caption</button>
+  </div>
+</div>
+
+<div class="footer">
+  <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--muted);line-height:1.6">⚠️ Margin calculations are based on your inputs only. Team EV rankings are relative estimates — not precise dollar values. Verify spot pricing against current market rates before going live.</div>
+  BreakEdge Beta 🚀 &nbsp;|&nbsp; <a href="mailto:adleranalyticsllc@gmail.com">adleranalyticsllc@gmail.com</a> &nbsp;|&nbsp; Founding rate: $49/mo
+</div>
+</div>
+
+<script>
+const TEAM_EV = [
+  {t:"Tennessee Titans",tier:"hot",note:"Cam Ward RC — ALL 4 auto sets + every insert"},
+  {t:"New York Giants",tier:"hot",note:"Jaxson Dart RC + Cam Skattebo RC + 4 RCs total"},
+  {t:"Tampa Bay Buccaneers",tier:"hot",note:"Emeka Egbuka RC all 4 sets + Tom Brady EQA"},
+  {t:"Buffalo Bills",tier:"hot",note:"Josh Allen EQA + 14 insert sets"},
+  {t:"Jacksonville Jaguars",tier:"hot",note:"Travis Hunter RC — most insert-stacked rookie"},
+  {t:"Kansas City Chiefs",tier:"hot",note:"Mahomes EQA + in every insert set"},
+  {t:"Las Vegas Raiders",tier:"hot",note:"Ashton Jeanty RC — every set (⚠️ market cooling)"},
+  {t:"San Francisco 49ers",tier:"hot",note:"Jerry Rice EQA + Joe Montana LY"},
+  {t:"Philadelphia Eagles",tier:"hot",note:"Hurts EQA + Saquon Barkley EQA — two on-card autos"},
+  {t:"New England Patriots",tier:"hot",note:"Tom Brady EQA + Drake Maye EQA + Rob Gronk LY"},
+  {t:"Chicago Bears",tier:"hot",note:"Caleb Williams EQA + 4 auto signers + Walter Payton LY"},
+  {t:"Cleveland Browns",tier:"hot",note:"Shedeur Sanders + Quinshon Judkins + Dillon Gabriel RCs"},
+  {t:"Los Angeles Chargers",tier:"warm",note:"Omarion Hampton RC + Justin Herbert EQA"},
+  {t:"Baltimore Ravens",tier:"warm",note:"Lamar Jackson 9 inserts + Derrick Henry EQA"},
+  {t:"Dallas Cowboys",tier:"warm",note:"Emmitt Smith EQA + 3 legend auto signers"},
+  {t:"Carolina Panthers",tier:"warm",note:"Tetairoa McMillan RC — 9 insert sets"},
+  {t:"Indianapolis Colts",tier:"warm",note:"Peyton Manning EQA + Tyler Warren RC 3 sets"},
+  {t:"Cincinnati Bengals",tier:"warm",note:"Joe Burrow SFS + Ja'Marr Chase deep inserts"},
+  {t:"Denver Broncos",tier:"warm",note:"Peyton Manning LY + John Elway LY — two legends"},
+  {t:"Detroit Lions",tier:"warm",note:"Barry Sanders SFS + Jahmyr Gibbs CCA"},
+  {t:"Green Bay Packers",tier:"warm",note:"Brett Favre SFS + Charles Woodson LY"},
+  {t:"Washington Commanders",tier:"warm",note:"Jayden Daniels EQA + Jaylin Lane RC dual signer"},
+  {t:"Minnesota Vikings",tier:"warm",note:"Justin Jefferson 10 inserts + Randy Moss LY"},
+  {t:"Pittsburgh Steelers",tier:"warm",note:"Aaron Rodgers SFS + Troy Polamalu LY"},
+  {t:"Houston Texans",tier:"warm",note:"CJ Stroud EQA + Jayden Higgins RC + Earl Campbell LY"},
+  {t:"Miami Dolphins",tier:"warm",note:"Dan Marino LY + De'Von Achane EQA"},
+  {t:"Arizona Cardinals",tier:"avg",note:"Trey McBride CCA + MHJ base"},
+  {t:"New Orleans Saints",tier:"avg",note:"Tyler Shough RC 3 sets + Chris Olave EQA"},
+  {t:"New York Jets",tier:"avg",note:"Breece Hall base + Mason Taylor RC + Darrelle Revis LY"},
+  {t:"Los Angeles Rams",tier:"avg",note:"Aaron Donald LY + Cooper Kupp SFS"},
+  {t:"Seattle Seahawks",tier:"avg",note:"JSN base + Cooper Kupp SFS + Jalen Milroe RC"},
+  {t:"Atlanta Falcons",tier:"avg",note:"Michael Penix Jr. EQA + Bijan Robinson base"},
+];
+
+let mode = 'team';
+
+function setMode(m){
+  mode = m;
+  document.getElementById('tab-team').className = 'mode-tab' + (m==='team'?' active':'');
+  document.getElementById('tab-player').className = 'mode-tab' + (m==='player'?' active':'');
+  document.getElementById('team-inputs').className = m==='team' ? '' : 'hidden';
+  document.getElementById('player-inputs').className = m==='player' ? '' : 'hidden';
+  document.getElementById('team-results').className = 'hidden';
+  document.getElementById('player-results').className = 'hidden';
+}
+
+function solveSpot(boxes, boxCost, spots, feePct, shipPer, targetMargin){
+  const fixed = boxes*boxCost + spots*shipPer;
+  const denom = 1 - feePct/100 - targetMargin/100;
+  return denom > 0.01 ? Math.ceil((fixed/denom)/spots) : Math.ceil(fixed/spots * 1.5);
+}
+
+function getMargin(spotPrice, boxes, boxCost, spots, feePct, shipPer){
+  const gross = spots*spotPrice;
+  const cost = boxes*boxCost + gross*(feePct/100) + spots*shipPer;
+  return {gross, cost, profit:gross-cost, margin:((gross-cost)/gross)*100};
+}
+
+function buildBreakdown(boxes, boxCost, spots, feePct, shipPer, spotPrice){
+  const {gross, cost, profit, margin} = getMargin(spotPrice, boxes, boxCost, spots, feePct, shipPer);
+  const fees = gross*(feePct/100);
+  return `
+    <div class="brow"><span>Box cost (${boxes}×$${boxCost})</span><strong>$${(boxes*boxCost).toLocaleString()}</strong></div>
+    <div class="brow"><span>Platform fees (${feePct}%)</span><strong>$${fees.toFixed(0)}</strong></div>
+    <div class="brow"><span>Shipping (${spots}×$${shipPer})</span><strong>$${(spots*shipPer).toFixed(0)}</strong></div>
+    <div class="brow"><span>Total cost</span><strong>$${cost.toFixed(0)}</strong></div>
+    <div class="brow"><span>Gross (${spots}×$${spotPrice})</span><strong>$${gross.toLocaleString()}</strong></div>
+    <div class="brow tot"><span>Net Profit</span><strong>${profit>=0?'+':''} $${Math.abs(profit).toFixed(0)} (${margin.toFixed(1)}%)</strong></div>
+  `;
+}
+
+function buildScenTable(boxes, boxCost, spots, feePct, shipPer, recSpot, tbodyId){
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = '';
+  const beFixed = boxes*boxCost + spots*shipPer;
+  const beSpot = Math.ceil(beFixed / (1 - feePct/100) / spots);
+  for(let p=Math.max(beSpot-1,1); p<=recSpot+8; p++){
+    const {gross,cost,profit,margin} = getMargin(p,boxes,boxCost,spots,feePct,shipPer);
+    const isRec = p===recSpot;
+    const mcls = margin>=20?'mg-g':margin>=10?'mg-y':'mg-r';
+    const vcls = margin<0?'vr':margin<10?'vr':margin<20?'vy':'vg';
+    const vtxt = margin<0?'❌ Loss':margin<10?'⚠️ Thin':margin<20?'⚡ Lean':margin<25?'✅ Good':'🚀 Strong';
+    const tr = document.createElement('tr');
+    if(isRec) tr.className='rec';
+    tr.innerHTML=`<td class="price-cell">${isRec?'→ ':''}$${p}${isRec?' ✓':''}</td><td>$${gross.toLocaleString()}</td><td>$${cost.toFixed(0)}</td><td style="color:${profit>=0?'var(--green)':'var(--red)'};font-weight:700">${profit>=0?'+':''} $${profit.toFixed(0)}</td><td class="mg ${mcls}">${margin.toFixed(1)}%</td><td class="${vcls}">${vtxt}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function setVerdict(el, margin){
+  if(margin>=20){el.className='verdict run';el.textContent=`✅ Run It — ${margin.toFixed(0)}% margin. Solid break.`;}
+  else if(margin>=10){el.className='verdict caution';el.textContent=`⚠️ Thin — ${margin.toFixed(0)}% margin. Consider raising spot price.`;}
+  else if(margin>=0){el.className='verdict caution';el.textContent=`⚠️ Marginal — barely breaking even. Raise price or cut costs.`;}
+  else{el.className='verdict pass';el.textContent=`❌ Losing money at this price. Raise spot price immediately.`;}
+}
+
+function calcTeam(){
+  const boxes=+document.getElementById('t-boxes').value||1;
+  const boxCost=+document.getElementById('t-boxcost').value||640;
+  const spots=+document.getElementById('t-format').value;
+  const feePct=+document.getElementById('t-fee').value||10;
+  const shipPer=+document.getElementById('t-ship').value||8;
+  const spotInput=+document.getElementById('t-spot').value||30;
+  const targetMargin=+document.getElementById('t-slider').value||20;
+
+  const recSpot = solveSpot(boxes,boxCost,spots,feePct,shipPer,targetMargin);
+  const {gross,cost,profit,margin} = getMargin(spotInput,boxes,boxCost,spots,feePct,shipPer);
+  const beFixed = boxes*boxCost + spots*shipPer;
+  const beSpot = Math.ceil(beFixed/(1-feePct/100)/spots);
+
+  document.getElementById('tr-recspot').textContent = '$'+recSpot;
+  document.getElementById('tr-profit').textContent = (profit>=0?'+':'')+' $'+Math.abs(profit).toFixed(0);
+  document.getElementById('tr-margin').textContent = margin.toFixed(1)+'%';
+  document.getElementById('tr-be').textContent = '$'+beSpot;
+
+  const pb=document.getElementById('tr-profitbox');
+  const mb=document.getElementById('tr-marginbox');
+  [pb,mb].forEach(b=>{b.className='sbox '+(margin>=20?'green':margin>=10?'gold':'red')});
+
+  setVerdict(document.getElementById('tr-verdict'), margin);
+  document.getElementById('tr-breakdown').innerHTML = buildBreakdown(boxes,boxCost,spots,feePct,shipPer,spotInput);
+  buildScenTable(boxes,boxCost,spots,feePct,shipPer,recSpot,'tr-scen');
+
+  // Team grid
+  const grid=document.getElementById('tr-teamgrid');
+  grid.innerHTML='';
+  TEAM_EV.forEach(t=>{
+    const d=document.createElement('div');
+    d.className='tec'+(t.tier==='hot'?' hot':t.tier==='warm'?' warm':'');
+    d.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline"><div class="tec-name">${t.t}</div><div class="tec-tier">${t.tier==='hot'?'🟢':t.tier==='warm'?'🟡':'⬜'}</div></div><div class="tec-note">${t.note}</div>`;
+    grid.appendChild(d);
+  });
+
+  const hotTeams=TEAM_EV.filter(t=>t.tier==='hot').slice(0,5).map(t=>t.t.split(' ').pop()).join(', ');
+  document.getElementById('tr-caption').textContent=`🚀 GOING LIVE — 2025 Topps Cosmic Chrome Football!\n\n📦 ${boxes} box${boxes>1?'es':''} | ${spots}-team break | $${spotInput}/spot\n🌌 First EVER Licensed Cosmic Chrome NFL Football\n\n🔥 Hot spots: ${hotTeams} + more\n\n Chase list:\n✍️ Cam Ward RC | Jaxson Dart RC | Travis Hunter RC | Ashton Jeanty RC\n🌟 Tom Brady EQA | Jerry Rice EQA | Josh Allen EQA | Patrick Mahomes EQA\n💫 Planetary Pursuit (10 variants) | SuperFractor 1/1 | Black Eclipse /10\n\nDrop ❤️ to claim — going fast!\n\n#CosmicChrome #TeamBreak #NFLCards #Whatnot #CardBreaks`;
+
+  document.getElementById('team-results').classList.remove('hidden');
+  document.getElementById('team-results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function calcPlayer(){
+  const boxes=+document.getElementById('p-boxes').value||1;
+  const boxCost=+document.getElementById('p-boxcost').value||640;
+  const spots=+document.getElementById('p-spots').value||50;
+  const feePct=+document.getElementById('p-fee').value||10;
+  const shipPer=+document.getElementById('p-ship').value||8;
+  const spotInput=+document.getElementById('p-spot').value||20;
+  const targetMargin=+document.getElementById('p-slider').value||20;
+
+  const recSpot = solveSpot(boxes,boxCost,spots,feePct,shipPer,targetMargin);
+  const {gross,cost,profit,margin} = getMargin(spotInput,boxes,boxCost,spots,feePct,shipPer);
+  const beFixed = boxes*boxCost + spots*shipPer;
+  const beSpot = Math.ceil(beFixed/(1-feePct/100)/spots);
+
+  document.getElementById('pr-recspot').textContent = '$'+recSpot;
+  document.getElementById('pr-profit').textContent = (profit>=0?'+':'')+' $'+Math.abs(profit).toFixed(0);
+  document.getElementById('pr-margin').textContent = margin.toFixed(1)+'%';
+  document.getElementById('pr-be').textContent = '$'+beSpot;
+
+  const pb=document.getElementById('pr-profitbox');
+  const mb=document.getElementById('pr-marginbox');
+  [pb,mb].forEach(b=>{b.className='sbox '+(margin>=20?'green':margin>=10?'gold':'red')});
+
+  setVerdict(document.getElementById('pr-verdict'), margin);
+  document.getElementById('pr-breakdown').innerHTML = buildBreakdown(boxes,boxCost,spots,feePct,shipPer,spotInput);
+  buildScenTable(boxes,boxCost,spots,feePct,shipPer,recSpot,'pr-scen');
+
+  document.getElementById('pr-caption').textContent=`🎯 PLAYER BREAK — 2025 Topps Cosmic Chrome Football!\n\n📦 ${boxes} box${boxes>1?'es':''} | ${spots} player spots | $${spotInput}/spot avg\n🌌 First EVER Licensed Cosmic Chrome NFL Football\n\n🌟 S-Tier spots: Cam Ward RC · Jaxson Dart RC · Travis Hunter RC · Josh Allen EQA · Tom Brady EQA\n💎 A-Tier spots: Caleb Williams · Drake Maye · Saquon Barkley EQA · Emeka Egbuka RC\n💸 Value spots from $5 — still chase Planetary Pursuit + inserts!\n\nDrop ❤️ to claim your player!\n\n#CosmicChrome #PlayerBreak #NFLCards #Whatnot #CardBreaks`;
+
+  document.getElementById('player-results').classList.remove('hidden');
+  document.getElementById('player-results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function copyIt(id, btn){
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{
+    btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='Copy Caption',2000);
+  });
+}
+</script>
+</body>
+</html>

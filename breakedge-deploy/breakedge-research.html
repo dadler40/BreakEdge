@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BreakEdge — Research</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A1628;--gold:#F5A623;--green:#32C864;--red:#FF6B6B;--purple:#6C3FC5;--teal:#00C9C9;--white:#fff;--muted:#6B7A99;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1)}
+body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;padding:20px}
+.wrap{max-width:900px;margin:0 auto}
+.header{text-align:center;padding:22px 0 16px}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;text-transform:uppercase}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.nav-link{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:3px}
+.nav-link.active{color:var(--gold);border-color:var(--gold)}
+
+/* TABS */
+.res-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-bottom:20px;border-radius:6px;overflow:hidden;border:1.5px solid var(--gold)}
+.res-tab{padding:11px;text-align:center;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;border:none;color:var(--muted);background:rgba(255,255,255,.03)}
+.res-tab.active{background:var(--gold);color:var(--navy)}
+.res-tab:not(.active):hover{background:rgba(245,166,35,.1);color:var(--gold)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px;margin-bottom:16px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.section{display:none}.section.active{display:block}
+
+/* METHODOLOGY STYLES */
+.step{display:flex;gap:14px;margin-bottom:18px;align-items:flex-start}
+.step-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--navy);background:var(--gold);width:28px;height:28px;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;text-transform:uppercase;color:var(--white);margin-bottom:4px}
+.step-body p{font-size:13px;color:#8BAFC6;line-height:1.65}
+.formula{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:6px;padding:14px;margin:12px 0;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--gold);text-align:center}
+.formula span{color:var(--white)}
+.mult-table{width:100%;border-collapse:collapse;margin-top:10px}
+.mult-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.mult-table td{font-size:13px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+.mult-table tr:last-child td{border:none}
+.mv{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--gold)}
+.anchor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:10px}
+.anchor-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:12px}
+.anp{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--white);margin-bottom:2px}
+.anc{font-size:11px;color:var(--muted);margin-bottom:6px}
+.anv{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--gold)}
+.ans{font-size:10px;color:rgba(255,255,255,.25);font-style:italic;margin-top:4px}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.insight{background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:4px;padding:14px}
+.insight h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.insight p{font-size:12px;color:#8BAFC6;line-height:1.6}
+/* interactive price builder */
+.pb-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.fg label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fg select{width:100%;padding:9px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--white);outline:none}
+.fg select:focus{border-color:var(--gold)}
+.fg select option{background:#1a2a3a}
+.pb-btn{width:100%;background:var(--gold);color:var(--navy);border:none;padding:11px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:8px}
+.pb-result{background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:6px;padding:14px;margin-top:12px;display:none}
+.pb-ev{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:var(--gold)}
+.pb-breakdown{font-size:12px;color:#8BAFC6;margin-top:6px;line-height:1.8}
+
+/* CLASS COMPS STYLES */
+.comp-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.comp-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:7px 10px;text-align:left;border-bottom:2px solid var(--border)}
+.comp-table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;vertical-align:top}
+.comp-table tr:hover td{background:rgba(255,255,255,.03)}
+.p25{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;color:var(--white)}
+.p24{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;color:var(--teal)}
+.tier-s{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;background:rgba(50,200,100,.2);color:var(--green)}
+.tier-a{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;background:rgba(245,166,35,.2);color:var(--gold)}
+.sale-num{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--gold)}
+.sale-card{font-size:10px;color:var(--muted);margin-top:1px}
+.cosm-ceil{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--purple)}
+.trend-up{color:var(--green);font-size:12px;font-weight:600}
+.trend-dn{color:var(--red);font-size:12px;font-weight:600}
+.trend-fl{color:var(--muted);font-size:12px;font-weight:600}
+.why-cell{font-size:11px;color:#8BAFC6;line-height:1.5}
+.cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:10px}
+.cal-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:12px}
+.cal-month{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:7px}
+.cal-event{font-size:11px;color:#D0DCF0;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05);line-height:1.4}
+.cal-event:last-child{border:none}
+.cal-event .evl{color:var(--gold);font-weight:600}
+.cal-event .evi{font-size:10px;color:var(--muted)}
+.ig2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+
+/* BACKTEST PREVIEW */
+.bt-mini{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:10px}
+.bt-mini h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.bt-mini p{font-size:12px;color:#8BAFC6;line-height:1.6}
+.bt-link{display:inline-block;margin-top:10px;background:rgba(245,166,35,.15);color:var(--gold);border:1px solid rgba(245,166,35,.3);padding:7px 16px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;text-decoration:none;letter-spacing:.06em}
+
+.footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.footer a{color:var(--gold);text-decoration:none}
+@media(max-width:600px){.res-tabs{grid-template-columns:1fr}.insight-grid,.ig2,.pb-row{grid-template-columns:1fr}.comp-table th:nth-child(3),.comp-table td:nth-child(3),.comp-table th:nth-child(5),.comp-table td:nth-child(5){display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+  <div style="width:100%;max-width:900px;margin:0 auto 8px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a1628"/>
+      <stop offset="50%" style="stop-color:#0d1e35"/>
+      <stop offset="100%" style="stop-color:#0a1628"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8C00"/>
+      <stop offset="100%" style="stop-color:#E85D04"/>
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E0E0E0"/>
+      <stop offset="50%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#B0B0B0"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#E8850A"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="900" height="220" fill="url(#bgGrad)"/>
+
+  <!-- TOP + BOTTOM ORANGE BARS -->
+  <rect x="0" y="0" width="900" height="5" fill="#E85D04"/>
+  <rect x="0" y="215" width="900" height="5" fill="#E85D04"/>
+
+  <!-- CHEVRON PATTERN -->
+  <g opacity="0.05" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+    <polyline points="0,60 450,20 900,60"/>
+    <polyline points="0,90 450,45 900,90"/>
+    <polyline points="0,120 450,70 900,120"/>
+    <polyline points="0,150 450,95 900,150"/>
+    <polyline points="0,180 450,120 900,180"/>
+  </g>
+
+  <!-- LEFT ORANGE ACCENT BAR -->
+  <rect x="0" y="0" width="6" height="220" fill="#E85D04"/>
+
+  <!-- MINI SHIELD ICON (left side) -->
+  <g transform="translate(30, 25)">
+    <!-- Shield -->
+    <path d="M 80 8 L 148 32 L 148 98 Q 148 148 80 170 Q 12 148 12 98 L 12 32 Z"
+          fill="url(#orangeGrad)" filter="url(#shadow)"/>
+    <path d="M 80 20 L 136 40 L 136 97 Q 136 140 80 158 Q 24 140 24 97 L 24 40 Z"
+          fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+    <!-- Sword on shield -->
+    <rect x="77" y="15" width="6" height="130"
+          rx="2" fill="url(#silverGrad)"
+          transform="rotate(-30, 80, 80)" filter="url(#shadow)"/>
+    <rect x="55" y="76" width="52" height="8"
+          rx="3" fill="url(#silverGrad)"
+          transform="rotate(-30, 80, 80)"/>
+    <rect x="77" y="110" width="6" height="35"
+          rx="2" fill="#8B4513"
+          transform="rotate(-30, 80, 80)"/>
+    <!-- Lightning bolt -->
+    <polygon points="84,30 73,62 82,62 70,95 97,58 86,58 98,30"
+             fill="rgba(255,255,255,0.85)" filter="url(#glow)"/>
+    <!-- Banner -->
+    <path d="M 10 158 L 150 158 L 138 180 L 80 186 L 22 180 Z"
+          fill="#0d1e35" stroke="#E85D04" stroke-width="1.5"/>
+    <text x="80" y="176"
+          font-family="'Arial Black', Impact, sans-serif"
+          font-weight="900" font-size="20" letter-spacing="1"
+          text-anchor="middle" fill="url(#goldText)">BREAK</text>
+  </g>
+
+  <!-- MAIN TITLE -->
+  <!-- BREAK in white -->
+  <text x="220" y="128"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-weight="900"
+        font-size="100"
+        letter-spacing="-2"
+        fill="#FFFFFF"
+        filter="url(#shadow)">BREAK</text>
+
+  <!-- EDGE in orange/gold -->
+  <text x="572" y="128"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-weight="900"
+        font-size="100"
+        letter-spacing="-2"
+        fill="url(#goldText)"
+        filter="url(#glow)">EDGE</text>
+
+  <!-- TAGLINE -->
+  <text x="220" y="160"
+        font-family="Arial, sans-serif"
+        font-weight="700"
+        font-size="13"
+        letter-spacing="4"
+        fill="#6B8CAD">BREAK SMARTER · BID SHARPER · KNOW YOUR EDGE</text>
+
+  <!-- RIGHT ACCENT — three dots -->
+  <circle cx="858" cy="80" r="5" fill="#E85D04" opacity="0.9"/>
+  <circle cx="858" cy="110" r="5" fill="#E85D04" opacity="0.6"/>
+  <circle cx="858" cy="140" r="5" fill="#E85D04" opacity="0.3"/>
+
+  <!-- RIGHT BORDER -->
+  <rect x="894" y="0" width="6" height="220" fill="#E85D04"/>
+</svg>
+</div>
+  <div class="nav-links">
+    <a class="nav-link" href="breakedge-host.html">Host</a>
+    <a class="nav-link" href="breakedge-buyer.html">Buyer</a>
+    <a class="nav-link" href="breakedge-compare.html">⚡ Compare</a>
+    <a class="nav-link" href="breakedge-mixed.html">🎲 Mixed</a>
+    <a class="nav-link" href="breakedge-live.html">🔴 Live</a>
+    <a class="nav-link" href="breakedge-nba.html">🏀 NBA</a>
+    <a class="nav-link active" href="#">Research</a>
+    <a class="nav-link" href="breakedge-backtest.html">Backtest</a>
+  </div>
+</div>
+
+<div class="res-tabs">
+  <button class="res-tab active" onclick="setTab('method')">📐 How We Price</button>
+  <button class="res-tab" onclick="setTab('comps')">📊 Class Comps</button>
+  <button class="res-tab" onclick="setTab('gaps')">⚠️ Known Gaps</button>
+</div>
+
+<!-- ══════ TAB 1: METHODOLOGY ══════ -->
+<div class="section active" id="tab-method">
+
+  <div class="card">
+    <div class="card-title">The Short Answer</div>
+    <p style="font-size:14px;color:#8BAFC6;line-height:1.75">Every EV and ceiling number starts with <strong style="color:var(--white)">three real data sources</strong>, then applies multipliers based on the player's situation. Not made-up numbers — but informed estimates where no Cosmic Chrome Football comps exist yet.</p>
+    <div class="insight-grid" style="margin-top:14px">
+      <div class="insight"><h4>Key Baseline</h4><p>Caleb Williams base Chrome auto = ~$303. Orange /25 = $1,200. Red /5 = $13,000. Ward and Dart should open above these on Cosmic hype, then settle similarly.</p></div>
+      <div class="insight"><h4>Cosmic Premium</h4><p>Cosmic Chrome = $640/box vs $350 Chrome. Lower print runs = higher parallel values. Expect Cosmic autos at roughly 1.5–2x equivalent Chrome parallel prices at release, compressing 60–90 days out.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Step 1 — Three Anchor Sources</div>
+    <div class="step">
+      <div class="step-num">A</div>
+      <div class="step-body"><h4>2025 Topps Chrome Football — Same Class, Different Product</h4><p>Chrome released April 2026 for the same rookie class. Real sold comps exist. Cam Ward Red /5 = $15,000. Dart Black Wave /10 = $14,000. Caleb Williams (2024 comp) base auto = ~$303. These set the floor — Cosmic is a premium product with lower print runs, so Cosmic autos should open above Chrome equivalents and compress over 60–90 days.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">B</div>
+      <div class="step-body"><h4>2025–26 Topps Cosmic Chrome Basketball — Same Product, Different Sport</h4><p>Same product structure, same insert sets, same rarity tiers. Wembanyama PP Pluto sold $39,100. Cooper Flagg Uranus PP sold $18,500. Flagg Orange /25 auto sold $9,487. These anchor ceiling estimates for football — adjusted ~15% down for NFL vs NBA market differences.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">C</div>
+      <div class="step-body"><h4>2024 Topps Cosmic Chrome Baseball — Same Product, Same Structure</h4><p>Skenes Black Eclipse /10 PSA10 = $6,800. Ohtani Orange /25 auto = $9,000. PP Pluto odds confirmed: 1:28,000 packs (1:233 hobby boxes). This is the cleanest same-product proxy we have — same set architecture, same rarity tiers, different sport.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">12 Verified Sales We Anchor Everything To</div>
+    <div class="anchor-grid">
+      <div class="anchor-card"><div class="anp">Cam Ward</div><div class="anc">Chrome Red Lava /5</div><div class="anv">$15,000</div><div class="ans">SI.com / Card Ladder · Apr 2026</div></div>
+      <div class="anchor-card"><div class="anp">Jaxson Dart</div><div class="anc">Chrome Black Wave /10</div><div class="anv">$14,000</div><div class="ans">SI.com / Card Ladder · Apr 2026</div></div>
+      <div class="anchor-card"><div class="anp">Caleb Williams (2024)</div><div class="anc">Chrome True Red /5</div><div class="anv">$13,000</div><div class="ans">SI.com · Apr 2026</div></div>
+      <div class="anchor-card"><div class="anp">Tom Brady</div><div class="anc">Chrome Kaiju PSA 10</div><div class="anv">$23,300</div><div class="ans">SI.com · Apr 2026</div></div>
+      <div class="anchor-card"><div class="anp">Caleb Williams (settled)</div><div class="anc">Chrome Base Auto</div><div class="anv">$303</div><div class="ans">Sports Card Investor · May 2026 (-29%)</div></div>
+      <div class="anchor-card"><div class="anp">Ashton Jeanty ⚠️</div><div class="anc">Chrome Pink /250</div><div class="anv">$96</div><div class="ans">Sports Card Investor · May 2026 (-68%)</div></div>
+      <div class="anchor-card"><div class="anp">Tetairoa McMillan</div><div class="anc">Chrome Blue /150</div><div class="anv">$270</div><div class="ans">Sports Card Investor · May 2026 (+3.8%)</div></div>
+      <div class="anchor-card"><div class="anp">Paul Skenes (Baseball)</div><div class="anc">Cosmic Black Eclipse /10 PSA10</div><div class="anv">$6,800</div><div class="ans">CardLines.com</div></div>
+      <div class="anchor-card"><div class="anp">Shohei Ohtani (Baseball)</div><div class="anc">Cosmic Orange /25</div><div class="anv">$9,000</div><div class="ans">CardLines.com</div></div>
+      <div class="anchor-card"><div class="anp">Skenes PP Earth (Baseball)</div><div class="anc">Cosmic PP raw</div><div class="anv">$595</div><div class="ans">Sports Card Investor</div></div>
+      <div class="anchor-card"><div class="anp">Cooper Flagg (NBA)</div><div class="anc">Cosmic Orange /25</div><div class="anv">$9,487</div><div class="ans">SI.com · May 2026</div></div>
+      <div class="anchor-card"><div class="anp">Wembanyama (NBA)</div><div class="anc">Cosmic PP Pluto</div><div class="anv">$39,100</div><div class="ans">SI.com · May 2026</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Step 2 — The Multipliers</div>
+    <table class="mult-table">
+      <thead><tr><th>Factor</th><th>Multiplier</th><th>Why</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Positional Weight</strong></td><td><div class="mv">QB 1.0x · TE 0.6x<br/>Legend 0.8x · WR 0.4x · RB 0.35x</div></td><td style="font-size:12px;color:#8BAFC6">NFL market pays a massive premium for QBs. RBs compress fastest. Validated by backtest.</td><td style="font-size:12px;color:#8BAFC6">Ward (QB) $15k vs Jeanty (RB) $96 on same-tier parallels</td></tr>
+        <tr><td><strong>Auto Set Count</strong></td><td><div class="mv">1.0x → 2.0x</div></td><td style="font-size:12px;color:#8BAFC6">More sets = more auction competition = higher floor</td><td style="font-size:12px;color:#8BAFC6">Ward all 4: 2.0x. Shedeur 2 sets: 1.1x</td></tr>
+        <tr><td><strong>Phase / Days Since Release</strong></td><td><div class="mv">Frenzy 1.3x · Compress 1.0x · Settled 0.8x</div></td><td style="font-size:12px;color:#8BAFC6">Opening week premiums confirmed by backtest. Jeanty -68% in 30d.</td><td style="font-size:12px;color:#8BAFC6">Day 1 values ~40% higher than Day 30</td></tr>
+        <tr><td><strong>PP Pluto Ceiling Adder</strong></td><td><div class="mv">+$3k–$40k depending on player</div></td><td style="font-size:12px;color:#8BAFC6">Pluto odds = 1:28,000 packs (1:233 boxes). Wemby Pluto = $39.1k.</td><td style="font-size:12px;color:#8BAFC6">Ward PP Pluto est. $6k–$16k. Allen PP est. $4k–$9k</td></tr>
+        <tr><td><strong>NFL vs NBA Discount</strong></td><td><div class="mv">0.75x–0.90x on NBA comps</div></td><td style="font-size:12px;color:#8BAFC6">NBA dominates high-end globally. NFL = bigger domestic but lower extreme ceiling.</td><td style="font-size:12px;color:#8BAFC6">Flagg Uranus $18.5k → Ward equiv est. $14–17k after discount</td></tr>
+        <tr><td><strong>Novelty Premium</strong></td><td><div class="mv">1.2x–1.5x first 30 days</div></td><td style="font-size:12px;color:#8BAFC6">First licensed NFL Cosmic ever. Opening week always trades above long-term value.</td><td style="font-size:12px;color:#8BAFC6">Chrome opened hot then fell 29–68% over 30 days</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Step 3 — Interactive Price Builder</div>
+    <p style="font-size:13px;color:#8BAFC6;margin-bottom:14px">Select a player tier and parallel — see how the methodology produces an estimate.</p>
+    <div class="pb-row">
+      <div class="fg"><label>Player Tier</label>
+        <select id="pb-tier">
+          <option value="38000">S-Tier QB (Ward / Dart)</option>
+          <option value="24000">S-Tier RC WR (Hunter / Egbuka)</option>
+          <option value="20000">S-Tier Vet QB (Allen / Mahomes)</option>
+          <option value="18000">S-Tier Legend (Brady / Rice)</option>
+          <option value="12000">A-Tier RC (McMillan / Hampton)</option>
+          <option value="8000">A-Tier Vet (Kittle / Maye)</option>
+          <option value="4000">B-Tier RC (Golden / Harvey)</option>
+        </select>
+      </div>
+      <div class="fg"><label>Parallel / Rarity</label>
+        <select id="pb-par">
+          <option value="1.0">SuperFractor 1/1</option>
+          <option value="0.25">Black Eclipse /10</option>
+          <option value="0.12">Orange Galactic /25</option>
+          <option value="0.05">Green Dust /75</option>
+          <option value="0.02">Base Auto</option>
+          <option value="0.08">PP Pluto</option>
+          <option value="0.04">PP Uranus</option>
+        </select>
+      </div>
+      <div class="fg"><label>Market Phase</label>
+        <select id="pb-phase">
+          <option value="1.3">🔥 Frenzy (Day 1–7)</option>
+          <option value="1.0">📉 Compression (Day 8–30)</option>
+          <option value="0.8">✅ Settled (Day 31+)</option>
+        </select>
+      </div>
+    </div>
+    <button class="pb-btn" onclick="buildPrice()">Build My Estimate</button>
+    <div class="pb-result" id="pb-result">
+      <div class="pb-ev" id="pb-ev">$0–$0</div>
+      <div class="pb-breakdown" id="pb-bd"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ TAB 2: CLASS COMPS ══════ -->
+<div class="section" id="tab-comps">
+
+  <div class="card">
+    <div class="card-title">How to Use This</div>
+    <p style="font-size:14px;color:#8BAFC6;line-height:1.75;margin-bottom:12px">Cosmic Chrome Football drops June 19, 2026 — no prior sales data exists. We compare the 2025 rookie class to the 2024 class in 2025 Topps Chrome Football using real verified sales to anchor ceiling estimates.</p>
+    <div class="ig2">
+      <div class="insight"><h4>Key Baseline</h4><p>Caleb Williams (#1 overall, 2024) base Chrome auto = ~$303 after a playoff year. Orange /25 stable at $1,200. Ward and Dart should open above these on Cosmic hype then settle similarly.</p></div>
+      <div class="insight"><h4>Cosmic Premium</h4><p>Cosmic is $640/box vs $350 Chrome. Lower print runs = higher values per parallel. Expect Cosmic autos to trade at 1.5–2x equivalent Chrome prices at release, then compress.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">2025 Class → 2024 Comp Table (Real Sales Data)</div>
+    <div style="overflow-x:auto">
+    <table class="comp-table">
+      <thead><tr><th>2025 Player</th><th>2024 Comp</th><th>2024 Chrome Sale</th><th>Cosmic Ceiling Est.</th><th>Trend</th><th>Why the Comp</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="p25">Cam Ward <span class="tier-s">S</span></div><div style="font-size:11px;color:var(--muted)">Tennessee · QB · #1 Overall</div></td>
+          <td><div class="p24">Caleb Williams</div><div style="font-size:11px;color:var(--muted)">#1 Overall · Chicago Bears</div></td>
+          <td><div class="sale-num">$15,000</div><div class="sale-card">Red Lava /5 · Apr 2026</div><div class="sale-num" style="margin-top:3px">$303</div><div class="sale-card">Base auto current</div></td>
+          <td><div class="cosm-ceil">$18k–32k</div><div style="font-size:10px;color:var(--muted)">EQA SuperFractor 1/1</div></td>
+          <td><span class="trend-up">↑ Rising</span></td>
+          <td class="why-cell">#1 overall QB, franchise cornerstone. Williams comp is direct. Cosmic premium offsets weaker Titans context vs Bears.</td>
+        </tr>
+        <tr>
+          <td><div class="p25">Jaxson Dart <span class="tier-s">S</span></div><div style="font-size:11px;color:var(--muted)">Giants · QB · #25 Overall</div></td>
+          <td><div class="p24">Jayden Daniels</div><div style="font-size:11px;color:var(--muted)">#2 Overall · Washington</div></td>
+          <td><div class="sale-num">$14,000</div><div class="sale-card">Black Wave /10 · Apr 2026</div><div class="sale-num" style="margin-top:3px">$13,100</div><div class="sale-card">Kaiju SSP · Apr 2026</div></td>
+          <td><div class="cosm-ceil">$14k–26k</div><div style="font-size:10px;color:var(--muted)">EQA SuperFractor 1/1</div></td>
+          <td><span class="trend-up">↑ Hot</span></td>
+          <td class="why-cell">Hobby darling, immediate starter, big market (NYC). Both instant starters who exceeded expectations as rookies.</td>
+        </tr>
+        <tr>
+          <td><div class="p25">Travis Hunter <span class="tier-s">S</span></div><div style="font-size:11px;color:var(--muted)">Jacksonville · WR/CB · #2</div></td>
+          <td><div class="p24">Marvin Harrison Jr.</div><div style="font-size:11px;color:var(--muted)">#4 Overall · Arizona</div></td>
+          <td><div class="sale-num">$800–1,500</div><div class="sale-card">Base Chrome auto range</div></td>
+          <td><div class="cosm-ceil">$10k–24k</div><div style="font-size:10px;color:var(--muted)">EQA SuperFractor 1/1</div></td>
+          <td><span class="trend-up">↑ Steady</span></td>
+          <td class="why-cell">Dual-threat (WR+CB) gives Hunter broader appeal than MHJ. Heisman winner energy. Better crossover comp than MHJ actually.</td>
+        </tr>
+        <tr>
+          <td><div class="p25">Emeka Egbuka <span class="tier-s">S</span></div><div style="font-size:11px;color:var(--muted)">Tampa Bay · WR · #33</div></td>
+          <td><div class="p24">Malik Nabers</div><div style="font-size:11px;color:var(--muted)">#6 Overall · New York Giants</div></td>
+          <td><div class="sale-num">$400–800</div><div class="sale-card">Base Chrome auto range</div></td>
+          <td><div class="cosm-ceil">$6k–14k</div><div style="font-size:10px;color:var(--muted)">EQA SuperFractor 1/1</div></td>
+          <td><span class="trend-fl">→ Stable</span></td>
+          <td class="why-cell">Elite WR in strong offensive system. Egbuka's 4 auto sets in Cosmic gives more ceiling than a pure WR comp suggests.</td>
+        </tr>
+        <tr>
+          <td><div class="p25">Ashton Jeanty <span class="tier-a">A</span></div><div style="font-size:11px;color:var(--muted)">Las Vegas · RB · #6</div></td>
+          <td><div class="p24">Bo Nix</div><div style="font-size:11px;color:var(--muted)">#12 Overall · Denver</div></td>
+          <td><div class="sale-num">$96 ⚠️</div><div class="sale-card">Pink /250 · down 68% in 30d</div></td>
+          <td><div class="cosm-ceil">$3k–14k</div><div style="font-size:10px;color:var(--muted)">Wide range · market cooling</div></td>
+          <td><span class="trend-dn">↓ Cooling</span></td>
+          <td class="why-cell">Chrome autos dropped 50–68% in May. RB market softens fastest. Sell into Cosmic opening frenzy — don't hold.</td>
+        </tr>
+        <tr>
+          <td><div class="p25">Tyler Warren <span class="tier-a">A</span></div><div style="font-size:11px;color:var(--muted)">Indianapolis · TE · #14</div></td>
+          <td><div class="p24">Brock Bowers</div><div style="font-size:11px;color:var(--muted)">#13 Overall · Las Vegas</div></td>
+          <td><div class="sale-num">$500–1,200</div><div class="sale-card">Chrome auto range · strong TE</div></td>
+          <td><div class="cosm-ceil">$3k–7k</div><div style="font-size:10px;color:var(--muted)">EQA SuperFractor 1/1</div></td>
+          <td><span class="trend-up">↑ Underrated</span></td>
+          <td class="why-cell">Bowers set TE rookie records. Warren has similar profile + 3 auto sets. Best value A-tier slot relative to spot price.</td>
+        </tr>
+        <tr>
+          <td><div class="p25">Shedeur Sanders <span class="tier-a">A</span></div><div style="font-size:11px;color:var(--muted)">Cleveland · QB · #5</div></td>
+          <td><div class="p24">Drake Maye</div><div style="font-size:11px;color:var(--muted)">#3 Overall · New England</div></td>
+          <td><div class="sale-num">$300–900</div><div class="sale-card">Chrome auto range · slow burn</div></td>
+          <td><div class="cosm-ceil">$5k–20k</div><div style="font-size:10px;color:var(--muted)">Wide range — starter dependent</div></td>
+          <td><span class="trend-fl">→ Watch</span></td>
+          <td class="why-cell">Both QBs with massive name recognition but uncertain immediate impact. Shedeur ceiling is huge if he starts — floor stays high regardless.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 NFL Hype Calendar — When Card Values Move</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px">Based on 2024 class pattern. Use to time when to buy or sell spots and holds.</p>
+    <div class="cal-grid">
+      <div class="cal-card"><div class="cal-month">June 2026</div><div class="cal-event"><span class="evl">June 19</span> — Cosmic Chrome drops<div class="evi">🔥 Buy window opens. First-week sales set ceiling comps.</div></div><div class="cal-event"><span class="evl">OTAs news</span><div class="evi">Affects Ward, Dart, Shedeur on depth chart clarity</div></div></div>
+      <div class="cal-card"><div class="cal-month">July 2026</div><div class="cal-event"><span class="evl">Training Camp</span><div class="evi">🔥 Biggest summer mover. Starters confirmed = value spike.</div></div><div class="cal-event"><span class="evl">Depth charts</span><div class="evi">Any QB controversy kills value instantly</div></div></div>
+      <div class="cal-card"><div class="cal-month">August 2026</div><div class="cal-event"><span class="evl">Preseason Games</span><div class="evi">Performance = short-term spikes. Don't buy preseason hype.</div></div><div class="cal-event"><span class="evl">53-Man Cuts</span><div class="evi">Surprise cuts kill value overnight. Watch WRs and RBs.</div></div></div>
+      <div class="cal-card"><div class="cal-month">Sept 2026</div><div class="cal-event"><span class="evl">Week 1 NFL</span><div class="evi">🔥🔥 Biggest catalyst of the year. Good game = 2–3x overnight.</div></div><div class="cal-event"><span class="evl">Prime time</span><div class="evi">Ward/Dart on MNF/SNF = buy before air time</div></div></div>
+      <div class="cal-card"><div class="cal-month">Oct–Nov</div><div class="cal-event"><span class="evl">Playoff Race</span><div class="evi">Teams in contention = sustained value. Watch TEN/NYG/CLE.</div></div><div class="cal-event"><span class="evl">Injury Risk</span><div class="evi">Peak injury season. QBs staying healthy = consistent gains.</div></div></div>
+      <div class="cal-card"><div class="cal-month">Jan 2027</div><div class="cal-event"><span class="evl">Playoffs</span><div class="evi">🔥🔥🔥 Rookie in playoffs = record sales. The ceiling catalyst.</div></div><div class="cal-event"><span class="evl">Super Bowl</span><div class="evi">Players in Super Bowl see 5–10x short-term spikes.</div></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Key Takeaways</div>
+    <div class="ig2">
+      <div class="insight"><h4>Best Time to Break Cosmic</h4><p>Opening weekend (June 19–22) and immediately after Week 1 NFL (September). First-week hype maximizes spot pricing power for hosts. After Week 1, strong performers spike — hosts can charge more for those team slots.</p></div>
+      <div class="insight"><h4>⚠️ The Jeanty Warning</h4><p>Jeanty Chrome autos dropped 68% in 30 days. RBs cool fast. If you pull a Jeanty Cosmic auto, sell into the Friday opening frenzy — don't hold waiting for the NFL season.</p></div>
+      <div class="insight"><h4>The Dart Opportunity</h4><p>Dart's market is hot and accelerating. Giants are big market, Harbaugh is elite, Dart exceeded expectations. His Cosmic EQA could be the best hold in the set if he starts fast in 2026.</p></div>
+      <div class="insight"><h4>The Sleeper Pick</h4><p>Tyler Warren (Colts TE). 3 auto sets, EQA on-card, strong landing spot. Brock Bowers comp is legitimate. Warren team spots are likely underpriced pre-Cosmic.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ TAB 3: KNOWN GAPS ══════ -->
+<div class="section" id="tab-gaps">
+  <div class="card">
+    <div class="card-title">What We Don't Know Yet</div>
+    <div class="ig2">
+      <div style="background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);border-radius:5px;padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--red);margin-bottom:8px">Missing Data</div>
+        <div style="font-size:12px;color:#8BAFC6;line-height:1.8">• Exact print runs for Cosmic Chrome Football autos<br/>• Published box odds from Topps<br/>• Real Cosmic Football sold comps (drops June 19)<br/>• Signature Class Football sold comps (released June 5 — 12 days old)<br/>• How many EQA autos per player actually exist</div>
+      </div>
+      <div style="background:rgba(50,200,100,.06);border:1px solid rgba(50,200,100,.2);border-radius:5px;padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--green);margin-bottom:8px">What We'll Update</div>
+        <div style="font-size:12px;color:#8BAFC6;line-height:1.8">• First week Cosmic Football sales (June 19–26)<br/>• Actual box odds when Topps publishes them<br/>• Signature Class Football sold comps<br/>• Training camp news (July) affecting player tiers<br/>• Week 1 NFL performance adjustments (Sept)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ Signature Class Football — No Real Comps Yet</div>
+    <p style="font-size:13px;color:#8BAFC6;line-height:1.7;margin-bottom:10px">2025 Topps Signature Class Football released June 5, 2026. Only 12 days old. No secondary market sold comps exist. Signature Class EVs in the Mixed Break tool use a <strong style="color:var(--white)">0.7x Chrome proxy</strong> based on: 2 autos/Hobby box vs Chrome's 1, Crystal Clear acetate format (premium but unproven resale), same rookie class but lower box cost ($430 vs $640). Update these numbers after real singles start selling on eBay.</p>
+  </div>
+
+  <div class="bt-mini">
+    <h4>📊 Backtest Results — How Accurate Is the Model?</h4>
+    <p>We ran the methodology against 30 verified 2025 Chrome Football and Cosmic Basketball sold prices. Result: ~78% hit+close rate. Positional weights validated. Phase compression confirmed. Two known failures: RB compression underestimated (68% actual vs 40% predicted) and new SSP formats (PREM1ERE patches) unpredictable pre-release.</p>
+    <a class="bt-link" href="breakedge-backtest.html">View Full Backtest →</a>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="card-title">Disclaimer</div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.7">⚠️ <strong style="color:rgba(255,255,255,.5)">Relative Value Engine — Not a Precise EV Calculator.</strong> All figures are derived from the methodology above using publicly available sales data. Positional weights applied: QB 1.0x · TE 0.6x · Legend 0.8x · WR 0.4x · RB 0.35x. Not financial advice. Always verify with current eBay sold listings before purchasing.</p>
+  </div>
+</div>
+
+<div class="footer">
+  BreakEdge Beta 🚀 &nbsp;|&nbsp; <a href="mailto:adleranalyticsllc@gmail.com">adleranalyticsllc@gmail.com</a> &nbsp;|&nbsp; Founding rate: $49/mo
+</div>
+</div>
+
+<script>
+function setTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.res-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function buildPrice(){
+  const base = +document.getElementById('pb-tier').value;
+  const par = +document.getElementById('pb-par').value;
+  const phase = +document.getElementById('pb-phase').value;
+  const tierLabel = document.getElementById('pb-tier').options[document.getElementById('pb-tier').selectedIndex].text;
+  const parLabel = document.getElementById('pb-par').options[document.getElementById('pb-par').selectedIndex].text;
+  const phaseLabel = document.getElementById('pb-phase').options[document.getElementById('pb-phase').selectedIndex].text;
+
+  const raw = base * par * phase;
+  const low = Math.round(raw * 0.70 / 100) * 100;
+  const high = Math.round(raw * 1.35 / 100) * 100;
+
+  document.getElementById('pb-result').style.display='block';
+  document.getElementById('pb-ev').textContent = '$'+low.toLocaleString()+' – $'+high.toLocaleString();
+  document.getElementById('pb-bd').innerHTML =
+    `<strong style="color:var(--white)">${tierLabel}</strong> · ${parLabel} · ${phaseLabel}<br/>
+    Base ceiling: $${base.toLocaleString()} × Parallel: ${par} × Phase: ${phase}<br/>
+    Raw: $${Math.round(raw).toLocaleString()} · Shown as ±30% range for auction variance<br/>
+    <span style="color:var(--red)">⚠️ Pre-release estimate. Update after first week of real Cosmic Football sales.</span>`;
+}
+</script>
+</body>
+</html>

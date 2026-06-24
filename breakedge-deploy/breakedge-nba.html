@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BreakEdge — NBA Basketball</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A1628;--gold:#F5A623;--green:#32C864;--red:#FF6B6B;--purple:#6C3FC5;--teal:#00C9C9;--orange:#E85D04;--white:#fff;--muted:#6B7A99;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1)}
+body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;padding:16px}
+.wrap{max-width:960px;margin:0 auto}
+.header{text-align:center;padding:16px 0 12px}
+.nav-links{display:flex;justify-content:center;gap:6px;margin-top:10px;flex-wrap:wrap}
+.nav-link{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--border);border-radius:3px}
+.nav-link.active{color:var(--gold);border-color:var(--gold)}
+.nav-link:hover:not(.active){color:var(--white);border-color:rgba(255,255,255,.3)}
+
+/* PRODUCT TABS */
+.prod-tabs{display:flex;gap:6px;margin:14px 0;flex-wrap:wrap}
+.prod-tab{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:8px 14px;border-radius:4px;border:1.5px solid var(--border);cursor:pointer;color:var(--muted);background:rgba(255,255,255,.03)}
+.prod-tab.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.prod-tab:not(.active):hover{border-color:var(--gold);color:var(--gold)}
+
+/* CONTROLS */
+.controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.ctrl-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:7px 14px;border-radius:4px;border:1px solid var(--border);cursor:pointer;color:var(--muted);background:rgba(255,255,255,.04)}
+.ctrl-btn.active{background:rgba(245,166,35,.15);color:var(--gold);border-color:var(--gold)}
+.box-input{display:flex;align-items:center;gap:8px;margin-left:auto}
+.box-input label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.06em}
+.box-input input{width:60px;padding:7px 10px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none;text-align:center}
+.box-input input:focus{border-color:var(--gold)}
+
+/* TEAM GRID */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px;margin-bottom:20px}
+.team-card{background:var(--card);border:1.5px solid var(--border);border-radius:7px;padding:13px 14px;cursor:pointer;transition:all .15s;position:relative}
+.team-card:hover{border-color:var(--gold);transform:translateY(-1px);background:rgba(245,166,35,.06)}
+.team-card.pp-team{border-color:rgba(108,63,197,.5)}
+.team-card.pp-team:hover{border-color:var(--purple);background:rgba(108,63,197,.08)}
+.team-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--white);margin-bottom:3px}
+.team-ev{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:var(--gold);line-height:1;margin-bottom:4px}
+.team-note{font-size:10px;color:var(--muted);line-height:1.5}
+.pp-badge{position:absolute;top:8px;right:10px;font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#A78BF5;letter-spacing:.04em}
+.tier-dot{position:absolute;bottom:8px;right:10px;width:8px;height:8px;border-radius:50%}
+.tier-s{background:var(--green)}
+.tier-a{background:var(--gold)}
+.tier-b{background:var(--muted)}
+
+/* EVALUATOR */
+.eval-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.fg label{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:9px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--gold)}
+.fg select option{background:#1a2a3a}
+.eval-btn{width:100%;background:var(--gold);color:var(--navy);border:none;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;border-radius:5px;cursor:pointer;margin-top:12px;letter-spacing:.08em}
+.eval-btn:hover{background:#FFD166}
+.result-box{display:none;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:16px;margin-top:14px}
+.result-box.show{display:block}
+.zones{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.zone{padding:12px;border-radius:5px;text-align:center}
+.zone-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.zone-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1}
+.zone-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:3px}
+.zone-deal{background:rgba(50,200,100,.1);border:2px solid var(--green)}
+.zone-deal .zone-label{color:var(--green)}
+.zone-deal .zone-val{color:var(--green)}
+.zone-fair{background:rgba(245,166,35,.08);border:2px solid var(--gold)}
+.zone-fair .zone-label{color:var(--gold)}
+.zone-fair .zone-val{color:var(--gold)}
+.zone-hard{background:rgba(255,107,107,.08);border:2px solid var(--red)}
+.zone-hard .zone-label{color:var(--red)}
+.zone-hard .zone-val{color:var(--red)}
+.verdict{padding:10px 14px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+.verdict.stash{background:rgba(50,200,100,.15);border:2px solid var(--green);color:var(--green)}
+.verdict.pass{background:rgba(255,107,107,.12);border:2px solid var(--red);color:var(--red)}
+
+/* MARKET DATA NOTE */
+.data-note{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:6px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#8BAFC6;line-height:1.6}
+
+/* PRODUCT INFO */
+.prod-info{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:14px}
+.prod-info h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:8px}
+.prod-info p{font-size:12px;color:#8BAFC6;line-height:1.65}
+.prod-stat{display:inline-block;background:rgba(0,201,201,.1);border:1px solid rgba(0,201,201,.2);border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--teal);padding:2px 8px;margin:3px 3px 0 0}
+
+footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+footer a{color:var(--gold);text-decoration:none}
+
+@media(max-width:600px){.g2,.g3,.zones{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}.prod-tabs{gap:4px}.prod-tab{font-size:11px;padding:7px 10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div style="width:100%;max-width:900px;margin:0 auto 8px">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="100%" style="display:block">
+      <defs>
+        <linearGradient id="bgG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#0a1628"/><stop offset="50%" style="stop-color:#0d1e35"/><stop offset="100%" style="stop-color:#0a1628"/></linearGradient>
+        <linearGradient id="oG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF8C00"/><stop offset="100%" style="stop-color:#E85D04"/></linearGradient>
+        <linearGradient id="sG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#E0E0E0"/><stop offset="50%" style="stop-color:#FFFFFF"/><stop offset="100%" style="stop-color:#B0B0B0"/></linearGradient>
+        <linearGradient id="gT" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#FFD700"/><stop offset="100%" style="stop-color:#E8850A"/></linearGradient>
+        <filter id="sh"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/></filter>
+        <filter id="gl"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="900" height="220" fill="url(#bgG)"/>
+      <rect x="0" y="0" width="900" height="5" fill="#E85D04"/>
+      <rect x="0" y="215" width="900" height="5" fill="#E85D04"/>
+      <g opacity="0.05" fill="none" stroke="#FFFFFF" stroke-width="1.5"><polyline points="0,60 450,20 900,60"/><polyline points="0,90 450,45 900,90"/><polyline points="0,120 450,70 900,120"/><polyline points="0,150 450,95 900,150"/><polyline points="0,180 450,120 900,180"/></g>
+      <rect x="0" y="0" width="6" height="220" fill="#E85D04"/>
+      <g transform="translate(30,25)">
+        <path d="M 80 8 L 148 32 L 148 98 Q 148 148 80 170 Q 12 148 12 98 L 12 32 Z" fill="url(#oG)" filter="url(#sh)"/>
+        <path d="M 80 20 L 136 40 L 136 97 Q 136 140 80 158 Q 24 140 24 97 L 24 40 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+        <rect x="77" y="15" width="6" height="130" rx="2" fill="url(#sG)" transform="rotate(-30,80,80)" filter="url(#sh)"/>
+        <rect x="55" y="76" width="52" height="8" rx="3" fill="url(#sG)" transform="rotate(-30,80,80)"/>
+        <rect x="77" y="110" width="6" height="35" rx="2" fill="#8B4513" transform="rotate(-30,80,80)"/>
+        <polygon points="84,30 73,62 82,62 70,95 97,58 86,58 98,30" fill="rgba(255,255,255,0.85)" filter="url(#gl)"/>
+        <path d="M 10 158 L 150 158 L 138 180 L 80 186 L 22 180 Z" fill="#0d1e35" stroke="#E85D04" stroke-width="1.5"/>
+        <text x="80" y="176" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="20" letter-spacing="1" text-anchor="middle" fill="url(#gT)">BREAK</text>
+      </g>
+      <text x="220" y="128" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="100" letter-spacing="-2" fill="#FFFFFF" filter="url(#sh)">BREAK</text>
+      <text x="572" y="128" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="100" letter-spacing="-2" fill="url(#gT)" filter="url(#gl)">EDGE</text>
+      <text x="220" y="160" font-family="Arial,sans-serif" font-weight="700" font-size="13" letter-spacing="4" fill="#6B8CAD">BREAK SMARTER · BID SHARPER · KNOW YOUR EDGE</text>
+      <circle cx="858" cy="80" r="5" fill="#E85D04" opacity="0.9"/>
+      <circle cx="858" cy="110" r="5" fill="#E85D04" opacity="0.6"/>
+      <circle cx="858" cy="140" r="5" fill="#E85D04" opacity="0.3"/>
+      <rect x="894" y="0" width="6" height="220" fill="#E85D04"/>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="breakedge-host.html">Host</a>
+    <a class="nav-link" href="breakedge-buyer.html">Buyer</a>
+    <a class="nav-link" href="breakedge-compare.html">⚡ Compare</a>
+    <a class="nav-link" href="breakedge-mixed.html">🎲 Mixed</a>
+    <a class="nav-link" href="breakedge-live.html">🔴 Live</a>
+    <a class="nav-link active" href="#">🏀 NBA</a>
+    <a class="nav-link" href="breakedge-research.html">Research</a>
+    <a class="nav-link" href="breakedge-backtest.html">Backtest</a>
+  </div>
+</div>
+
+<!-- PRODUCT TABS -->
+<div class="prod-tabs">
+  <button class="prod-tab active" onclick="setProduct('cosmic')">🌌 Cosmic Chrome</button>
+  <button class="prod-tab" onclick="setProduct('cactus')">🌵 Cactus Jack</button>
+  <button class="prod-tab" onclick="setProduct('signature')">✍️ Signature Class</button>
+  <button class="prod-tab" onclick="setProduct('bowman')">🟢 Bowman</button>
+  <button class="prod-tab" onclick="setProduct('sapphire')">💎 Bowman Sapphire</button>
+</div>
+
+<!-- PRODUCT INFO -->
+<div class="prod-info" id="prodInfo"></div>
+
+<!-- DATA NOTE -->
+<div class="data-note" id="dataNoteBox"></div>
+
+<!-- SLOT EVALUATOR -->
+<div class="eval-card">
+  <div class="card-title">Team Slot Evaluator</div>
+  <div class="g3">
+    <div class="fg">
+      <label>Team</label>
+      <select id="ev-team"></select>
+    </div>
+    <div class="fg">
+      <label>Price Asked ($)</label>
+      <input type="number" id="ev-price" placeholder="e.g. 400" min="1"/>
+    </div>
+    <div class="fg">
+      <label>Boxes in Break</label>
+      <input type="number" id="ev-boxes" value="12" min="1" max="24"/>
+    </div>
+  </div>
+  <button class="eval-btn" onclick="evaluate()">Evaluate This Slot →</button>
+  <div class="result-box" id="resultBox">
+    <div class="zones">
+      <div class="zone zone-deal"><div class="zone-label">🟢 Deal</div><div class="zone-val" id="rDeal">—</div><div class="zone-sub">Bid confidently</div></div>
+      <div class="zone zone-fair"><div class="zone-label">🟡 Fair</div><div class="zone-val" id="rFair">—</div><div class="zone-sub">At market</div></div>
+      <div class="zone zone-hard"><div class="zone-label">🔴 Hard No</div><div class="zone-val" id="rHard">—</div><div class="zone-sub">Let it go</div></div>
+    </div>
+    <div class="verdict" id="rVerdict"></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6" id="rNote"></div>
+  </div>
+</div>
+
+<!-- SORT CONTROLS -->
+<div class="controls">
+  <button class="ctrl-btn active" id="sort-ev" onclick="sortTeams('ev')">💰 Sort by Value</button>
+  <button class="ctrl-btn" id="sort-az" onclick="sortTeams('az')">🔤 Sort A–Z</button>
+  <div class="box-input">
+    <label>Boxes:</label>
+    <input type="number" id="box-count" value="12" min="1" max="24" oninput="renderGrid()"/>
+  </div>
+</div>
+
+<!-- TEAM GRID -->
+<div class="team-grid" id="teamGrid"></div>
+
+<footer>
+  BreakEdge Beta 🚀 · NBA Edition · <a href="mailto:adleranalyticsllc@gmail.com">adleranalyticsllc@gmail.com</a> · Calibrated from real PYT break data
+</footer>
+</div>
+
+<script>
+// ── PRODUCTS ──
+const PRODUCTS = {
+  cosmic: {
+    name: "2025-26 Topps Cosmic Chrome Basketball",
+    boxPrice: 850, // secondary market
+    caseBoxes: 8, // NBA Cosmic Chrome = 8 boxes per case (vs 12 for NFL)
+    autosPerCase: 2,
+    note: "Secondary market ~$850/box · FDI Dutch Auction sold at $1,550 · Same structure as NFL Cosmic Chrome · Planetary Pursuit, Galaxy Greats, Alien Autographs, Electro Static Signatures",
+    dataNote: "⚡ Calibrated from real break data + eBay sold comps + Finals-era market sentiment. SAS ranked #1: Wemby+Harper most sought after pairing during Finals. DAL #2: Flagg ROY. LAL gets 2 PP players (LeBron + Luka). CHA cooling post-Finals vs Wemby/Harper hype. GSW best confirmed card comp: Curry CCA $11,750 sold. NBA Cosmic = 8 boxes/case.",
+    confidence: "HIGH",
+    tags: ["PP", "Galaxy Greats", "Alien Autos", "ESS", "CCA"]
+  },
+  cactus: {
+    name: "2025-26 Topps Chrome × Cactus Jack Basketball",
+    boxPrice: 700,
+    caseBoxes: 12, // Chrome products = 12 boxes/case
+    autosPerCase: 2,
+    note: "Secondary market ~$700-750/box · Same rookie class as Cosmic · Base Autographs, Cactus Ink, La Flame Legends, Jacked Up, Utopia Highlights · Travis Scott collab premium",
+    dataNote: "⚡ Calibrated from real PYT break data — Break #1120 June 22, 2026 (2-box break confirmed). DAL > SAS > CHA > LAL > GSW hierarchy confirmed consistent with Cosmic. Note: 2-box break data; scale proportionally for larger breaks.",
+    confidence: "HIGH",
+    tags: ["Cactus Ink", "La Flame Legends", "Jacked Up", "Utopia Highlights"]
+  },
+  signature: {
+    name: "2025-26 Topps Signature Class Basketball",
+    boxPrice: 430,
+    caseBoxes: 12,
+    autosPerCase: 4,
+    note: "~$430/box secondary · 4 autos per hobby box vs Cosmic's case hit · Rookie Class Autographs, Crystal Clear Autos, Veteran Class, Leviathans, Monarchs · Case avg ~$234/slot (confirmed June 22)",
+    dataNote: "⚡ REAL DATA — Full hobby case June 22, 2026 (30-team confirmed). DAL $1,550 BEATS SAS $950 — Flagg dominates 1-on-1 auto products vs Cosmic where Wemby leads. CHA $550 very strong (Knueppel premium). BKN $115 surprisingly strong (Demin + RC depth). Total case ~$7,015 · ~$234 avg/slot.",
+    confidence: "HIGH",
+    tags: ["RCA", "CCA", "VCA", "Leviathans", "Crystal Clear"]
+  },
+  bowman: {
+    name: "2025-26 Bowman Basketball",
+    boxPrice: 250,
+    caseBoxes: 12,
+    autosPerCase: 3,
+    note: "~$250/box secondary · Prospect-heavy product · Chrome Autographs, Timeless Touch Signatures, Opening Statement, Bowman Dual Autos · NIL prospects included",
+    dataNote: "⚠️ No confirmed NBA Bowman PYT break data. Values estimated at 0.35x Cosmic Chrome comps based on box price ratio. Update after real break data.",
+    confidence: "LOW",
+    tags: ["Chrome Autos", "Timeless Touch", "Opening Statement", "NIL Prospects"]
+  },
+  sapphire: {
+    name: "2025-26 Bowman Sapphire Basketball",
+    boxPrice: 400,
+    caseBoxes: 12,
+    autosPerCase: 3,
+    note: "~$400/box secondary · Premium Bowman with Sapphire parallels · Same checklist as Bowman but premium stock · Sapphire Selections NBA/NIL Autographs",
+    dataNote: "⚠️ No confirmed Bowman Sapphire PYT break data. Values estimated at 0.50x Cosmic Chrome comps. Update after real break data.",
+    confidence: "LOW",
+    tags: ["Sapphire Selections", "Chrome Autos", "NIL Autos"]
+  }
+};
+
+// ── TEAM DATA ──
+// NBA Cosmic Chrome — REAL MARKET PRICES from Main Street Breaks #1112 (full 12-box case)
+// Scaled: ev = full case market price. Adjust by boxes/12 for smaller breaks.
+const NBA_TEAMS = {
+  cosmic: [
+    // EVs calibrated from 3 real break sources — Firehand 8-box case + Main Street + Texas Rips 1-box
+    // NBA Cosmic Chrome = 8 boxes per case (not 12 like NFL)
+    // EVs reflect settled market post-Finals — Wemby+Harper (SAS) most sought after
+    // Harper+Wemby on same team is the unique premium. Knueppel hype cooled vs Wemby/Harper.
+    {id:"SAS",name:"Spurs",ev:1499,tier:"s",pp:true,note:"Wembanyama + Dylan Harper · 2 RC autos + Gervin Alien · 💫 PP · Most sought after team Finals era"},
+    {id:"DAL",name:"Mavericks",ev:1299,tier:"s",pp:true,note:"Cooper Flagg CCA + ESS · Luka PP · 🔥 Flagg ROY — PP Neptune $12k ceiling"},
+    {id:"LAL",name:"Lakers",ev:699,tier:"s",pp:true,note:"LeBron James CCA + Bronny Alien · Luka PP Uranus · 💫 PP — 2 PP players on one team"},
+    {id:"GSW",name:"Warriors",ev:499,tier:"s",pp:true,note:"Stephen Curry CCA $11,750 confirmed · 💫 PP Earth — Curry auto is the best confirmed comp"},
+    {id:"CHA",name:"Hornets",ev:399,tier:"s",pp:true,note:"Kon Knueppel CCA + ESS · 💫 PP Sun · Market cooled post-Finals vs Wemby/Harper hype"},
+    {id:"OKC",name:"Thunder",ev:329,tier:"s",pp:true,note:"SGA CCA II + Chet Holmgren CCA · 💫 PP Mercury — SGA PP easiest planet pull"},
+    {id:"UTA",name:"Jazz",ev:225,tier:"s",pp:false,note:"Ace Bailey CCA + Walter Clayton Jr. · 10 autos · Underrated vs checklist depth"},
+    {id:"PHI",name:"76ers",ev:225,tier:"a",pp:false,note:"Allen Iverson Alien Auto · Heavy inserts · AI premium always holds"},
+    {id:"DEN",name:"Nuggets",ev:200,tier:"a",pp:false,note:"Nikola Jokic CCA II + Jamal Murray CCA · Jokic global premium"},
+    {id:"BOS",name:"Celtics",ev:165,tier:"s",pp:false,note:"Jayson Tatum CCA + Paul Pierce Alien + Larry Bird Galaxy Greats"},
+    {id:"MEM",name:"Grizzlies",ev:165,tier:"a",pp:false,note:"Cedric Coward CCA + Jaylen Wells Alien Auto"},
+    {id:"NOP",name:"Pelicans",ev:150,tier:"a",pp:false,note:"Derik Queen CCA + Yves Missi + CJ McCollum Alien"},
+    {id:"MIN",name:"Timberwolves",ev:100,tier:"a",pp:true,note:"Anthony Edwards CCA · DiVincenzo ESS · 💫 PP — ANT premium"},
+    {id:"MIL",name:"Bucks",ev:100,tier:"b",pp:true,note:"Giannis PP · 0 autos · Heavy inserts only · 💫 PP — no autos hurts value"},
+    {id:"BKN",name:"Nets",ev:115,tier:"a",pp:false,note:"Egor Demin Alien Auto + Danny Wolf + Ben Saraf · 10 autos total"},
+    {id:"DET",name:"Pistons",ev:100,tier:"a",pp:false,note:"Chaz Lanier CCA + Jerry Stackhouse Alien Auto"},
+    {id:"CHI",name:"Bulls",ev:100,tier:"b",pp:false,note:"Noa Essengue RC + Dennis Rodman Singularity"},
+    {id:"HOU",name:"Rockets",ev:100,tier:"a",pp:false,note:"Jalen Green CCA + Kevin Durant CCA"},
+    {id:"CLE",name:"Cavaliers",ev:100,tier:"a",pp:false,note:"Ty Jerome Alien + Tyrese Proctor Alien · 7 autos"},
+    {id:"TOR",name:"Raptors",ev:100,tier:"a",pp:false,note:"Collin Murray-Boyles CCA + ESS · 9 autos"},
+    {id:"IND",name:"Pacers",ev:65,tier:"a",pp:false,note:"Tyrese Haliburton CCA + Jalen Rose Alien"},
+    {id:"NYK",name:"Knicks",ev:65,tier:"a",pp:false,note:"Jalen Brunson CCA + Mikal Bridges Alien"},
+    {id:"ORL",name:"Magic",ev:65,tier:"s",pp:false,note:"Franz Wagner CCA + Penny Hardaway Alien · Undervalued at market"},
+    {id:"MIA",name:"Heat",ev:50,tier:"b",pp:false,note:"Kasparas Jakucionis RC + Kevin Love ESS"},
+    {id:"PHX",name:"Suns",ev:50,tier:"b",pp:false,note:"Khaman Maluach RC + Ryan Dunn Alien"},
+    {id:"POR",name:"Blazers",ev:50,tier:"b",pp:false,note:"Clyde Drexler Singularity + Yang Hansen CCA"},
+    {id:"WAS",name:"Wizards",ev:50,tier:"b",pp:false,note:"Will Riley CCA + Kyshawn George Alien"},
+    {id:"ATL",name:"Hawks",ev:40,tier:"b",pp:false,note:"Asa Newell RC + Dominique Wilkins Alien"},
+    {id:"LAC",name:"Clippers",ev:40,tier:"b",pp:false,note:"James Harden CCA + Yanic Konan-Niederhäuser"},
+    {id:"SAC",name:"Kings",ev:40,tier:"b",pp:false,note:"Jason Williams Alien + Peja Stojakovic Alien"},
+  ],
+  cactus: [
+    // ⚡ REAL DATA — Break #1120, June 22, 2026 (2-box break confirmed)
+    {id:"DAL",name:"Mavericks",ev:425,tier:"s",pp:false,note:"Cooper Flagg BV Auto + Cactus Ink · Flagg chase · ✅ Real: $425"},
+    {id:"SAS",name:"Spurs",ev:345,tier:"s",pp:false,note:"Dylan Harper BV Auto · Cactus Ink · Wemby La Flame Legends · ✅ Real: $345"},
+    {id:"CHA",name:"Hornets",ev:235,tier:"s",pp:false,note:"Kon Knueppel BV Auto + Cactus Ink · LaMelo Jacked Up · ✅ Real: $235"},
+    {id:"LAL",name:"Lakers",ev:185,tier:"s",pp:false,note:"LeBron La Flame Legends · Utopia Highlights · ✅ Real: $185"},
+    {id:"GSW",name:"Warriors",ev:135,tier:"s",pp:false,note:"Steph Curry BV Auto · Jacked Up · ✅ Real: $135"},
+    {id:"UTA",name:"Jazz",ev:100,tier:"a",pp:false,note:"Ace Bailey BV Auto + Cactus Ink · ✅ Real: $100"},
+    {id:"PHI",name:"76ers",ev:100,tier:"a",pp:false,note:"Allen Iverson La Flame Legends · Jacked Up · ✅ Real: $100"},
+    {id:"BOS",name:"Celtics",ev:90,tier:"a",pp:false,note:"Tatum BV Auto + Larry Bird La Flame Legends · ✅ Real: $90"},
+    {id:"OKC",name:"Thunder",ev:90,tier:"a",pp:false,note:"SGA BV Auto · Chet Holmgren · Jacked Up · ✅ Real: $90"},
+    {id:"DEN",name:"Nuggets",ev:85,tier:"a",pp:false,note:"Jokic BV Auto · Murray Cactus Ink · ✅ Real: $85"},
+    {id:"MEM",name:"Grizzlies",ev:70,tier:"a",pp:false,note:"Cedric Coward BV Auto · ✅ Real: $70"},
+    {id:"NOP",name:"Pelicans",ev:65,tier:"a",pp:false,note:"Derik Queen BV Auto · ✅ Real: $65"},
+    {id:"BKN",name:"Nets",ev:50,tier:"a",pp:false,note:"Egor Demin BV Auto + 5 RC autos · ✅ Real: $50"},
+    {id:"DET",name:"Pistons",ev:50,tier:"a",pp:false,note:"Chaz Lanier BV Auto · ✅ Real: $50"},
+    {id:"CHI",name:"Bulls",ev:40,tier:"b",pp:false,note:"Noa Essengue BV Auto · ✅ Real: $40"},
+    {id:"MIL",name:"Bucks",ev:40,tier:"b",pp:false,note:"Giannis Jacked Up · Antetokounmpo La Flame Legends · ✅ Real: $40"},
+    {id:"MIN",name:"Timberwolves",ev:40,tier:"a",pp:false,note:"Anthony Edwards BV Auto · ✅ Real: $40"},
+    {id:"HOU",name:"Rockets",ev:40,tier:"a",pp:false,note:"Jalen Green BV Auto · ✅ Real: $40"},
+    {id:"CLE",name:"Cavaliers",ev:40,tier:"a",pp:false,note:"Donovan Mitchell Jacked Up · ✅ Real: $40"},
+    {id:"TOR",name:"Raptors",ev:40,tier:"a",pp:false,note:"Collin Murray-Boyles BV Auto · ✅ Real: $40"},
+    {id:"IND",name:"Pacers",ev:40,tier:"b",pp:false,note:"Haliburton BV Auto · ✅ Real: $40"},
+    {id:"ORL",name:"Magic",ev:30,tier:"b",pp:false,note:"Franz Wagner BV Auto · ✅ Real: $30"},
+    {id:"NYK",name:"Knicks",ev:25,tier:"b",pp:false,note:"Brunson BV Auto · ✅ Real: $25"},
+    {id:"WAS",name:"Wizards",ev:25,tier:"b",pp:false,note:"Will Riley BV Auto · ✅ Real: $25"},
+    {id:"MIA",name:"Heat",ev:25,tier:"b",pp:false,note:"Jakucionis BV Auto · ✅ Real: $25"},
+    {id:"PHX",name:"Suns",ev:25,tier:"b",pp:false,note:"Khaman Maluach BV Auto · ✅ Real: $25"},
+    {id:"POR",name:"Blazers",ev:25,tier:"b",pp:false,note:"Drexler La Flame Legends · ✅ Real: $25"},
+    {id:"ATL",name:"Hawks",ev:20,tier:"b",pp:false,note:"Asa Newell BV Auto · ✅ Real: $20"},
+    {id:"LAC",name:"Clippers",ev:20,tier:"b",pp:false,note:"Harden BV Auto · ✅ Real: $20"},
+    {id:"SAC",name:"Kings",ev:20,tier:"b",pp:false,note:"Jason Williams La Flame Legends · ✅ Real: $20"},
+  ],
+  signature: [
+    // ⚡ REAL DATA — Full hobby case June 22, 2026 (30-team confirmed) · DAL>SAS in Signature Class!
+    {id:"DAL",name:"Mavericks",ev:1550,tier:"s",pp:false,note:"Cooper Flagg RCA + CCA · Crystal Clear Auto · ✅ Real: $1,550 — Flagg #1 in Sig Class (beats Wemby!)"},
+    {id:"SAS",name:"Spurs",ev:950,tier:"s",pp:false,note:"Dylan Harper RCA + CCA · Leviathan · ✅ Real: $950"},
+    {id:"CHA",name:"Hornets",ev:550,tier:"s",pp:false,note:"Kon Knueppel RCA + CCA · 3 auto sets · ✅ Real: $550 (very strong)"},
+    {id:"LAL",name:"Lakers",ev:450,tier:"s",pp:false,note:"LeBron Veteran Class Auto · Multiple signers · ✅ Real: $450"},
+    {id:"GSW",name:"Warriors",ev:350,tier:"a",pp:false,note:"Curry VCA · Steph veteran auto · ✅ Real: $350"},
+    {id:"OKC",name:"Thunder",ev:350,tier:"a",pp:false,note:"SGA VCA · Chet veteran auto · ✅ Real: $350"},
+    {id:"UTA",name:"Jazz",ev:230,tier:"a",pp:false,note:"Ace Bailey RCA + CCA · 3 sets · ✅ Real: $230"},
+    {id:"PHI",name:"76ers",ev:140,tier:"a",pp:false,note:"VJ Edgecombe RC + VCA signers · ✅ Real: $140"},
+    {id:"NOP",name:"Pelicans",ev:130,tier:"a",pp:false,note:"Jeremiah Fears RCA + Derik Queen · ✅ Real: $130"},
+    {id:"NYK",name:"Knicks",ev:130,tier:"a",pp:false,note:"Brunson VCA · ✅ Real: $130"},
+    {id:"MEM",name:"Grizzlies",ev:120,tier:"a",pp:false,note:"Cedric Coward RCA · ✅ Real: $120"},
+    {id:"BKN",name:"Nets",ev:115,tier:"a",pp:false,note:"Egor Demin RCA + multiple RCs · ✅ Real: $115 (surprisingly strong)"},
+    {id:"MIN",name:"Timberwolves",ev:105,tier:"a",pp:false,note:"Anthony Edwards VCA · ✅ Real: $105"},
+    {id:"MIL",name:"Bucks",ev:95,tier:"b",pp:false,note:"Giannis VCA · ✅ Real: $95"},
+    {id:"BOS",name:"Celtics",ev:95,tier:"a",pp:false,note:"Tatum VCA + Horford VCA · ✅ Real: $95"},
+    {id:"DEN",name:"Nuggets",ev:95,tier:"a",pp:false,note:"Jokic VCA · Murray VCA · ✅ Real: $95"},
+    {id:"SAC",name:"Kings",ev:90,tier:"b",pp:false,note:"Nique Clifford VCA · ✅ Real: $90"},
+    {id:"DET",name:"Pistons",ev:75,tier:"b",pp:false,note:"Chaz Lanier RCA · ✅ Real: $75"},
+    {id:"HOU",name:"Rockets",ev:75,tier:"a",pp:false,note:"Jalen Green VCA + Tre Johnson RCA · ✅ Real: $75"},
+    {id:"IND",name:"Pacers",ev:70,tier:"b",pp:false,note:"Haliburton VCA · ✅ Real: $70"},
+    {id:"CLE",name:"Cavaliers",ev:60,tier:"a",pp:false,note:"Mitchell VCA · Multiple signers · ✅ Real: $60"},
+    {id:"ORL",name:"Magic",ev:60,tier:"a",pp:false,note:"Franz Wagner VCA · ✅ Real: $60"},
+    {id:"WAS",name:"Wizards",ev:60,tier:"b",pp:false,note:"Will Riley + Tre Johnson RCA · ✅ Real: $60"},
+    {id:"CHI",name:"Bulls",ev:45,tier:"b",pp:false,note:"Noa Essengue RCA · ✅ Real: $45"},
+    {id:"MIA",name:"Heat",ev:50,tier:"b",pp:false,note:"Jakucionis RCA · ✅ Real: $50"},
+    {id:"TOR",name:"Raptors",ev:50,tier:"a",pp:false,note:"Collin Murray-Boyles RCA + CCA · ✅ Real: $50"},
+    {id:"POR",name:"Blazers",ev:50,tier:"b",pp:false,note:"Yang Hansen RCA · ✅ Real: $50"},
+    {id:"PHX",name:"Suns",ev:40,tier:"b",pp:false,note:"Maluach RCA · ✅ Real: $40"},
+    {id:"ATL",name:"Hawks",ev:40,tier:"b",pp:false,note:"Asa Newell RCA · ✅ Real: $40"},
+    {id:"LAC",name:"Clippers",ev:40,tier:"b",pp:false,note:"Harden VCA · ✅ Real: $40"},
+  ],
+  bowman: [
+    {id:"DAL",name:"Mavericks",ev:140,tier:"s",pp:false,note:"Cooper Flagg Chrome Auto + RC base · Top rookie"},
+    {id:"SAS",name:"Spurs",ev:114,tier:"s",pp:false,note:"Dylan Harper Chrome Auto · Multiple prospect RC"},
+    {id:"LAL",name:"Lakers",ev:61,tier:"s",pp:false,note:"LeBron Chrome Auto · Adou Thiero RC"},
+    {id:"CHA",name:"Hornets",ev:58,tier:"s",pp:false,note:"Kon Knueppel Chrome Auto · LaMelo base"},
+    {id:"GSW",name:"Warriors",ev:46,tier:"a",pp:false,note:"Steph Curry Chrome Auto"},
+    {id:"UTA",name:"Jazz",ev:32,tier:"a",pp:false,note:"Ace Bailey Chrome Auto + base RC"},
+    {id:"PHI",name:"76ers",ev:32,tier:"a",pp:false,note:"VJ Edgecombe Chrome Auto"},
+    {id:"OKC",name:"Thunder",ev:30,tier:"a",pp:false,note:"SGA Chrome Auto"},
+    {id:"DEN",name:"Nuggets",ev:28,tier:"a",pp:false,note:"Jokic Chrome Auto"},
+    {id:"BOS",name:"Celtics",ev:23,tier:"a",pp:false,note:"Tatum Chrome Auto + Hugo Gonzalez RC"},
+    {id:"MEM",name:"Grizzlies",ev:23,tier:"a",pp:false,note:"Cedric Coward Chrome Auto"},
+    {id:"NOP",name:"Pelicans",ev:21,tier:"a",pp:false,note:"Jeremiah Fears Chrome Auto + Derik Queen"},
+    {id:"BKN",name:"Nets",ev:16,tier:"a",pp:false,note:"Egor Demin Chrome Auto + 5 RC autos"},
+    {id:"DET",name:"Pistons",ev:14,tier:"b",pp:false,note:"Chaz Lanier Chrome Auto"},
+    {id:"CHI",name:"Bulls",ev:14,tier:"b",pp:false,note:"Noa Essengue Chrome Auto"},
+    {id:"MIL",name:"Bucks",ev:14,tier:"b",pp:false,note:"Giannis Chrome Auto"},
+    {id:"MIN",name:"Timberwolves",ev:14,tier:"a",pp:false,note:"Anthony Edwards Chrome Auto"},
+    {id:"HOU",name:"Rockets",ev:14,tier:"a",pp:false,note:"Jalen Green Chrome Auto"},
+    {id:"CLE",name:"Cavaliers",ev:14,tier:"a",pp:false,note:"Chrome Autos × 2"},
+    {id:"TOR",name:"Raptors",ev:14,tier:"a",pp:false,note:"Collin Murray-Boyles Chrome Auto"},
+    {id:"IND",name:"Pacers",ev:9,tier:"b",pp:false,note:"Haliburton Chrome Auto"},
+    {id:"NYK",name:"Knicks",ev:9,tier:"b",pp:false,note:"Brunson Chrome Auto"},
+    {id:"ORL",name:"Magic",ev:9,tier:"a",pp:false,note:"Franz Wagner Chrome Auto"},
+    {id:"MIA",name:"Heat",ev:7,tier:"b",pp:false,note:"Jakucionis Chrome Auto"},
+    {id:"PHX",name:"Suns",ev:7,tier:"b",pp:false,note:"Maluach Chrome Auto"},
+    {id:"POR",name:"Blazers",ev:7,tier:"b",pp:false,note:"Yang Hansen Chrome Auto"},
+    {id:"WAS",name:"Wizards",ev:7,tier:"b",pp:false,note:"Will Riley Chrome Auto"},
+    {id:"ATL",name:"Hawks",ev:5,tier:"b",pp:false,note:"Asa Newell Chrome Auto"},
+    {id:"LAC",name:"Clippers",ev:5,tier:"b",pp:false,note:"Harden Chrome Auto"},
+    {id:"SAC",name:"Kings",ev:5,tier:"b",pp:false,note:"Clifford Chrome Auto"},
+  ],
+  sapphire: [
+    {id:"DAL",name:"Mavericks",ev:200,tier:"s",pp:false,note:"Cooper Flagg Sapphire Chrome Auto · Top RC · Premium stock"},
+    {id:"SAS",name:"Spurs",ev:163,tier:"s",pp:false,note:"Dylan Harper Sapphire Chrome Auto · Sapphire Selections NBA"},
+    {id:"LAL",name:"Lakers",ev:88,tier:"s",pp:false,note:"LeBron Sapphire Selections NBA · Premium finish"},
+    {id:"CHA",name:"Hornets",ev:83,tier:"s",pp:false,note:"Kon Knueppel Sapphire Chrome Auto · Sapphire premium"},
+    {id:"GSW",name:"Warriors",ev:65,tier:"a",pp:false,note:"Curry Sapphire Selections NBA · Premium stock"},
+    {id:"UTA",name:"Jazz",ev:45,tier:"a",pp:false,note:"Ace Bailey Sapphire Chrome Auto"},
+    {id:"PHI",name:"76ers",ev:45,tier:"a",pp:false,note:"VJ Edgecombe Sapphire Chrome Auto"},
+    {id:"OKC",name:"Thunder",ev:43,tier:"a",pp:false,note:"SGA Sapphire Selections NBA"},
+    {id:"DEN",name:"Nuggets",ev:40,tier:"a",pp:false,note:"Jokic Sapphire Selections NBA"},
+    {id:"BOS",name:"Celtics",ev:33,tier:"a",pp:false,note:"Tatum Sapphire Selections NBA · Horford Chrome Auto"},
+    {id:"MEM",name:"Grizzlies",ev:33,tier:"a",pp:false,note:"Cedric Coward Sapphire Chrome Auto"},
+    {id:"NOP",name:"Pelicans",ev:30,tier:"a",pp:false,note:"Jeremiah Fears + Derik Queen Sapphire Autos"},
+    {id:"BKN",name:"Nets",ev:23,tier:"a",pp:false,note:"Egor Demin + 4 RC Sapphire Autos"},
+    {id:"DET",name:"Pistons",ev:20,tier:"b",pp:false,note:"Chaz Lanier Sapphire Chrome Auto"},
+    {id:"CHI",name:"Bulls",ev:20,tier:"b",pp:false,note:"Noa Essengue Sapphire Chrome Auto"},
+    {id:"MIL",name:"Bucks",ev:20,tier:"b",pp:false,note:"Giannis Sapphire Chrome Auto"},
+    {id:"MIN",name:"Timberwolves",ev:20,tier:"a",pp:false,note:"Edwards Sapphire Chrome Auto"},
+    {id:"HOU",name:"Rockets",ev:20,tier:"a",pp:false,note:"Jalen Green Sapphire Auto"},
+    {id:"CLE",name:"Cavaliers",ev:20,tier:"a",pp:false,note:"Chrome Autos × 2"},
+    {id:"TOR",name:"Raptors",ev:20,tier:"a",pp:false,note:"Collin Murray-Boyles Sapphire Auto"},
+    {id:"IND",name:"Pacers",ev:13,tier:"b",pp:false,note:"Haliburton Sapphire Auto"},
+    {id:"NYK",name:"Knicks",ev:13,tier:"b",pp:false,note:"Brunson Sapphire Auto"},
+    {id:"ORL",name:"Magic",ev:13,tier:"a",pp:false,note:"Franz Wagner Sapphire Auto"},
+    {id:"MIA",name:"Heat",ev:10,tier:"b",pp:false,note:"Jakucionis Sapphire Auto"},
+    {id:"PHX",name:"Suns",ev:10,tier:"b",pp:false,note:"Maluach Sapphire Auto"},
+    {id:"POR",name:"Blazers",ev:10,tier:"b",pp:false,note:"Drexler Sapphire Legends"},
+    {id:"WAS",name:"Wizards",ev:10,tier:"b",pp:false,note:"Will Riley Sapphire Auto"},
+    {id:"ATL",name:"Hawks",ev:8,tier:"b",pp:false,note:"Asa Newell Sapphire Auto"},
+    {id:"LAC",name:"Clippers",ev:8,tier:"b",pp:false,note:"Harden Sapphire Auto"},
+    {id:"SAC",name:"Kings",ev:8,tier:"b",pp:false,note:"Peja Sapphire Legends"},
+  ]
+};
+
+let currentProduct = 'cosmic';
+let currentSort = 'ev';
+
+const tierColors = {s:'var(--green)',a:'var(--gold)',b:'var(--muted)'};
+
+function setProduct(key){
+  currentProduct = key;
+  document.querySelectorAll('.prod-tab').forEach((t,i)=>{
+    t.classList.toggle('active', Object.keys(PRODUCTS)[i]===key);
+  });
+  updateProdInfo();
+  populateTeamSelect();
+  renderGrid();
+}
+
+function updateProdInfo(){
+  const p = PRODUCTS[currentProduct];
+  const confColor = p.confidence==='HIGH'?'var(--green)':p.confidence==='MEDIUM'?'var(--gold)':'var(--red)';
+  document.getElementById('prodInfo').innerHTML = `
+    <h4>${p.name}</h4>
+    <p>${p.note}</p>
+    <div style="margin-top:8px">
+      ${p.tags.map(t=>`<span class="prod-stat">${t}</span>`).join('')}
+      <span class="prod-stat" style="background:rgba(${p.confidence==='HIGH'?'50,200,100':'245,166,35'},.1);border-color:${confColor};color:${confColor}">Data: ${p.confidence}</span>
+    </div>`;
+  document.getElementById('dataNoteBox').textContent = p.dataNote;
+}
+
+function populateTeamSelect(){
+  const teams = NBA_TEAMS[currentProduct];
+  const sel = document.getElementById('ev-team');
+  sel.innerHTML = teams.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+}
+
+function getScaledEv(baseEv, boxes){
+  // Scale EV proportionally by box count vs full case
+  // Case size varies by product: Cosmic = 8 boxes, Chrome/others = 12 boxes
+  const prod = PRODUCTS[currentProduct];
+  const caseBoxes = prod.caseBoxes || 12;
+  // 60% scales linearly with box count (checklist cards per team)
+  // 40% stays as floor (pull probability — each box has same odds)
+  const linear = baseEv * (boxes/caseBoxes);
+  const floor = baseEv * 0.40;
+  const scaled = linear * 0.60 + floor;
+  return Math.round(scaled);
+}
+
+function sortTeams(mode){
+  currentSort = mode;
+  document.getElementById('sort-ev').classList.toggle('active', mode==='ev');
+  document.getElementById('sort-az').classList.toggle('active', mode==='az');
+  renderGrid();
+}
+
+function renderGrid(){
+  const boxes = +document.getElementById('box-count').value || 12;
+  const teams = [...NBA_TEAMS[currentProduct]];
+  if(currentSort==='ev') teams.sort((a,b)=>b.ev-a.ev);
+  else teams.sort((a,b)=>a.name.localeCompare(b.name));
+
+  const grid = document.getElementById('teamGrid');
+  grid.innerHTML = teams.map(t=>{
+    const ev = getScaledEv(t.ev, boxes);
+    const deal = Math.round(ev*0.65);
+    const fair = Math.round(ev*0.90);
+    const ppBadge = t.pp ? '<div class="pp-badge">💫 PP</div>' : '';
+    const tierCls = 'tier-dot tier-'+t.tier;
+    const borderStyle = t.pp ? 'style="border-color:rgba(108,63,197,.5)"' : '';
+    return `<div class="team-card${t.pp?' pp-team':''}" ${borderStyle} onclick="quickEval('${t.id}')">
+      ${ppBadge}
+      <div class="team-name">${t.name}</div>
+      <div class="team-ev">$${ev}</div>
+      <div class="team-note">${t.note}</div>
+      <div class="${tierCls}"></div>
+    </div>`;
+  }).join('');
+}
+
+function quickEval(teamId){
+  document.getElementById('ev-team').value = teamId;
+  evaluate();
+  document.querySelector('.eval-card').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function evaluate(){
+  const teamId = document.getElementById('ev-team').value;
+  const price = +document.getElementById('ev-price').value;
+  const boxes = +document.getElementById('ev-boxes').value || 12;
+  const team = NBA_TEAMS[currentProduct].find(t=>t.id===teamId);
+  if(!team) return;
+
+  const ev = getScaledEv(team.ev, boxes);
+  const deal = Math.round(ev*0.65);
+  const fair = Math.round(ev*0.90);
+
+  document.getElementById('rDeal').textContent = '$'+deal;
+  document.getElementById('rFair').textContent = '$'+fair;
+  document.getElementById('rHard').textContent = '$'+(fair+1)+'+';
+
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+
+  const vEl = document.getElementById('rVerdict');
+  const nEl = document.getElementById('rNote');
+  const prod = PRODUCTS[currentProduct];
+
+  if(!price){
+    vEl.className='verdict';
+    vEl.textContent='Enter a price to get your Deal/Fair/Hard No verdict';
+    nEl.textContent=`${team.name} — ${boxes}-box break EV: ~$${ev} · Key cards: ${team.note}`;
+    return;
+  }
+
+  if(price <= deal){
+    vEl.className='verdict stash';
+    vEl.textContent=`📦 STASH IT — Deal price ($${price} ≤ $${deal})`;
+  } else if(price <= fair){
+    vEl.className='verdict';
+    vEl.style.background='rgba(245,166,35,.1)';
+    vEl.style.border='2px solid var(--gold)';
+    vEl.style.color='var(--gold)';
+    vEl.textContent=`🟡 Fair Price — You're paying market ($${price})`;
+  } else {
+    vEl.className='verdict pass';
+    vEl.textContent=`❌ HARD NO — You're overpaying ($${price} > fair ceiling $${fair})`;
+  }
+
+  const conf = prod.confidence;
+  const confNote = conf==='HIGH'?'Based on real PYT break data.':conf==='MEDIUM'?'⚠️ Estimated — limited real break data. Use as starting point.':'⚠️ Estimated — no confirmed break data yet. Treat as rough guide only.';
+  nEl.textContent=`${team.name} · ${boxes} boxes · EV ~$${ev} · Key: ${team.note} · ${confNote}`;
+}
+
+// Init
+updateProdInfo();
+populateTeamSelect();
+renderGrid();
+</script>
+</body>
+</html>

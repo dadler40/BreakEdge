@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BreakEdge — Buyer Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A1628;--gold:#F5A623;--green:#32C864;--red:#FF6B6B;--purple:#6C3FC5;--teal:#00C9C9;--orange:#E85D04;--white:#fff;--muted:#6B7A99;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1)}
+body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;padding:16px}
+.wrap{max-width:900px;margin:0 auto}
+.header{text-align:center;padding:20px 0 12px}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;text-transform:uppercase}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.nav-link{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:3px}
+.nav-link.active{color:var(--teal);border-color:var(--teal)}
+
+/* MODE TABS */
+.mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:16px;border-radius:6px;overflow:hidden;border:1.5px solid var(--teal)}
+.mode-tab{padding:12px;text-align:center;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;border:none;color:var(--muted);background:rgba(255,255,255,.03)}
+.mode-tab.active{background:var(--teal);color:var(--navy)}
+.mode-tab:not(.active):hover{background:rgba(0,201,201,.08);color:var(--teal)}
+
+/* PHASE BAR */
+.phase-bar{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:14px;flex-wrap:wrap}
+.phase-bar label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.phase-bar select{background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--white);padding:6px 10px;outline:none}
+.phase-badge{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-left:auto}
+.pf{background:rgba(255,107,107,.15);color:var(--red);border:1px solid var(--red)}
+.pc{background:rgba(245,166,35,.15);color:var(--gold);border:1px solid var(--gold)}
+.ps{background:rgba(50,200,100,.15);color:var(--green);border:1px solid var(--green)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.fg label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:10px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--teal)}
+.fg select option{background:#1a2a3a}
+.btn{width:100%;background:var(--teal);color:var(--navy);border:none;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:4px}
+
+/* SUGGEST */
+.suggest{background:rgba(10,22,40,1);border:1px solid var(--border);border-radius:4px;max-height:160px;overflow-y:auto;display:none;margin-top:2px}
+.suggest div{padding:9px 12px;cursor:pointer;font-size:13px;border-bottom:1px solid rgba(255,255,255,.05)}
+.suggest div:hover{background:rgba(0,201,201,.08)}
+
+/* EV RANGE */
+.ev-range-box{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin-bottom:14px}
+.evrt{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.evnums{display:flex;align-items:baseline;gap:8px}
+.evlo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#8BAFC6}
+.evmi{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--gold)}
+.evhi{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#8BAFC6}
+.evda{font-size:16px;color:var(--muted)}
+.conf-bar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;margin:8px 0 4px;overflow:hidden}
+.conf-fill{height:100%;border-radius:3px}
+
+/* VERDICT */
+.big-verdict{border-radius:8px;padding:16px 20px;margin-bottom:14px}
+.big-verdict.buy{background:rgba(50,200,100,.1);border:2px solid var(--green)}
+.big-verdict.stash{background:rgba(245,166,35,.1);border:2px solid var(--gold)}
+.big-verdict.pass{background:rgba(255,107,107,.1);border:2px solid var(--red)}
+.vt{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.vlbl{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;text-transform:uppercase}
+.big-verdict.buy .vlbl{color:var(--green)}.big-verdict.stash .vlbl{color:var(--gold)}.big-verdict.pass .vlbl{color:var(--red)}
+.vroi{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900}
+.big-verdict.buy .vroi{color:var(--green)}.big-verdict.stash .vroi{color:var(--gold)}.big-verdict.pass .vroi{color:var(--red)}
+.vsub{font-size:12px;color:#8BAFC6}
+.vpnote{font-size:12px;color:#8BAFC6;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08)}
+
+/* AUCTION */
+.auction-box{background:rgba(232,93,4,.1);border:1.5px solid var(--orange);border-radius:8px;padding:14px;margin-bottom:14px}
+.auction-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--orange);margin-bottom:10px}
+.ag{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.ab{background:rgba(255,255,255,.05);border-radius:5px;padding:10px;text-align:center}
+.ab-num{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--gold)}
+.ab-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;margin-top:3px}
+.bid-row{display:flex;gap:10px}
+.bid-row input{flex:1;padding:10px 12px;background:rgba(255,255,255,.07);border:1.5px solid rgba(232,93,4,.4);border-radius:4px;font-family:'Barlow',sans-serif;font-size:15px;color:var(--white);outline:none}
+.bid-btn{background:var(--orange);color:var(--white);border:none;padding:10px 16px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.bid-result{margin-top:10px;border-radius:5px;padding:10px 14px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;display:none}
+.bid-result.g{background:rgba(50,200,100,.15);border:1px solid var(--green);color:var(--green)}
+.bid-result.y{background:rgba(245,166,35,.15);border:1px solid var(--gold);color:var(--gold)}
+.bid-result.r{background:rgba(255,107,107,.15);border:1px solid var(--red);color:var(--red)}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.sbox{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;padding:13px 8px;text-align:center}
+.sbox.t{background:rgba(0,201,201,.1);border-color:var(--teal)}
+.sbox.g{background:rgba(50,200,100,.1);border-color:var(--green)}
+.sbox.go{background:rgba(245,166,35,.1);border-color:var(--gold)}
+.sbox.pu{background:rgba(108,63,197,.1);border-color:var(--purple)}
+.snum{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;line-height:1;color:var(--teal)}
+.sbox.g .snum{color:var(--green)}.sbox.go .snum{color:var(--gold)}.sbox.pu .snum{color:#A78BF5}
+.slbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:4px}
+
+/* CONCENTRATION */
+.boom-bar{height:6px;border-radius:3px;background:rgba(255,255,255,.08);margin:4px 0;overflow:hidden}
+.boom-fill{height:100%;border-radius:3px}
+.boom-lbl{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:1px}
+
+/* CEILING */
+.ceil-table{width:100%;border-collapse:collapse}
+.ceil-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:6px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.ceil-table td{font-size:12px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04)}
+.ceil-table tr:last-child td{border:none}
+.price-range{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--gold)}
+.src-cell{font-size:10px;color:rgba(255,255,255,.3);font-style:italic}
+
+/* INSERT PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.pill{font-size:11px;padding:3px 8px;border-radius:2px;background:rgba(255,255,255,.08);color:#D0DCF0}
+.pill.auto{background:rgba(245,166,35,.2);color:var(--gold)}
+.pill.pp{background:rgba(108,63,197,.2);color:#A78BF5}
+
+/* TEAM/PLAYER LISTS */
+.search-box{width:100%;padding:10px 14px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:6px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none;margin-bottom:12px}
+.search-box:focus{border-color:var(--teal)}
+.list-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:8px}
+.lc{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:10px 12px;cursor:pointer}
+.lc:hover{border-color:var(--teal)}
+.lc.s{border-color:var(--green);background:rgba(50,200,100,.06)}
+.lc.a{border-color:var(--gold);background:rgba(245,166,35,.06)}
+.lc.b{border-color:var(--purple);background:rgba(108,63,197,.06)}
+.lc-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--white)}
+.lc-detail{font-size:11px;color:var(--muted);margin-top:2px}
+.lc-tier{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;float:right}
+.lc.s .lc-tier{color:var(--green)}.lc.a .lc-tier{color:var(--gold)}.lc.b .lc-tier{color:var(--purple)}
+
+/* TEAM TABLE */
+.team-table{width:100%;border-collapse:collapse}
+.team-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);cursor:pointer}
+.team-table th:hover{color:var(--teal)}
+.team-table td{font-size:13px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer}
+.team-table tr:hover td{background:rgba(255,255,255,.03)}
+.tier-s{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;background:rgba(50,200,100,.2);color:var(--green)}
+.tier-a{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;background:rgba(0,201,201,.2);color:var(--teal)}
+.tier-b{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;background:rgba(108,63,197,.2);color:#A78BF5}
+
+.brow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.brow:last-child{border:none}
+.brow span{color:#8BAFC6}.brow strong{color:var(--white)}
+
+.hidden{display:none}
+.pos-tag{font-size:9px;font-weight:700;padding:1px 5px;border-radius:2px;margin-left:4px;display:inline-block}
+.pqb{background:rgba(50,200,100,.2);color:var(--green)}.pwr{background:rgba(0,201,201,.2);color:var(--teal)}
+.prb{background:rgba(245,166,35,.2);color:var(--gold)}.pte{background:rgba(108,63,197,.2);color:#A78BF5}
+.pleg{background:rgba(255,107,107,.2);color:var(--red)}
+.footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.footer a{color:var(--teal);text-decoration:none}
+@media(max-width:600px){.g2,.g3,.ag,.stats-row{grid-template-columns:1fr 1fr}.vt{flex-direction:column}.vroi{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+  <div style="width:100%;max-width:900px;margin:0 auto 8px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a1628"/>
+      <stop offset="50%" style="stop-color:#0d1e35"/>
+      <stop offset="100%" style="stop-color:#0a1628"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8C00"/>
+      <stop offset="100%" style="stop-color:#E85D04"/>
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E0E0E0"/>
+      <stop offset="50%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#B0B0B0"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#E8850A"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="900" height="220" fill="url(#bgGrad)"/>
+
+  <!-- TOP + BOTTOM ORANGE BARS -->
+  <rect x="0" y="0" width="900" height="5" fill="#E85D04"/>
+  <rect x="0" y="215" width="900" height="5" fill="#E85D04"/>
+
+  <!-- CHEVRON PATTERN -->
+  <g opacity="0.05" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+    <polyline points="0,60 450,20 900,60"/>
+    <polyline points="0,90 450,45 900,90"/>
+    <polyline points="0,120 450,70 900,120"/>
+    <polyline points="0,150 450,95 900,150"/>
+    <polyline points="0,180 450,120 900,180"/>
+  </g>
+
+  <!-- LEFT ORANGE ACCENT BAR -->
+  <rect x="0" y="0" width="6" height="220" fill="#E85D04"/>
+
+  <!-- MINI SHIELD ICON (left side) -->
+  <g transform="translate(30, 25)">
+    <!-- Shield -->
+    <path d="M 80 8 L 148 32 L 148 98 Q 148 148 80 170 Q 12 148 12 98 L 12 32 Z"
+          fill="url(#orangeGrad)" filter="url(#shadow)"/>
+    <path d="M 80 20 L 136 40 L 136 97 Q 136 140 80 158 Q 24 140 24 97 L 24 40 Z"
+          fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+    <!-- Sword on shield -->
+    <rect x="77" y="15" width="6" height="130"
+          rx="2" fill="url(#silverGrad)"
+          transform="rotate(-30, 80, 80)" filter="url(#shadow)"/>
+    <rect x="55" y="76" width="52" height="8"
+          rx="3" fill="url(#silverGrad)"
+          transform="rotate(-30, 80, 80)"/>
+    <rect x="77" y="110" width="6" height="35"
+          rx="2" fill="#8B4513"
+          transform="rotate(-30, 80, 80)"/>
+    <!-- Lightning bolt -->
+    <polygon points="84,30 73,62 82,62 70,95 97,58 86,58 98,30"
+             fill="rgba(255,255,255,0.85)" filter="url(#glow)"/>
+    <!-- Banner -->
+    <path d="M 10 158 L 150 158 L 138 180 L 80 186 L 22 180 Z"
+          fill="#0d1e35" stroke="#E85D04" stroke-width="1.5"/>
+    <text x="80" y="176"
+          font-family="'Arial Black', Impact, sans-serif"
+          font-weight="900" font-size="20" letter-spacing="1"
+          text-anchor="middle" fill="url(#goldText)">BREAK</text>
+  </g>
+
+  <!-- MAIN TITLE -->
+  <!-- BREAK in white -->
+  <text x="220" y="128"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-weight="900"
+        font-size="100"
+        letter-spacing="-2"
+        fill="#FFFFFF"
+        filter="url(#shadow)">BREAK</text>
+
+  <!-- EDGE in orange/gold -->
+  <text x="572" y="128"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-weight="900"
+        font-size="100"
+        letter-spacing="-2"
+        fill="url(#goldText)"
+        filter="url(#glow)">EDGE</text>
+
+  <!-- TAGLINE -->
+  <text x="220" y="160"
+        font-family="Arial, sans-serif"
+        font-weight="700"
+        font-size="13"
+        letter-spacing="4"
+        fill="#6B8CAD">BREAK SMARTER · BID SHARPER · KNOW YOUR EDGE</text>
+
+  <!-- RIGHT ACCENT — three dots -->
+  <circle cx="858" cy="80" r="5" fill="#E85D04" opacity="0.9"/>
+  <circle cx="858" cy="110" r="5" fill="#E85D04" opacity="0.6"/>
+  <circle cx="858" cy="140" r="5" fill="#E85D04" opacity="0.3"/>
+
+  <!-- RIGHT BORDER -->
+  <rect x="894" y="0" width="6" height="220" fill="#E85D04"/>
+</svg>
+</div>
+  <div class="nav-links">
+    <a class="nav-link" href="breakedge-host.html">Host</a>
+    <a class="nav-link active" href="#">Buyer</a>
+    <a class="nav-link" href="breakedge-compare.html">⚡ Compare</a>
+    <a class="nav-link" href="breakedge-mixed.html">🎲 Mixed</a>
+    <a class="nav-link" href="breakedge-live.html">🔴 Live</a>
+    <a class="nav-link" href="breakedge-nba.html">🏀 NBA</a>
+    <a class="nav-link" href="breakedge-research.html">Research</a>
+    <a class="nav-link" href="breakedge-backtest.html">Backtest</a>
+  </div>
+</div>
+
+<!-- PHASE SELECTOR — global -->
+<div class="phase-bar">
+  <label>Market Phase</label>
+  <select id="phaseSelect" onchange="updatePhase()">
+    <option value="1">Day 1–7 — Opening Frenzy</option>
+    <option value="8">Day 8–30 — Compression</option>
+    <option value="31">Day 31+ — Settled</option>
+  </select>
+  <div class="phase-badge pf" id="phaseBadge">🔥 Frenzy — Buy ≤55% EV</div>
+</div>
+
+<!-- MODE TABS -->
+<div class="mode-tabs">
+  <button class="mode-tab active" id="tab-team" onclick="setMode('team')">🏟️ Team Break</button>
+  <button class="mode-tab" id="tab-player" onclick="setMode('player')">🎯 Player Break</button>
+</div>
+
+<!-- TEAM INPUTS -->
+<div id="team-section">
+  <div class="card">
+    <div class="card-title">Team Spot Evaluator</div>
+    <div class="g3">
+      <div class="fg"><label>Team</label>
+        <select id="t-team" onchange="teamAutoFill()">
+          <option value="">— Select team —</option>
+          <option value="TEN">Tennessee Titans</option><option value="NYG">New York Giants</option><option value="TB">Tampa Bay Buccaneers</option><option value="BUF">Buffalo Bills</option><option value="JAX">Jacksonville Jaguars</option><option value="KC">Kansas City Chiefs</option><option value="LV">Las Vegas Raiders</option><option value="SF">San Francisco 49ers</option><option value="PHI">Philadelphia Eagles</option><option value="NE">New England Patriots</option><option value="CHI">Chicago Bears</option><option value="CLE">Cleveland Browns</option><option value="LAC">Los Angeles Chargers</option><option value="BAL">Baltimore Ravens</option><option value="DAL">Dallas Cowboys</option><option value="CAR">Carolina Panthers</option><option value="IND">Indianapolis Colts</option><option value="CIN">Cincinnati Bengals</option><option value="DEN">Denver Broncos</option><option value="DET">Detroit Lions</option><option value="GB">Green Bay Packers</option><option value="WSH">Washington Commanders</option><option value="MIN">Minnesota Vikings</option><option value="PIT">Pittsburgh Steelers</option><option value="HOU">Houston Texans</option><option value="MIA">Miami Dolphins</option><option value="ARI">Arizona Cardinals</option><option value="NO">New Orleans Saints</option><option value="NYJ">New York Jets</option><option value="LAR">Los Angeles Rams</option><option value="SEA">Seattle Seahawks</option><option value="ATL">Atlanta Falcons</option>
+        </select>
+      </div>
+      <div class="fg"><label>Spot Price Asked ($)</label><input type="number" id="t-price" value="30" min="1"/></div>
+      <div class="fg"><label>Boxes in Break</label><input type="number" id="t-boxes" value="1" min="1" max="12"/></div>
+    </div>
+    <button class="btn" onclick="evalTeam()">💰 Evaluate Team Spot</button>
+  </div>
+
+  <div id="team-results" class="hidden">
+    <div class="ev-range-box">
+      <div class="evrt">Relative Value Estimate — <span id="tr-conf-lbl" style="color:var(--teal)"></span></div>
+      <div class="evnums"><div class="evlo" id="tr-lo">$0</div><div class="evda">—</div><div class="evmi" id="tr-mid">$0</div><div class="evda">—</div><div class="evhi" id="tr-hi">$0</div></div>
+      <div class="conf-bar"><div class="conf-fill" id="tr-conf-fill" style="width:0%"></div></div>
+      <div style="font-size:11px;color:var(--muted)" id="tr-conf-note"></div>
+    </div>
+    <div class="big-verdict" id="tr-verdict">
+      <div class="vt"><div><div class="vlbl" id="tr-vlbl">BUY</div><div class="vsub" id="tr-vsub"></div></div><div class="vroi" id="tr-roi">+0%</div></div>
+      <div class="vpnote" id="tr-pnote"></div>
+    </div>
+    <div class="auction-box">
+      <div class="auction-title">⚡ Live Auction Guidance</div>
+      <div class="ag">
+        <div class="ab"><div class="ab-num" id="tr-ev">$0</div><div class="ab-lbl">Mid EV</div></div>
+        <div class="ab"><div class="ab-num" id="tr-max">$0</div><div class="ab-lbl">Max Bid</div></div>
+        <div class="ab"><div class="ab-num" id="tr-ceil">$0</div><div class="ab-lbl">Ceiling</div></div>
+      </div>
+      <div class="bid-row">
+        <input type="number" id="t-bidinput" placeholder="Enter current bid..." oninput="checkTeamBid()"/>
+        <button class="bid-btn" onclick="checkTeamBid()">Check</button>
+      </div>
+      <div class="bid-result" id="t-bidresult"></div>
+    </div>
+    <div class="stats-row">
+      <div class="sbox t"><div class="snum" id="tr-players">0</div><div class="slbl">Players</div></div>
+      <div class="sbox pu"><div class="snum" id="tr-rcs">0</div><div class="slbl">Rookies</div></div>
+      <div class="sbox go"><div class="snum" id="tr-autos">0</div><div class="slbl">Auto Sets</div></div>
+      <div class="sbox g"><div class="snum" id="tr-inserts">0</div><div class="slbl">Insert Sets</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Value Concentration</div>
+      <div id="tr-conc"></div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted)" id="tr-boom"></div>
+      <div style="margin-top:12px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">EV by Type</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px" id="tr-evtype"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏆 Ceiling Cards</div>
+      <table class="ceil-table"><thead><tr><th>Card</th><th>Player</th><th>Parallel</th><th>Price Range</th><th>Odds</th><th>Anchor</th></tr></thead><tbody id="tr-ceiltable"></tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">Auto Signers</div>
+      <div id="tr-autos-detail"></div>
+    </div>
+  </div>
+
+  <!-- TEAM RANKINGS TABLE -->
+  <div class="card">
+    <div class="card-title">All 32 Teams — Ranked by EV</div>
+    <input class="search-box" type="text" placeholder="Search teams..." oninput="filterTeams(this.value)"/>
+    <div style="overflow-x:auto">
+    <table class="team-table">
+      <thead><tr><th>Team</th><th>Tier</th><th>EV Range</th><th>Ceiling</th><th>Autos</th><th>RCs</th><th>Profile</th></tr></thead>
+      <tbody id="team-rank-body"></tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYER SECTION -->
+<div id="player-section" class="hidden">
+  <div class="card">
+    <div class="card-title">Player Spot Evaluator</div>
+    <div class="g3">
+      <div class="fg">
+        <label>Player Name</label>
+        <input type="text" id="p-name" placeholder="Type to search..." oninput="liveSearch(this.value)"/>
+        <div class="suggest" id="p-suggest"></div>
+      </div>
+      <div class="fg"><label>Spot Price Asked ($)</label><input type="number" id="p-price" value="20" min="1"/></div>
+      <div class="fg"><label>Boxes in Break</label><input type="number" id="p-boxes" value="1" min="1" max="12"/></div>
+    </div>
+    <button class="btn" onclick="evalPlayer()">🎯 Evaluate Player Spot</button>
+  </div>
+
+  <div id="player-results" class="hidden">
+    <div class="ev-range-box">
+      <div class="evrt">Relative Value — <span id="pr-pos" style="color:var(--teal)"></span></div>
+      <div class="evnums"><div class="evlo" id="pr-lo">$0</div><div class="evda">—</div><div class="evmi" id="pr-mid">$0</div><div class="evda">—</div><div class="evhi" id="pr-hi">$0</div></div>
+      <div class="conf-bar"><div class="conf-fill" id="pr-conf-fill" style="width:0%"></div></div>
+      <div style="font-size:11px;color:var(--muted)" id="pr-conf-note"></div>
+      <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:4px" id="pr-posweight"></div>
+    </div>
+    <div class="big-verdict" id="pr-verdict">
+      <div class="vt"><div><div class="vlbl" id="pr-vlbl">BUY</div><div class="vsub" id="pr-vsub"></div></div><div class="vroi" id="pr-roi">+0%</div></div>
+      <div class="vpnote" id="pr-pnote"></div>
+    </div>
+    <div class="auction-box">
+      <div class="auction-title">⚡ Live Auction Guidance</div>
+      <div class="ag">
+        <div class="ab"><div class="ab-num" id="pr-ev">$0</div><div class="ab-lbl">Mid EV</div></div>
+        <div class="ab"><div class="ab-num" id="pr-max">$0</div><div class="ab-lbl">Max Bid</div></div>
+        <div class="ab"><div class="ab-num" id="pr-ceil">$0</div><div class="ab-lbl">Ceiling</div></div>
+      </div>
+      <div class="bid-row">
+        <input type="number" id="p-bidinput" placeholder="Enter current bid..." oninput="checkPlayerBid()"/>
+        <button class="bid-btn" onclick="checkPlayerBid()">Check</button>
+      </div>
+      <div class="bid-result" id="p-bidresult"></div>
+    </div>
+    <div class="stats-row">
+      <div class="sbox t"><div class="snum" id="pr-tier">—</div><div class="slbl">Tier</div></div>
+      <div class="sbox go"><div class="snum" id="pr-autos">0</div><div class="slbl">Auto Sets</div></div>
+      <div class="sbox g"><div class="snum" id="pr-inserts">0</div><div class="slbl">Insert Sets</div></div>
+      <div class="sbox pu"><div class="snum" id="pr-hitrate">0%</div><div class="slbl">Hit Prob</div></div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-title">Insert Appearances</div>
+        <div class="pills" id="pr-pills"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Hit Probabilities</div>
+        <div id="pr-probs"></div>
+        <div style="margin-top:8px;font-size:11px;color:var(--muted)" id="pr-phasenote"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏆 Ceiling Cards</div>
+      <table class="ceil-table"><thead><tr><th>Set</th><th>Parallel</th><th>Price Range</th><th>Odds</th><th>Anchor</th></tr></thead><tbody id="pr-ceiltable"></tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">Why This Rating</div>
+      <div id="pr-note" style="font-size:13px;color:#8BAFC6;line-height:1.7"></div>
+    </div>
+  </div>
+
+  <!-- PLAYER LIST -->
+  <div class="card">
+    <div class="card-title">All Players — Search & Compare</div>
+    <input class="search-box" type="text" placeholder="Search player, team, or position..." oninput="filterPlayers(this.value)"/>
+    <div class="list-grid" id="player-list-grid"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--muted);line-height:1.6">⚠️ <strong style="color:rgba(255,255,255,.5)">Relative Value Engine.</strong> Positional weights: QB 1.0x · TE 0.6x · Legend 0.8x · WR 0.4x · RB 0.35x. Anchored to Chrome Ward /5 $15k, Dart /10 $14k, Skenes Cosmic /10 $6,800, Flagg NBA Cosmic /25 $9,487. Not financial advice.</div>
+  BreakEdge Beta 🚀 &nbsp;|&nbsp; <a href="mailto:adleranalyticsllc@gmail.com">adleranalyticsllc@gmail.com</a> &nbsp;|&nbsp; Founding rate: $49/mo
+</div>
+</div>
+
+<script>
+// ── PHASE SYSTEM ──
+const PHASES={1:{mult:1.3,buy:0.55,stash:0.75,maxAdj:-0.10,lbl:'🔥 Frenzy — Buy ≤55% EV',cls:'pf',note:'⚠️ Opening frenzy — only buy S-tier QBs at ≤55% EV. Sellers have leverage.',probNote:'Act fast on S-tier QBs. Everything else: wait for compression.'},8:{mult:1.0,buy:0.65,stash:0.85,maxAdj:0,lbl:'📉 Compression — Best buying window',cls:'pc',note:'✅ Compression phase — best buying window. Prices falling from peak.',probNote:'Good time to pick up A-tier at opening-week discounts.'},31:{mult:0.8,buy:0.75,stash:0.92,maxAdj:0.05,lbl:'✅ Settled — Check eBay comps first',cls:'ps',note:'📋 Settled market — verify with real eBay sold comps. Our estimates may be stale.',probNote:'Check actual Cosmic Football comps on eBay before trusting BreakEdge ranges.'}};
+let phase=PHASES[1];
+let mode='team';
+let selPlayer=null;
+
+function updatePhase(){
+  const v=+document.getElementById('phaseSelect').value;
+  phase=PHASES[v];
+  const b=document.getElementById('phaseBadge');
+  b.textContent=phase.lbl;b.className='phase-badge '+phase.cls;
+}
+
+function setMode(m){
+  mode=m;
+  document.getElementById('tab-team').className='mode-tab'+(m==='team'?' active':'');
+  document.getElementById('tab-player').className='mode-tab'+(m==='player'?' active':'');
+  document.getElementById('team-section').className=m==='team'?'':'hidden';
+  document.getElementById('player-section').className=m==='player'?'':'hidden';
+}
+
+// ── TEAM DATA ──
+const TEAMS={
+  TEN:{name:"Tennessee Titans",tier:"s",ev:60,ceiling:30000,conf:8,vets:["Tony Pollard","Calvin Ridley"],rookies:["Cam Ward RC","Elic Ayomanor RC","Gunnar Helm RC"],autoSets:4,autoSigners:["Cam Ward (CCA+EQA+SFS+FFS — ALL 4)","Elic Ayomanor (CCA+FFS)"],insertSets:15,rookieEV:90,vetEV:8,legendEV:0,hitRate:70,autoRate:28,rating:"Boom/Bust",concentration:[{n:"Cam Ward RC",p:93},{n:"Elic Ayomanor RC",p:5},{n:"Others",p:2}],ceiling_cards:[{c:"EQA Auto",pl:"Cam Ward",par:"SF 1/1",lo:18000,hi:32000,odds:"1:500",src:"QB 1.0x · Chrome Red /5=$15k · Cosmic 1.3x"},{c:"PP Pluto",pl:"Cam Ward",par:"1:28k packs",lo:6000,hi:16000,odds:"1:233 boxes",src:"Flagg NBA Uranus $18.5k · NFL adj"}]},
+  NYG:{name:"New York Giants",tier:"s",ev:52,ceiling:24000,conf:7,vets:["Malik Nabers","Dexter Lawrence II"],rookies:["Jaxson Dart RC","Cam Skattebo RC","Abdul Carter RC","Darius Alexander RC"],autoSets:4,autoSigners:["Jaxson Dart (ALL 4 sets)","Cam Skattebo (CCA+FFS)","Abdul Carter (FFS)","Lawrence Taylor (LY ⭐)"],insertSets:15,rookieEV:75,vetEV:15,legendEV:10,hitRate:65,autoRate:24,rating:"Deep Checklist",concentration:[{n:"Jaxson Dart RC",p:55},{n:"Cam Skattebo RC",p:28},{n:"Others",p:17}],ceiling_cards:[{c:"EQA Auto",pl:"Jaxson Dart",par:"SF 1/1",lo:14000,hi:26000,odds:"1:500",src:"QB 1.0x · Chrome /10=$14k · Cosmic 1.3x"},{c:"PP Pluto",pl:"Jaxson Dart",par:"1:28k packs",lo:5000,hi:12000,odds:"1:233 boxes",src:"QB PP · Dart market hot"}]},
+  TB:{name:"Tampa Bay Buccaneers",tier:"s",ev:52,ceiling:24000,conf:8,vets:["Baker Mayfield","Mike Evans","Bucky Irving"],rookies:["Emeka Egbuka RC","Tez Johnson RC","Benjamin Morrison RC"],autoSets:4,autoSigners:["Emeka Egbuka (ALL 4 sets)","Tez Johnson (CCA+FFS)","Tom Brady (EQA legacy ⭐)"],insertSets:14,rookieEV:78,vetEV:10,legendEV:12,hitRate:65,autoRate:24,rating:"Boom/Bust",concentration:[{n:"Emeka Egbuka RC",p:78},{n:"Tom Brady legacy",p:12},{n:"Others",p:10}],ceiling_cards:[{c:"EQA Auto",pl:"Tom Brady",par:"SF 1/1",lo:16000,hi:28000,odds:"1:500",src:"GOAT QB · legacy slot"},{c:"EQA Auto",pl:"Emeka Egbuka",par:"SF 1/1",lo:6000,hi:14000,odds:"1:450",src:"WR 0.4x · all 4 sets × 2.0x"}]},
+  BUF:{name:"Buffalo Bills",tier:"s",ev:55,ceiling:25000,conf:8,vets:["Josh Allen","James Cook","Keon Coleman"],rookies:["Maxwell Hairston RC","T.J. Sanders RC","Landon Jackson RC"],autoSets:2,autoSigners:["Josh Allen (EQA)","Keon Coleman (CCA)"],insertSets:14,rookieEV:15,vetEV:82,legendEV:0,hitRate:65,autoRate:22,rating:"Boom/Bust",concentration:[{n:"Josh Allen",p:85},{n:"James Cook",p:10},{n:"Others",p:5}],ceiling_cards:[{c:"EQA Auto",pl:"Josh Allen",par:"SF 1/1",lo:18000,hi:30000,odds:"1:500",src:"QB 1.0x · Ward Chrome /5 $15k"},{c:"PP Pluto",pl:"Josh Allen",par:"1:28k packs",lo:4000,hi:8000,odds:"1:233 boxes",src:"QB PP · Flagg NBA comp"}]},
+  JAX:{name:"Jacksonville Jaguars",tier:"s",ev:50,ceiling:22000,conf:7,vets:["Trevor Lawrence","Travis Etienne Jr.","Brian Thomas Jr."],rookies:["Travis Hunter RC","Bhayshul Tuten RC","Jack Kiser RC"],autoSets:3,autoSigners:["Travis Hunter (CCA+EQA+FFS)","Travis Etienne (CCA)","Trevor Lawrence (EQA)"],insertSets:14,rookieEV:75,vetEV:22,legendEV:0,hitRate:62,autoRate:22,rating:"Boom/Bust",concentration:[{n:"Travis Hunter RC",p:80},{n:"Travis Etienne",p:12},{n:"Others",p:8}],ceiling_cards:[{c:"EQA Auto",pl:"Travis Hunter",par:"SF 1/1",lo:12000,hi:24000,odds:"1:500",src:"WR 0.4x+dual +50% · Flagg Cosmic /10=$11.5k"}]},
+  KC:{name:"Kansas City Chiefs",tier:"s",ev:48,ceiling:20000,conf:8,vets:["Patrick Mahomes II","Travis Kelce","Xavier Worthy"],rookies:["Josh Simmons RC","Jalen Royals RC"],autoSets:2,autoSigners:["Patrick Mahomes (EQA)","Jalen Royals (CCA+FFS)"],insertSets:14,rookieEV:10,vetEV:88,legendEV:0,hitRate:60,autoRate:18,rating:"Boom/Bust",concentration:[{n:"Patrick Mahomes",p:85},{n:"Travis Kelce",p:10},{n:"Others",p:5}],ceiling_cards:[{c:"EQA Auto",pl:"Patrick Mahomes",par:"SF 1/1",lo:14000,hi:24000,odds:"1:500",src:"QB 1.0x · Mahomes premium"},{c:"PP Pluto",pl:"Patrick Mahomes",par:"1:28k packs",lo:5000,hi:10000,odds:"1:233 boxes",src:"QB PP · Flagg Uranus $18.5k comp"}]},
+  LV:{name:"Las Vegas Raiders",tier:"s",ev:48,ceiling:24000,conf:7,vets:["Geno Smith","Brock Bowers","Maxx Crosby"],rookies:["Ashton Jeanty RC","Jack Bech RC","Dont'e Thornton Jr. RC"],autoSets:4,autoSigners:["Ashton Jeanty (CCA+EQA+FFS)","Brock Bowers (CCA+SFS)","Maxx Crosby (CCA)","Jack Bech (CCA+FFS)"],insertSets:15,rookieEV:70,vetEV:25,legendEV:0,hitRate:68,autoRate:26,rating:"Boom/Bust",concentration:[{n:"Ashton Jeanty RC ⚠️",p:70},{n:"Brock Bowers",p:18},{n:"Others",p:12}],ceiling_cards:[{c:"EQA Auto",pl:"Ashton Jeanty ⚠️COOLING",par:"SF 1/1",lo:5000,hi:14000,odds:"1:500",src:"RB 0.35x · Chrome /250 down to $96"},{c:"PP Pluto",pl:"Ashton Jeanty",par:"1:28k packs",lo:3000,hi:8000,odds:"1:233 boxes",src:"RB PP · market cooling adj"}]},
+  SF:{name:"San Francisco 49ers",tier:"s",ev:50,ceiling:26000,conf:8,vets:["Brock Purdy","Christian McCaffrey","George Kittle"],rookies:["Mykel Williams RC","Alfred Collins RC"],autoSets:3,autoSigners:["George Kittle (CCA)","Brock Purdy (EQA)","Nick Bosa (CCA)","Jerry Rice (EQA+SFS ⭐)","Joe Montana (LY ⭐)"],insertSets:12,rookieEV:10,vetEV:55,legendEV:35,hitRate:62,autoRate:22,rating:"Balanced",concentration:[{n:"Jerry Rice legend",p:35},{n:"George Kittle",p:25},{n:"Christian McCaffrey",p:25},{n:"Others",p:15}],ceiling_cards:[{c:"EQA Auto",pl:"Jerry Rice",par:"SF 1/1",lo:16000,hi:28000,odds:"1:500",src:"GOAT WR · Legend 0.8x · Brady comp"},{c:"SFS Auto",pl:"Jerry Rice",par:"SF 1/1",lo:12000,hi:22000,odds:"1:500",src:"Two on-card auto sets"}]},
+  PHI:{name:"Philadelphia Eagles",tier:"s",ev:48,ceiling:20000,conf:8,vets:["Jalen Hurts","Saquon Barkley","A.J. Brown","Dallas Goedert"],rookies:["Jihaad Campbell RC","Kyle McCord RC"],autoSets:3,autoSigners:["Jalen Hurts (EQA)","Saquon Barkley (EQA)","A.J. Brown (SFS)","Kyle McCord (CCA+FFS)"],insertSets:12,rookieEV:15,vetEV:85,legendEV:0,hitRate:60,autoRate:22,rating:"Deep Checklist",concentration:[{n:"Jalen Hurts",p:40},{n:"Saquon Barkley",p:38},{n:"Others",p:22}],ceiling_cards:[{c:"EQA Auto",pl:"Jalen Hurts",par:"SF 1/1",lo:12000,hi:22000,odds:"1:500",src:"QB 1.0x · Super Bowl QB"},{c:"EQA Auto",pl:"Saquon Barkley",par:"SF 1/1",lo:5000,hi:12000,odds:"1:450",src:"RB 0.35x · monster season 2x premium"}]},
+  NE:{name:"New England Patriots",tier:"s",ev:42,ceiling:22000,conf:8,vets:["Drake Maye","Stefon Diggs","Christian Gonzalez"],rookies:["TreVeyon Henderson RC","Kyle Williams RC","Will Campbell RC"],autoSets:4,autoSigners:["Drake Maye (EQA)","TreVeyon Henderson (CCA+SFS+FFS)","Kyle Williams (CCA+FFS)","Tom Brady (EQA ⭐)","Rob Gronkowski (LY ⭐)"],insertSets:11,rookieEV:35,vetEV:30,legendEV:35,hitRate:55,autoRate:20,rating:"Balanced",concentration:[{n:"Tom Brady legend",p:40},{n:"Drake Maye",p:30},{n:"TreVeyon Henderson RC",p:30}],ceiling_cards:[{c:"EQA Auto",pl:"Tom Brady",par:"SF 1/1",lo:16000,hi:28000,odds:"1:500",src:"GOAT · Chrome Kaiju $23.3k"},{c:"EQA Auto",pl:"Drake Maye",par:"SF 1/1",lo:5000,hi:11000,odds:"1:400",src:"QB 1.0x · slow burn market"}]},
+  CHI:{name:"Chicago Bears",tier:"s",ev:48,ceiling:22000,conf:7,vets:["Caleb Williams","D'Andre Swift","Rome Odunze"],rookies:["Luther Burden III RC","Colston Loveland RC","Kyle Monangai RC"],autoSets:4,autoSigners:["Caleb Williams (CCA+EQA)","Luther Burden III (CCA+EQA+FFS)","Colston Loveland (CCA+FFS)","Rome Odunze (CCA+SFS)","Jim McMahon (SF ⭐)"],insertSets:14,rookieEV:40,vetEV:55,legendEV:5,hitRate:62,autoRate:22,rating:"Deep Checklist",concentration:[{n:"Caleb Williams",p:45},{n:"Luther Burden III RC",p:30},{n:"Others",p:25}],ceiling_cards:[{c:"EQA Auto",pl:"Caleb Williams",par:"SF 1/1",lo:14000,hi:24000,odds:"1:500",src:"QB 1.0x · Chrome Red $13k · Cosmic 1.3x"},{c:"CCA Auto",pl:"Luther Burden III RC",par:"SF 1/1",lo:4000,hi:9000,odds:"1:400",src:"WR 0.4x · 3 auto sets × 1.5x"}]},
+  CLE:{name:"Cleveland Browns",tier:"s",ev:45,ceiling:20000,conf:7,vets:["Jerry Jeudy","Myles Garrett"],rookies:["Shedeur Sanders RC","Quinshon Judkins RC","Dillon Gabriel RC","Harold Fannin Jr. RC","Mason Graham RC"],autoSets:4,autoSigners:["Shedeur Sanders (CCA+FFS)","Quinshon Judkins (CCA+EQA+FFS)","Dillon Gabriel (CCA+SFS+FFS)","Jerry Jeudy (CCA)"],insertSets:12,rookieEV:70,vetEV:25,legendEV:0,hitRate:60,autoRate:22,rating:"Deep Checklist",concentration:[{n:"Shedeur Sanders RC",p:50},{n:"Quinshon Judkins RC",p:20},{n:"Others",p:30}],ceiling_cards:[{c:"CCA Auto",pl:"Shedeur Sanders",par:"SF 1/1",lo:10000,hi:22000,odds:"1:500",src:"QB 1.0x · name premium · uncertain starter"},{c:"CCA Auto",pl:"Quinshon Judkins",par:"SF 1/1",lo:2000,hi:5000,odds:"1:400",src:"RB 0.35x · 3 auto sets × 1.5x"}]},
+  BAL:{name:"Baltimore Ravens",tier:"s",ev:42,ceiling:18000,conf:7,vets:["Lamar Jackson","Derrick Henry","Zay Flowers"],rookies:["Malaki Starks RC","Mike Green RC"],autoSets:2,autoSigners:["Derrick Henry (EQA)","Ray Lewis (SF ⭐)"],insertSets:12,rookieEV:20,vetEV:75,legendEV:5,hitRate:55,autoRate:18,rating:"Boom/Bust",concentration:[{n:"Lamar Jackson",p:70},{n:"Derrick Henry",p:20},{n:"Others",p:10}],ceiling_cards:[{c:"EQA Auto",pl:"Derrick Henry",par:"SF 1/1",lo:5000,hi:10000,odds:"1:200",src:"RB 0.35x · HOF-bound · Jeanty Chrome comp"},{c:"SF Auto",pl:"Ray Lewis",par:"Legend",lo:1500,hi:3500,odds:"1:150",src:"Legend 0.8x · defensive HOFer"}]},
+  LAC:{name:"Los Angeles Chargers",tier:"s",ev:40,ceiling:18000,conf:7,vets:["Justin Herbert","Ladd McConkey","Derwin James Jr."],rookies:["Omarion Hampton RC","Tre Harris III RC","Jamaree Caldwell RC"],autoSets:3,autoSigners:["Justin Herbert (SFS+EQA)","Omarion Hampton (CCA+EQA+FFS)","Tre Harris III (CCA+FFS)","Ladd McConkey (CCA)"],insertSets:10,rookieEV:55,vetEV:40,legendEV:0,hitRate:55,autoRate:20,rating:"Balanced",concentration:[{n:"Omarion Hampton RC",p:50},{n:"Justin Herbert",p:35},{n:"Others",p:15}],ceiling_cards:[{c:"EQA Auto",pl:"Justin Herbert",par:"SF 1/1",lo:10000,hi:20000,odds:"1:500",src:"QB 1.0x · Chrome comp"},{c:"EQA Auto",pl:"Omarion Hampton",par:"SF 1/1",lo:3000,hi:8000,odds:"1:400",src:"RB 0.35x · 3 auto sets bonus"}]},
+  DAL:{name:"Dallas Cowboys",tier:"a",ev:34,ceiling:16000,conf:6,vets:["Dak Prescott","CeeDee Lamb","George Pickens"],rookies:["Tyler Booker RC","Donovan Ezeiruaku RC"],autoSets:3,autoSigners:["Emmitt Smith (EQA ⭐)","Jason Witten (LY ⭐)","Michael Irvin (SF ⭐)"],insertSets:10,rookieEV:10,vetEV:55,legendEV:35,hitRate:48,autoRate:14,rating:"Balanced",concentration:[{n:"CeeDee Lamb",p:40},{n:"Legend autos",p:35},{n:"Dak Prescott",p:25}],ceiling_cards:[{c:"EQA Auto",pl:"Emmitt Smith",par:"SF 1/1",lo:8000,hi:18000,odds:"1:500",src:"Legend 0.8x · all-time great RB"}]},
+  CAR:{name:"Carolina Panthers",tier:"a",ev:28,ceiling:12000,conf:6,vets:["Bryce Young","Rico Dowdle"],rookies:["Tetairoa McMillan RC","Nic Scourton RC","Trevor Etienne RC"],autoSets:3,autoSigners:["Tetairoa McMillan (CCA+EQA)","Bryce Young (SFS+EQA)"],insertSets:12,rookieEV:65,vetEV:30,legendEV:0,hitRate:52,autoRate:18,rating:"Balanced",concentration:[{n:"Tetairoa McMillan RC",p:70},{n:"Bryce Young",p:20},{n:"Others",p:10}],ceiling_cards:[{c:"EQA Auto",pl:"Tetairoa McMillan",par:"SF 1/1",lo:6000,hi:14000,odds:"1:400",src:"WR 0.4x · Chrome /150=$270 · 9 inserts"},{c:"SFS Auto",pl:"Bryce Young",par:"SF 1/1",lo:3000,hi:7000,odds:"1:400",src:"QB 1.0x · Williams comp scaled"}]},
+  IND:{name:"Indianapolis Colts",tier:"a",ev:32,ceiling:16000,conf:7,vets:["Jonathan Taylor","Sauce Gardner"],rookies:["Tyler Warren RC","Riley Leonard RC","JT Tuimoloau RC"],autoSets:4,autoSigners:["Jonathan Taylor (CCA+SFS)","Tyler Warren (CCA+EQA+FFS)","Riley Leonard (CCA+FFS)","Peyton Manning (EQA ⭐)"],insertSets:9,rookieEV:45,vetEV:30,legendEV:25,hitRate:52,autoRate:18,rating:"Balanced",concentration:[{n:"Tyler Warren RC",p:40},{n:"Peyton Manning legend",p:30},{n:"Jonathan Taylor",p:30}],ceiling_cards:[{c:"EQA Auto",pl:"Peyton Manning",par:"SF 1/1",lo:9000,hi:18000,odds:"1:500",src:"Legend QB 0.8x · premium demand"},{c:"EQA Auto",pl:"Tyler Warren",par:"SF 1/1",lo:3000,hi:7000,odds:"1:350",src:"TE 0.6x · Bowers Chrome comp"}]},
+  CIN:{name:"Cincinnati Bengals",tier:"a",ev:32,ceiling:14000,conf:6,vets:["Joe Burrow","Ja'Marr Chase","Tee Higgins"],rookies:["Shemar Stewart RC","Demetrius Knight Jr. RC"],autoSets:2,autoSigners:["Joe Burrow (SFS+EQA)","Trey Hendrickson (CCA)","Chad Johnson (SF+LY ⭐)"],insertSets:10,rookieEV:15,vetEV:75,legendEV:10,hitRate:50,autoRate:16,rating:"Balanced",concentration:[{n:"Ja'Marr Chase",p:45},{n:"Joe Burrow",p:40},{n:"Chad Johnson legend",p:15}],ceiling_cards:[{c:"SFS Auto",pl:"Joe Burrow",par:"SF 1/1",lo:10000,hi:18000,odds:"1:450",src:"QB 1.0x · Burrow Chrome SF sold $23k"}]},
+  DEN:{name:"Denver Broncos",tier:"a",ev:30,ceiling:14000,conf:6,vets:["Bo Nix","Pat Surtain II"],rookies:["RJ Harvey RC","Jahdae Barron RC","Pat Bryant RC"],autoSets:3,autoSigners:["Bo Nix (CCA+EQA)","RJ Harvey (CCA+FFS)","John Elway (LY ⭐)","Peyton Manning (LY+SFS ⭐)"],insertSets:9,rookieEV:20,vetEV:45,legendEV:35,hitRate:48,autoRate:15,rating:"Balanced",concentration:[{n:"Peyton Manning legend",p:40},{n:"Bo Nix",p:35},{n:"Others",p:25}],ceiling_cards:[{c:"SFS Auto",pl:"Peyton Manning",par:"SF 1/1",lo:8000,hi:16000,odds:"1:500",src:"Legend QB 0.8x · elite demand"},{c:"LY",pl:"John Elway",par:"Legend",lo:500,hi:1000,odds:"1:100",src:"Legend insert comp"}]},
+  DET:{name:"Detroit Lions",tier:"a",ev:30,ceiling:12000,conf:6,vets:["Jared Goff","Jahmyr Gibbs","Amon-Ra St. Brown"],rookies:["Isaac TeSlaa RC","Tyleik Williams RC","Tate Ratledge RC"],autoSets:3,autoSigners:["Jared Goff (CCA)","Jahmyr Gibbs (CCA)","Isaac TeSlaa (CCA+FFS)","Barry Sanders (SFS+LY ⭐)"],insertSets:10,rookieEV:15,vetEV:70,legendEV:15,hitRate:50,autoRate:16,rating:"Balanced",concentration:[{n:"Jahmyr Gibbs",p:45},{n:"Barry Sanders legend",p:25},{n:"Others",p:30}],ceiling_cards:[{c:"SFS Auto",pl:"Barry Sanders",par:"SF 1/1",lo:6000,hi:14000,odds:"1:500",src:"Legend RB 0.8x · all-time great"}]},
+  GB:{name:"Green Bay Packers",tier:"a",ev:28,ceiling:12000,conf:6,vets:["Jordan Love","Josh Jacobs","Micah Parsons"],rookies:["Matthew Golden RC","Savion Williams RC"],autoSets:4,autoSigners:["Matthew Golden (CCA+FFS)","Savion Williams (CCA+FFS)","Josh Jacobs (SFS+CCA)","Brett Favre (SFS+LY ⭐)","Charles Woodson (LY ⭐)"],insertSets:9,rookieEV:30,vetEV:35,legendEV:35,hitRate:48,autoRate:15,rating:"Balanced",concentration:[{n:"Brett Favre legend",p:35},{n:"Matthew Golden RC",p:35},{n:"Micah Parsons",p:30}],ceiling_cards:[{c:"SFS Auto",pl:"Brett Favre",par:"SF 1/1",lo:6000,hi:13000,odds:"1:500",src:"Legend QB 0.8x · HOF"}]},
+  WSH:{name:"Washington Commanders",tier:"a",ev:28,ceiling:10000,conf:6,vets:["Jayden Daniels","Terry McLaurin","Deebo Samuel"],rookies:["Jaylin Lane RC","Josh Conerly Jr. RC"],autoSets:3,autoSigners:["Jayden Daniels (CCA+EQA)","Jaylin Lane (CCA+FFS)","Terry McLaurin (SFS)"],insertSets:10,rookieEV:25,vetEV:70,legendEV:0,hitRate:48,autoRate:16,rating:"Balanced",concentration:[{n:"Jayden Daniels",p:60},{n:"Terry McLaurin",p:25},{n:"Others",p:15}],ceiling_cards:[{c:"EQA Auto",pl:"Jayden Daniels",par:"SF 1/1",lo:7000,hi:15000,odds:"1:450",src:"QB 1.0x · Chrome Kaiju $13.1k"},{c:"SFS Auto",pl:"Terry McLaurin",par:"SF 1/1",lo:1500,hi:4000,odds:"1:350",src:"WR 0.4x · veteran WR SFS"}]},
+  MIN:{name:"Minnesota Vikings",tier:"a",ev:30,ceiling:12000,conf:6,vets:["J.J. McCarthy","Justin Jefferson","Aaron Jones Sr."],rookies:["Tai Felton RC","Donovan Jackson RC"],autoSets:2,autoSigners:["Jordan Addison (EQA)","Tai Felton (CCA+FFS)","Randy Moss (LY ⭐)"],insertSets:12,rookieEV:15,vetEV:70,legendEV:15,hitRate:48,autoRate:12,rating:"Boom/Bust",concentration:[{n:"Justin Jefferson",p:75},{n:"Randy Moss legend",p:15},{n:"Others",p:10}],ceiling_cards:[{c:"PP Pluto",pl:"Justin Jefferson",par:"1:28k packs",lo:3000,hi:7000,odds:"1:233 boxes",src:"WR PP · Flagg NBA Uranus $18.5k · WR 0.4x"},{c:"LY",pl:"Randy Moss",par:"Legend",lo:700,hi:1500,odds:"1:100",src:"Legend WR 0.8x · HOF"}]},
+  PIT:{name:"Pittsburgh Steelers",tier:"a",ev:26,ceiling:12000,conf:6,vets:["Aaron Rodgers","DK Metcalf","T.J. Watt"],rookies:["Kaleb Johnson RC","Will Howard RC","Derrick Harmon RC"],autoSets:3,autoSigners:["T.J. Watt (CCA)","Kaleb Johnson (CCA+FFS)","Will Howard (CCA+FFS)","Aaron Rodgers (SFS)","Troy Polamalu (LY ⭐)"],insertSets:9,rookieEV:25,vetEV:50,legendEV:25,hitRate:45,autoRate:15,rating:"Balanced",concentration:[{n:"Aaron Rodgers",p:35},{n:"Troy Polamalu legend",p:25},{n:"T.J. Watt",p:25},{n:"Others",p:15}],ceiling_cards:[{c:"SFS Auto",pl:"Aaron Rodgers",par:"SF 1/1",lo:6000,hi:14000,odds:"1:500",src:"QB 1.0x · SFS set · age discount"}]},
+  HOU:{name:"Houston Texans",tier:"a",ev:26,ceiling:10000,conf:6,vets:["CJ Stroud","Nico Collins"],rookies:["Jayden Higgins RC","Jaylin Noel RC"],autoSets:3,autoSigners:["CJ Stroud (EQA)","Nico Collins (SFS)","Jayden Higgins (CCA+FFS)","Earl Campbell (LY ⭐)"],insertSets:8,rookieEV:30,vetEV:55,legendEV:15,hitRate:45,autoRate:14,rating:"Balanced",concentration:[{n:"CJ Stroud",p:50},{n:"Jayden Higgins RC",p:30},{n:"Earl Campbell legend",p:20}],ceiling_cards:[{c:"EQA Auto",pl:"CJ Stroud",par:"SF 1/1",lo:5000,hi:11000,odds:"1:450",src:"QB 1.0x · year 2 QB"}]},
+  MIA:{name:"Miami Dolphins",tier:"a",ev:26,ceiling:10000,conf:5,vets:["Tua Tagovailoa","De'Von Achane","Tyreek Hill"],rookies:["Quinn Ewers RC","Kenneth Grant RC","Ollie Gordon II RC"],autoSets:2,autoSigners:["De'Von Achane (EQA)","Quinn Ewers (CCA)","Dan Marino (LY ⭐)"],insertSets:9,rookieEV:20,vetEV:65,legendEV:15,hitRate:45,autoRate:13,rating:"Deep Checklist",concentration:[{n:"De'Von Achane",p:30},{n:"Tyreek Hill",p:25},{n:"Dan Marino legend",p:20},{n:"Others",p:25}],ceiling_cards:[{c:"LY",pl:"Dan Marino",par:"Legend",lo:800,hi:1800,odds:"1:100",src:"Legend QB 0.8x · HOF"},{c:"EQA Auto",pl:"De'Von Achane",par:"SF 1/1",lo:2500,hi:6000,odds:"1:400",src:"RB 0.35x · speed back premium"}]},
+  ARI:{name:"Arizona Cardinals",tier:"a",ev:22,ceiling:8000,conf:5,vets:["Kyler Murray","Marvin Harrison Jr.","Trey Benson"],rookies:["Walter Nolen RC","Will Johnson RC"],autoSets:2,autoSigners:["Trey McBride (CCA)"],insertSets:8,rookieEV:30,vetEV:60,legendEV:0,hitRate:45,autoRate:12,rating:"Balanced",concentration:[{n:"Marvin Harrison Jr.",p:55},{n:"Kyler Murray",p:30},{n:"Others",p:15}],ceiling_cards:[{c:"CCA Auto",pl:"Trey McBride",par:"SF 1/1",lo:1500,hi:3500,odds:"1:80",src:"TE 0.6x · Bowers comp"}]},
+  NO:{name:"New Orleans Saints",tier:"b",ev:16,ceiling:5000,conf:4,vets:["Alvin Kamara","Chris Olave"],rookies:["Tyler Shough RC","Kelvin Banks Jr. RC"],autoSets:2,autoSigners:["Chris Olave (EQA)","Tyler Shough (CCA+SFS+FFS)"],insertSets:5,rookieEV:40,vetEV:55,legendEV:0,hitRate:35,autoRate:10,rating:"Balanced",concentration:[{n:"Tyler Shough RC",p:45},{n:"Chris Olave",p:35},{n:"Others",p:20}],ceiling_cards:[{c:"SFS Auto",pl:"Tyler Shough",par:"SF 1/1",lo:2000,hi:6000,odds:"1:400",src:"QB 1.0x · starter NO · 3 auto sets"}]},
+  NYJ:{name:"New York Jets",tier:"b",ev:18,ceiling:6000,conf:4,vets:["Justin Fields","Breece Hall"],rookies:["Mason Taylor RC","Armand Membou RC"],autoSets:2,autoSigners:["Mason Taylor (CCA+FFS)","Darrelle Revis (LY ⭐)"],insertSets:6,rookieEV:35,vetEV:50,legendEV:15,hitRate:35,autoRate:10,rating:"Balanced",concentration:[{n:"Breece Hall",p:50},{n:"Darrelle Revis legend",p:25},{n:"Others",p:25}],ceiling_cards:[{c:"CCA Auto",pl:"Mason Taylor",par:"SF 1/1",lo:1000,hi:3000,odds:"1:350",src:"TE 0.6x · Warren comp"}]},
+  LAR:{name:"Los Angeles Rams",tier:"b",ev:18,ceiling:8000,conf:5,vets:["Matthew Stafford","Kyren Williams","Puka Nacua"],rookies:["Terrance Ferguson RC","Josaiah Stewart RC"],autoSets:3,autoSigners:["Matthew Stafford (CCA)","Terrance Ferguson (CCA+FFS)","Aaron Donald (LY ⭐)","Cooper Kupp (SFS)"],insertSets:7,rookieEV:20,vetEV:55,legendEV:25,hitRate:38,autoRate:10,rating:"Balanced",concentration:[{n:"Matthew Stafford",p:40},{n:"Aaron Donald legend",p:35},{n:"Others",p:25}],ceiling_cards:[{c:"SFS Auto",pl:"Cooper Kupp",par:"SF 1/1",lo:3000,hi:7000,odds:"1:400",src:"WR 0.4x · injury history discount"}]},
+  SEA:{name:"Seattle Seahawks",tier:"b",ev:18,ceiling:6000,conf:4,vets:["Sam Darnold","Kenneth Walker III","Jaxon Smith-Njigba"],rookies:["Jalen Milroe RC","Elijah Arroyo RC","Nick Emmanwori RC"],autoSets:3,autoSigners:["Sam Darnold (CCA)","Jalen Milroe (CCA+FFS)","Elijah Arroyo (CCA+FFS)","Cooper Kupp (SFS)"],insertSets:7,rookieEV:30,vetEV:55,legendEV:15,hitRate:38,autoRate:12,rating:"Balanced",concentration:[{n:"Jaxon Smith-Njigba",p:40},{n:"Cooper Kupp SFS",p:30},{n:"Others",p:30}],ceiling_cards:[{c:"CCA Auto",pl:"Jalen Milroe",par:"SF 1/1",lo:1000,hi:3000,odds:"1:300",src:"QB 1.0x · backup role"}]},
+  ATL:{name:"Atlanta Falcons",tier:"b",ev:16,ceiling:4000,conf:4,vets:["Bijan Robinson","Drake London","Kyle Pitts"],rookies:["Jalon Walker RC","Billy Bowman Jr. RC"],autoSets:1,autoSigners:["Michael Penix Jr. (EQA)"],insertSets:5,rookieEV:25,vetEV:65,legendEV:0,hitRate:35,autoRate:8,rating:"Balanced",concentration:[{n:"Bijan Robinson",p:55},{n:"Drake London",p:25},{n:"Others",p:20}],ceiling_cards:[{c:"EQA Auto",pl:"Michael Penix Jr.",par:"SF 1/1",lo:1500,hi:4000,odds:"1:120",src:"QB backup comp"}]},
+};
+
+// ── PLAYER DATA ──
+const POS_WEIGHTS={QB:1.0,WR:0.4,RB:0.35,TE:0.6,Legend:0.8};
+const POS_COLORS={QB:'var(--green)',WR:'var(--teal)',RB:'var(--gold)',TE:'var(--purple)',Legend:'var(--red)'};
+const MAX_BID_PCT={QB:0.85,TE:0.80,Legend:0.80,WR:0.75,RB:0.70};
+
+const PLAYERS=[
+  {name:"Cam Ward",team:"TEN",pos:"QB",ev:38,ceiling:32000,conf:8,autos:4,autoDetail:"CCA · EQA · SFS · FFS — ALL 4",inserts:["LS","ET","STN","CD","SPN","CP","PL","BCV","SF","SC","PP"],hitRate:70,autoRate:28,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:18000,hi:32000,odds:"1:500",src:"QB 1.0x · Chrome Red /5=$15k"},{s:"PP Pluto",par:"1:28k packs",lo:6000,hi:16000,odds:"1:233 boxes",src:"Flagg NBA Uranus $18.5k"}],note:"#1 overall QB. Chrome /5 sold $15k. All 4 auto sets and every insert. QB 1.0x weight = highest multiplier."},
+  {name:"Jaxson Dart",team:"NYG",pos:"QB",ev:32,ceiling:26000,conf:8,autos:4,autoDetail:"CCA · EQA · SFS · FFS — ALL 4",inserts:["ET","STN","CD","SPN","CP","PL","BCV","SF","SC","PP"],hitRate:65,autoRate:24,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:14000,hi:26000,odds:"1:500",src:"QB 1.0x · Chrome /10=$14k"},{s:"PP Pluto",par:"1:28k packs",lo:5000,hi:12000,odds:"1:233 boxes",src:"QB PP · hot market"}],note:"Chrome /10 sold $14k — same opening-week tier as Ward. QB 1.0x. NYG big market."},
+  {name:"Travis Hunter",team:"JAX",pos:"WR",ev:24,ceiling:22000,conf:7,autos:3,autoDetail:"CCA · EQA · FFS",inserts:["ET","STN","CD","SPN","CP","PL","BCV","SC"],hitRate:62,autoRate:22,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:10000,hi:22000,odds:"1:500",src:"WR 0.4x + dual-threat +50% · Flagg /10=$11.5k"},{s:"CCA Auto",par:"Orange /25",lo:1200,hi:3000,odds:"1:80",src:"WR · McMillan /150=$270 scaled"}],note:"WR 0.4x but dual-threat premium adds 50% → effective 0.6x. 3 auto sets + 8 inserts."},
+  {name:"Emeka Egbuka",team:"TB",pos:"WR",ev:22,ceiling:14000,conf:7,autos:4,autoDetail:"CCA · EQA · SFS · FFS — ALL 4",inserts:["ET","STN","CD","SPN","CP","PL","BCV","SF","SC"],hitRate:65,autoRate:24,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:6000,hi:14000,odds:"1:450",src:"WR 0.4x · 4 sets × 2.0x · Flagg /25=$9.5k"},{s:"SFS Auto",par:"SF 1/1",lo:5000,hi:11000,odds:"1:500",src:"WR · all 4 sets = demand"}],note:"WR 0.4x but all 4 auto sets applies 2.0x bonus. Net ~0.8x effective. Deep insert run."},
+  {name:"Cam Skattebo",team:"NYG",pos:"RB",ev:18,ceiling:18000,conf:6,autos:2,autoDetail:"CCA · FFS",inserts:["ET","STN","CD","SPN","CP","PL","BCV","SF","SC","PP"],hitRate:55,autoRate:16,ceiling_cards:[{s:"PP Pluto",par:"1:28k packs",lo:3000,hi:10000,odds:"1:233 boxes",src:"RB 0.35x · PP featured × 1.8x"},{s:"CCA Auto",par:"SF 1/1",lo:2500,hi:7000,odds:"1:400",src:"RB 0.35x · PP presence bonus"}],note:"RB 0.35x but featured in Planetary Pursuit — 1.8x PP bonus on ceiling calc."},
+  {name:"Omarion Hampton",team:"LAC",pos:"RB",ev:18,ceiling:12000,conf:6,autos:3,autoDetail:"CCA · EQA · FFS",inserts:["ET","SPN","PL","BCV","SC"],hitRate:52,autoRate:18,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:3000,hi:8000,odds:"1:400",src:"RB 0.35x · 3 auto sets × 1.5x"},{s:"CCA Auto",par:"Orange /25",lo:600,hi:1500,odds:"1:80",src:"RB · Jeanty Chrome /250=$96 scaled"}],note:"RB 0.35x × 3 auto sets = net ~0.52x. Herbert connection premium. Buy in compression."},
+  {name:"Tom Brady",team:"TB",pos:"Legend",ev:42,ceiling:30000,conf:8,autos:1,autoDetail:"EQA on-card ⭐",inserts:["Light Years"],hitRate:15,autoRate:5,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:16000,hi:30000,odds:"1:500",src:"GOAT QB · Legend 0.8x · Chrome Kaiju $23.3k"},{s:"EQA Auto",par:"Black Eclipse /10",lo:5000,hi:12000,odds:"1:200",src:"Numbered Brady auto · massive demand"}],note:"Tom Brady EQA is the single most valuable pull in the product. Legend 0.8x weight but GOAT overrides. Pure lottery ticket."},
+  {name:"Jerry Rice",team:"SF",pos:"Legend",ev:38,ceiling:26000,conf:7,autos:2,autoDetail:"EQA + SFS — both on-card ⭐",inserts:["Light Years","SF"],hitRate:12,autoRate:5,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:16000,hi:28000,odds:"1:500",src:"GOAT WR · Legend 0.8x · Brady comp"},{s:"SFS Auto",par:"SF 1/1",lo:12000,hi:22000,odds:"1:500",src:"Two on-card auto sets = demand × 2"}],note:"Two on-card auto sets. WR GOAT with elite demand. Legend 0.8x min."},
+  {name:"Josh Allen",team:"BUF",pos:"QB",ev:36,ceiling:25000,conf:8,autos:1,autoDetail:"EQA on-card",inserts:["LS","ET","STN","CD","SPN","CP","PL","BCV","SF","SC","PP"],hitRate:65,autoRate:18,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:16000,hi:28000,odds:"1:500",src:"QB 1.0x · most-inserted active player"},{s:"PP Pluto",par:"1:28k packs",lo:4000,hi:9000,odds:"1:233 boxes",src:"QB PP · Wemby $39.1k · Flagg $18.5k NFL adj"}],note:"QB 1.0x. Most insert-stacked active player — 11 sets including PP. EQA on-card."},
+  {name:"Patrick Mahomes II",team:"KC",pos:"QB",ev:34,ceiling:20000,conf:8,autos:1,autoDetail:"EQA on-card",inserts:["LS","ET","STN","CD","SPN","CP","PL","BCV","SF","SC","PP"],hitRate:60,autoRate:16,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:12000,hi:22000,odds:"1:500",src:"QB 1.0x · Mahomes premium"},{s:"PP Pluto",par:"1:28k packs",lo:4000,hi:10000,odds:"1:233 boxes",src:"QB PP · Flagg NBA comp"}],note:"QB 1.0x. Rivals Allen for insert saturation. EQA on-card."},
+  {name:"Peyton Manning",team:"IND",pos:"Legend",ev:36,ceiling:16000,conf:7,autos:2,autoDetail:"SFS + EQA — both on-card ⭐",inserts:["Light Years"],hitRate:10,autoRate:5,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:8000,hi:16000,odds:"1:500",src:"Legend QB 0.8x · elite demand"},{s:"SFS Auto",par:"SF 1/1",lo:6000,hi:14000,odds:"1:500",src:"Two on-card auto sets"}],note:"Two on-card auto sets. Available in IND and DEN team slots. Manning autos strong sellers."},
+  {name:"Saquon Barkley",team:"PHI",pos:"RB",ev:24,ceiling:12000,conf:7,autos:1,autoDetail:"EQA on-card",inserts:["LS","STN","CD","SPN","SC","BCV","PP"],hitRate:55,autoRate:16,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:5000,hi:12000,odds:"1:450",src:"RB 0.35x · monster season × 2x premium"},{s:"PP Pluto",par:"1:28k packs",lo:1500,hi:4000,odds:"1:233 boxes",src:"RB PP · Skenes Earth $595 NFL adj"}],note:"RB 0.35x but Barkley monster season 2025 earns 2x demand override → effective 0.7x."},
+  {name:"Jalen Hurts",team:"PHI",pos:"QB",ev:26,ceiling:20000,conf:7,autos:1,autoDetail:"EQA on-card",inserts:["LS","STN","CD","SPN","CP","SC","BCV"],hitRate:55,autoRate:16,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:10000,hi:20000,odds:"1:500",src:"QB 1.0x · Super Bowl QB"},{s:"BLC /10",par:"Black Eclipse",lo:3500,hi:8000,odds:"1:200",src:"Skenes /10=$6.8k baseball comp"}],note:"QB 1.0x. Super Bowl champion. 7 insert sets. PHI slot has both Hurts and Barkley EQA."},
+  {name:"Ashton Jeanty",team:"LV",pos:"RB",ev:18,ceiling:14000,conf:6,autos:4,autoDetail:"CCA · EQA · FFS — 3 main sets",inserts:["ET","STN","CD","SPN","CP","PL","BCV","SF","SC","PP"],hitRate:68,autoRate:26,ceiling_cards:[{s:"EQA Auto ⚠️COOLING",par:"SF 1/1",lo:3000,hi:10000,odds:"1:500",src:"RB 0.35x · Chrome /250 DOWN to $96 (-68%)"},{s:"PP Pluto",par:"1:28k packs",lo:2500,hi:7000,odds:"1:233 boxes",src:"RB PP · market cooling adj"}],note:"⚠️ COOLING MARKET. Chrome Pink /250 dropped to $96 (-68% in 30 days). RB 0.35x. Sell into frenzy, don't hold."},
+  {name:"Tetairoa McMillan",team:"CAR",pos:"WR",ev:16,ceiling:12000,conf:6,autos:2,autoDetail:"CCA · EQA",inserts:["ET","STN","CD","SPN","CP","PL","BCV","SF","SC"],hitRate:50,autoRate:16,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:4000,hi:12000,odds:"1:400",src:"WR 0.4x · Chrome /150=$270 · 9 inserts"},{s:"CCA Auto",par:"Orange /25",lo:600,hi:1500,odds:"1:80",src:"WR · Chrome comp scaled to /25"}],note:"WR 0.4x. Chrome Blue /150 sold $270 — rising +3.8%. Deep insert run (9 sets). Sleeper slot."},
+  {name:"Tyler Warren",team:"IND",pos:"TE",ev:14,ceiling:7000,conf:6,autos:3,autoDetail:"CCA · EQA · FFS",inserts:["STN","PL","BCV"],hitRate:42,autoRate:14,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:3000,hi:7000,odds:"1:350",src:"TE 0.6x · Bowers Chrome comp"},{s:"CCA Auto",par:"Orange /25",lo:700,hi:1800,odds:"1:80",src:"TE · Kittle CCA comp"}],note:"TE 0.6x — better than WR/RB. 3 auto sets. Bowers set TE rookie records — Warren is the Bowers comp."},
+  {name:"Shedeur Sanders",team:"CLE",pos:"QB",ev:18,ceiling:20000,conf:5,autos:2,autoDetail:"CCA · FFS",inserts:["STN","CD","SPN","CP","PL","BCV","SF","SC"],hitRate:48,autoRate:12,ceiling_cards:[{s:"CCA Auto",par:"SF 1/1",lo:5000,hi:20000,odds:"1:500",src:"QB 1.0x · name premium · wide range = uncertain role"},{s:"CCA Auto",par:"Orange /25",lo:800,hi:2500,odds:"1:80",src:"QB · starter vs backup gap"}],note:"QB 1.0x but conf 5/10 — wide range reflects starter uncertainty. Name keeps floor high."},
+  {name:"Luther Burden III",team:"CHI",pos:"WR",ev:14,ceiling:8000,conf:6,autos:3,autoDetail:"CCA · EQA · FFS",inserts:["ET","STN","CD","SPN","CP","PL","BCV"],hitRate:45,autoRate:15,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:3000,hi:8000,odds:"1:400",src:"WR 0.4x · 3 auto sets × 1.5x · Williams premium"},{s:"CCA Auto",par:"Orange /25",lo:500,hi:1200,odds:"1:80",src:"WR · 3 sets bonus"}],note:"WR 0.4x · 3 auto sets × 1.5x bonus → net ~0.6x. Caleb Williams connection helps."},
+  {name:"George Kittle",team:"SF",pos:"TE",ev:18,ceiling:8000,conf:6,autos:1,autoDetail:"CCA on-card",inserts:["STN","SPN","PL","BCV"],hitRate:42,autoRate:12,ceiling_cards:[{s:"CCA Auto",par:"SF 1/1",lo:4000,hi:9000,odds:"1:400",src:"TE 0.6x · top active TE"},{s:"CCA Auto",par:"Orange /25",lo:800,hi:2000,odds:"1:80",src:"TE · strong collector demand"}],note:"TE 0.6x. CCA on-card. SF slot also has Jerry Rice EQA and Joe Montana LY — deep legend slot."},
+  {name:"Drake Maye",team:"NE",pos:"QB",ev:20,ceiling:10000,conf:6,autos:1,autoDetail:"EQA on-card",inserts:["LS","STN","BCV","PL"],hitRate:45,autoRate:14,ceiling_cards:[{s:"EQA Auto",par:"SF 1/1",lo:4000,hi:10000,odds:"1:400",src:"QB 1.0x · slow-burn market · Cosmic premium"},{s:"EQA Auto",par:"BLC /10",lo:1500,hi:4000,odds:"1:200",src:"QB · Skenes /10=$6.8k baseball comp NFL adj"}],note:"QB 1.0x but NE = slow burn. Chrome market described as slow-build. NE slot also has Tom Brady EQA."},
+  {name:"Dillon Gabriel",team:"CLE",pos:"QB",ev:10,ceiling:4000,conf:4,autos:3,autoDetail:"CCA · SFS · FFS",inserts:["BCV"],hitRate:35,autoRate:12,ceiling_cards:[{s:"SFS Auto",par:"SF 1/1",lo:1500,hi:4500,odds:"1:400",src:"QB 1.0x · SFS on-card · backup 40% discount"}],note:"QB 1.0x but backup role = 40% discount. 3 auto sets including SFS on-card. Sleeper if he wins CLE job."},
+  {name:"Tyler Shough",team:"NO",pos:"QB",ev:9,ceiling:5000,conf:4,autos:3,autoDetail:"CCA · SFS · FFS",inserts:["BCV"],hitRate:30,autoRate:10,ceiling_cards:[{s:"SFS Auto",par:"SF 1/1",lo:1500,hi:5000,odds:"1:400",src:"QB 1.0x · SFS on-card · starter NO"},{s:"CCA Auto",par:"Orange /25",lo:250,hi:700,odds:"1:80",src:"QB · NO situation · 3 sets bonus"}],note:"QB 1.0x but conf 4/10. SFS on-card is the hook. Budget buy under $10. Wide range."},
+  {name:"Matthew Golden",team:"GB",pos:"WR",ev:7,ceiling:3000,conf:4,autos:2,autoDetail:"CCA · FFS",inserts:["BCV"],hitRate:28,autoRate:8,ceiling_cards:[{s:"CCA Auto",par:"SF 1/1",lo:800,hi:3000,odds:"1:350",src:"WR 0.4x · limited comps"}],note:"WR 0.4x. 2 auto sets. Budget slot — fair under $8."},
+  {name:"RJ Harvey",team:"DEN",pos:"RB",ev:6,ceiling:2500,conf:4,autos:2,autoDetail:"CCA · FFS",inserts:["BCV"],hitRate:25,autoRate:8,ceiling_cards:[{s:"CCA Auto",par:"SF 1/1",lo:600,hi:2500,odds:"1:350",src:"RB 0.35x · limited comps"}],note:"RB 0.35x. Lowest positional weight. Budget slot only — fair under $8. DEN team slot is A-tier due to Peyton Manning."},
+];
+
+// ── TEAM EVAL ──
+function teamAutoFill(){
+  const k=document.getElementById('t-team').value;
+  if(k) document.getElementById('t-price').value=Math.round(TEAMS[k].ev*0.9);
+}
+
+function evalTeam(){
+  const k=document.getElementById('t-team').value;
+  if(!k){alert('Select a team first!');return;}
+  const sp=+document.getElementById('t-price').value||30;
+  const boxes=+document.getElementById('t-boxes').value||1;
+  const t=TEAMS[k];
+  const ev=t.ev*boxes*phase.mult;
+  const roi=Math.round(((ev-sp)/sp)*100);
+  const maxBid=Math.round(ev*(t.rating==='Boom/Bust'?0.75:0.85)+(phase.maxAdj*ev));
+  const low=Math.round(ev*0.65);const high=Math.round(ev*1.45);
+
+  document.getElementById('tr-lo').textContent='$'+low;
+  document.getElementById('tr-mid').textContent='$'+Math.round(ev);
+  document.getElementById('tr-hi').textContent='$'+high;
+  document.getElementById('tr-conf-lbl').textContent='Confidence '+t.conf+'/10';
+  const cf=document.getElementById('tr-conf-fill');
+  cf.style.width=Math.round(t.conf/10*100)+'%';
+  cf.style.background=t.conf>=7?'var(--green)':t.conf>=5?'var(--gold)':'var(--red)';
+  document.getElementById('tr-conf-note').textContent=t.conf>=7?'Multiple verified comps.':t.conf>=5?'Partial comps. Range is wider.':'Limited comps. Treat as rough guide.';
+
+  const bv=document.getElementById('tr-verdict');
+  const buyT=phase.buy;const stashT=phase.stash;
+  if(sp<=ev*buyT){bv.className='big-verdict buy';document.getElementById('tr-vlbl').textContent='✅ BUY';document.getElementById('tr-vsub').textContent='Strong relative value at this price.';}
+  else if(sp<=ev*stashT){bv.className='big-verdict buy';document.getElementById('tr-vlbl').textContent='✅ BUY';document.getElementById('tr-vsub').textContent='Within buy zone for current phase.';}
+  else if(sp<=ev){bv.className='big-verdict stash';document.getElementById('tr-vlbl').textContent='📦 STASH';document.getElementById('tr-vsub').textContent='Near value. Ceiling play only.';}
+  else{bv.className='big-verdict pass';document.getElementById('tr-vlbl').textContent='❌ PASS';document.getElementById('tr-vsub').textContent='Above value. Max bid: $'+maxBid+'.';}
+  document.getElementById('tr-roi').textContent=(roi>=0?'+':'')+roi+'%';
+  document.getElementById('tr-pnote').textContent=phase.note;
+
+  document.getElementById('tr-ev').textContent='$'+Math.round(ev);
+  document.getElementById('tr-max').textContent='$'+maxBid;
+  document.getElementById('tr-ceil').textContent='$'+t.ceiling.toLocaleString();
+  document.getElementById('t-bidinput').value='';
+  document.getElementById('t-bidresult').style.display='none';
+
+  document.getElementById('tr-players').textContent=t.vets.length+t.rookies.length;
+  document.getElementById('tr-rcs').textContent=t.rookies.length;
+  document.getElementById('tr-autos').textContent=t.autoSets;
+  document.getElementById('tr-inserts').textContent=t.insertSets;
+
+  const conc=document.getElementById('tr-conc');
+  conc.innerHTML=t.concentration.map(c=>`<div class="boom-lbl"><span>${c.n}</span><span>${c.p}%</span></div><div class="boom-bar"><div class="boom-fill" style="width:${c.p}%;background:${c.p>65?'var(--red)':c.p>35?'var(--gold)':'var(--green)'}"></div></div>`).join('');
+  const topP=t.concentration[0].p;
+  document.getElementById('tr-boom').innerHTML=topP>70?`⚠️ <strong>Boom/Bust</strong> — ${topP}% from one player. High variance.`:topP>40?`🟡 <strong>Concentrated</strong> — one main driver.`:`🟢 <strong>Spread Risk</strong> — value distributed.`;
+
+  document.getElementById('tr-evtype').innerHTML=`<div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--purple)">${t.rookieEV}%</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;margin-top:3px">Rookie EV</div></div><div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--teal)">${t.vetEV}%</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;margin-top:3px">Veteran EV</div></div><div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--gold)">${t.legendEV}%</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;margin-top:3px">Legend EV</div></div>`;
+
+  document.getElementById('tr-ceiltable').innerHTML=t.ceiling_cards.map(c=>`<tr><td>${c.c}</td><td style="font-weight:600">${c.pl}</td><td style="color:var(--purple);font-size:11px">${c.par}</td><td class="price-range">$${(c.lo/1000).toFixed(1)}k–$${(c.hi/1000).toFixed(1)}k</td><td style="color:var(--muted)">${c.odds}</td><td class="src-cell">${c.src}</td></tr>`).join('');
+  document.getElementById('tr-autos-detail').innerHTML=t.autoSigners.map(a=>`<div style="font-size:13px;color:#FFD080;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05)">✍️ ${a}</div>`).join('');
+
+  document.getElementById('team-results').classList.remove('hidden');
+  document.getElementById('team-results').scrollIntoView({behavior:'smooth',block:'start'});
+  buildTeamTable();
+}
+
+function checkTeamBid(){
+  const k=document.getElementById('t-team').value;if(!k) return;
+  const bid=+document.getElementById('t-bidinput').value;if(!bid) return;
+  const t=TEAMS[k];
+  const ev=t.ev*(+document.getElementById('t-boxes').value||1)*phase.mult;
+  const maxBid=Math.round(ev*(t.rating==='Boom/Bust'?0.75:0.85));
+  const r=document.getElementById('t-bidresult');r.style.display='block';
+  if(bid<=ev*0.55){r.className='bid-result g';r.textContent='🟢 Strong Buy — '+Math.round(bid/ev*100)+'% of EV. Pull the trigger.';}
+  else if(bid<=maxBid){r.className='bid-result g';r.textContent='🟢 Good Bid — In the zone. Max: $'+maxBid+'.';}
+  else if(bid<=ev){r.className='bid-result y';r.textContent='🟡 Fair — At EV. Ceiling play only.';}
+  else{r.className='bid-result r';r.textContent='🔴 Overpriced — Max bid: $'+maxBid+'. Phase: '+phase.lbl+'.';}
+}
+
+function buildTeamTable(filter=''){
+  const f=filter.toLowerCase();
+  const sorted=Object.entries(TEAMS).sort((a,b)=>b[1].ev-a[1].ev);
+  const tbody=document.getElementById('team-rank-body');tbody.innerHTML='';
+  sorted.forEach(([k,t])=>{
+    if(f&&!t.name.toLowerCase().includes(f)) return;
+    const adjEv=t.ev*phase.mult;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="font-weight:600">${t.name}</td><td><span class="tier-${t.tier}">${t.tier.toUpperCase()}</span></td><td style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700">$${Math.round(adjEv*0.65)}–$${Math.round(adjEv*1.45)}</td><td style="color:var(--purple);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700">$${t.ceiling.toLocaleString()}</td><td>${t.autoSets}</td><td>${t.rookies.length}</td><td style="font-size:12px;font-weight:600;color:${t.rating==='Boom/Bust'?'var(--red)':t.rating==='Balanced'?'var(--teal)':'var(--green)'}">${t.rating}</td>`;
+    tr.onclick=()=>{document.getElementById('t-team').value=k;document.getElementById('t-price').value=Math.round(t.ev*0.9);evalTeam();};
+    tr.style.cursor='pointer';
+    tbody.appendChild(tr);
+  });
+}
+function filterTeams(v){buildTeamTable(v);}
+buildTeamTable();
+
+// ── PLAYER EVAL ──
+function liveSearch(v){
+  const s=document.getElementById('p-suggest');
+  if(v.length<2){s.style.display='none';return;}
+  const m=PLAYERS.filter(p=>p.name.toLowerCase().includes(v.toLowerCase())).slice(0,6);
+  if(!m.length){s.style.display='none';return;}
+  s.style.display='block';
+  s.innerHTML=m.map(p=>`<div onclick="pickPlayer('${p.name}')">${p.name} <span style="color:var(--muted)">${p.pos} · ${p.team} · ~$${p.ev}</span></div>`).join('');
+}
+
+let selP=null;
+function pickPlayer(name){
+  document.getElementById('p-name').value=name;
+  document.getElementById('p-suggest').style.display='none';
+  selP=PLAYERS.find(p=>p.name===name);
+  if(selP) document.getElementById('p-price').value=Math.round(selP.ev*0.9);
+}
+
+function evalPlayer(){
+  const name=document.getElementById('p-name').value;
+  const sp=+document.getElementById('p-price').value||20;
+  const boxes=+document.getElementById('p-boxes').value||1;
+  const p=selP||PLAYERS.find(pl=>pl.name.toLowerCase()===name.toLowerCase());
+  if(!p){alert('Player not found — use the list below.');return;}
+  selP=p;
+  const posW=POS_WEIGHTS[p.pos]||0.5;
+  const ev=p.ev*boxes*phase.mult;
+  const maxBidPct=(MAX_BID_PCT[p.pos]||0.75)+(phase.buy-0.65);
+  const maxBid=Math.round(ev*Math.min(maxBidPct,0.90));
+  const roi=Math.round(((ev-sp)/sp)*100);
+  const low=Math.round(ev*0.6);const high=Math.round(ev*1.5);
+
+  document.getElementById('pr-lo').textContent='$'+low;
+  document.getElementById('pr-mid').textContent='$'+Math.round(ev);
+  document.getElementById('pr-hi').textContent='$'+high;
+  document.getElementById('pr-pos').textContent=p.pos+' · '+posW+'x weight';
+  document.getElementById('pr-pos').style.color=POS_COLORS[p.pos]||'var(--teal)';
+  document.getElementById('pr-posweight').textContent='Positional weights: QB=1.0 · TE=0.6 · Legend=0.8 · WR=0.4 · RB=0.35';
+  const cf=document.getElementById('pr-conf-fill');
+  cf.style.width=Math.round(p.conf/10*100)+'%';
+  cf.style.background=p.conf>=7?'var(--green)':p.conf>=5?'var(--gold)':'var(--red)';
+  document.getElementById('pr-conf-note').textContent=p.conf>=7?'Multiple verified comps.':p.conf>=5?'Partial comps. Range is wider.':'Limited comps. Rough guide only.';
+
+  const bv=document.getElementById('pr-verdict');
+  if(sp<=ev*phase.buy){bv.className='big-verdict buy';document.getElementById('pr-vlbl').textContent='✅ BUY';document.getElementById('pr-vsub').textContent='Strong relative value.';}
+  else if(sp<=ev*phase.stash){bv.className='big-verdict buy';document.getElementById('pr-vlbl').textContent='✅ BUY';document.getElementById('pr-vsub').textContent='Within buy zone for current phase.';}
+  else if(sp<=ev){bv.className='big-verdict stash';document.getElementById('pr-vlbl').textContent='📦 STASH';document.getElementById('pr-vsub').textContent='Near value. Ceiling play only.';}
+  else{bv.className='big-verdict pass';document.getElementById('pr-vlbl').textContent='❌ PASS';document.getElementById('pr-vsub').textContent='Above value. Max bid: $'+maxBid+'.';}
+  document.getElementById('pr-roi').textContent=(roi>=0?'+':'')+roi+'%';
+  document.getElementById('pr-pnote').textContent=phase.note;
+
+  document.getElementById('pr-ev').textContent='$'+Math.round(ev);
+  document.getElementById('pr-max').textContent='$'+maxBid;
+  document.getElementById('pr-ceil').textContent='$'+p.ceiling.toLocaleString();
+  document.getElementById('p-bidinput').value='';
+  document.getElementById('p-bidresult').style.display='none';
+
+  document.getElementById('pr-tier').textContent={s:'S-Tier',a:'A-Tier',b:'B-Tier'}[p.ev>=30?'s':p.ev>=14?'a':'b'];
+  document.getElementById('pr-autos').textContent=p.autos;
+  document.getElementById('pr-inserts').textContent=p.inserts.length;
+  const hr=Math.round(100-(100-p.hitRate)**boxes);
+  document.getElementById('pr-hitrate').textContent=Math.min(99,hr)+'%';
+
+  document.getElementById('pr-pills').innerHTML=p.inserts.map(i=>`<span class="pill ${i==='PP'?'pp':''}">${i}</span>`).join('')+(p.autos>0?`<span class="pill auto">AUTO ×${p.autos} — ${p.autoDetail}</span>`:'');
+
+  const ar=Math.round(100-(100-p.autoRate)**boxes);
+  document.getElementById('pr-probs').innerHTML=`<div class="brow"><span>Any card</span><strong>${Math.min(99,hr)}%</strong></div><div class="brow"><span>At least one auto</span><strong>${ar}%</strong></div><div class="brow"><span>Numbered /25 or better</span><strong>${Math.round(ar*0.3)}%</strong></div>`;
+  document.getElementById('pr-phasenote').textContent=phase.probNote;
+
+  document.getElementById('pr-ceiltable').innerHTML=p.ceiling_cards.map(c=>`<tr><td>${c.s}</td><td style="color:var(--purple);font-size:11px">${c.par}</td><td class="price-range">$${(c.lo/1000).toFixed(1)}k–$${(c.hi/1000).toFixed(1)}k</td><td style="color:var(--muted)">${c.odds}</td><td class="src-cell">${c.src}</td></tr>`).join('');
+  document.getElementById('pr-note').textContent=p.note;
+
+  document.getElementById('player-results').classList.remove('hidden');
+  document.getElementById('player-results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function checkPlayerBid(){
+  if(!selP) return;
+  const bid=+document.getElementById('p-bidinput').value;if(!bid) return;
+  const ev=selP.ev*(+document.getElementById('p-boxes').value||1)*phase.mult;
+  const maxBid=Math.round(ev*(MAX_BID_PCT[selP.pos]||0.75));
+  const r=document.getElementById('p-bidresult');r.style.display='block';
+  if(bid<=ev*0.55){r.className='bid-result g';r.textContent='🟢 Strong Buy — '+Math.round(bid/ev*100)+'% of EV. Go.';}
+  else if(bid<=maxBid){r.className='bid-result g';r.textContent='🟢 Good — In zone for '+selP.pos+'. Max: $'+maxBid+'.';}
+  else if(bid<=ev){r.className='bid-result y';r.textContent='🟡 Fair — At EV. Ceiling play only.';}
+  else{r.className='bid-result r';r.textContent='🔴 Overpriced — Max bid for '+selP.pos+': $'+maxBid+'.';}
+}
+
+function buildPlayerList(filter=''){
+  const grid=document.getElementById('player-list-grid');grid.innerHTML='';
+  const f=filter.toLowerCase();
+  const sorted=[...PLAYERS].sort((a,b)=>b.ev-a.ev);
+  sorted.forEach(p=>{
+    if(f&&!p.name.toLowerCase().includes(f)&&!p.team.toLowerCase().includes(f)&&!p.pos.toLowerCase().includes(f)) return;
+    const tier=p.ev>=30?'s':p.ev>=14?'a':'b';
+    const posColor=POS_COLORS[p.pos]||'var(--muted)';
+    const posClass={QB:'pqb',WR:'pwr',RB:'prb',TE:'pte',Legend:'pleg'}[p.pos]||'pqb';
+    const d=document.createElement('div');
+    d.className='lc '+tier;
+    d.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline"><div class="lc-name">${p.name}</div><div class="lc-tier">${{s:'S⭐',a:'A',b:'B'}[tier]}</div></div><div class="lc-detail"><span class="pos-tag ${posClass}">${p.pos}</span> ${p.team} · ~$${p.ev} · ${p.autos} autos</div>`;
+    d.onclick=()=>{pickPlayer(p.name);document.getElementById('player-results').classList.add('hidden');};
+    grid.appendChild(d);
+  });
+}
+function filterPlayers(v){buildPlayerList(v);}
+buildPlayerList();
+</script>
+</body>
+</html>
