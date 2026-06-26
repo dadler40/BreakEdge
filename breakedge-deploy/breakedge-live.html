@@ -10,335 +10,229 @@
 :root{--navy:#0A1628;--gold:#F5A623;--green:#32C864;--red:#FF6B6B;--purple:#6C3FC5;--teal:#00C9C9;--orange:#E85D04;--white:#fff;--muted:#6B7A99;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1)}
 body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;padding:16px}
 .wrap{max-width:900px;margin:0 auto}
-.header{text-align:center;padding:18px 0 12px}
-.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;text-transform:uppercase}
-.logo span{color:var(--gold)}
-.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,107,107,.15);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-top:8px;border:1px solid var(--red)}
-.live-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulse 1.2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .nav-links{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
 .nav-link{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:3px}
 .nav-link.active{color:var(--red);border-color:var(--red)}
-
-/* STEP INDICATOR */
+.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,107,107,.15);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-top:8px;border:1px solid var(--red)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .steps{display:flex;gap:0;margin-bottom:18px;border-radius:6px;overflow:hidden;border:1px solid var(--border)}
 .step-tab{flex:1;padding:10px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:rgba(255,255,255,.03);border:none}
 .step-tab.active{background:rgba(255,107,107,.15);color:var(--red)}
 .step-tab.done{background:rgba(50,200,100,.1);color:var(--green)}
-
 .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px}
 .card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
 .fg label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.fg select,.fg input{width:100%;padding:10px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none}
+.fg select,.fg input{width:100%;padding:10px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:4px;font-family:'Barlow',sans-serif;font-size:16px;color:var(--white);outline:none}
 .fg select:focus,.fg input:focus{border-color:var(--red)}
 .fg select option{background:#1a2a3a}
-.fg .hint{font-size:11px;color:var(--muted);margin-top:4px}
 .next-btn{width:100%;background:var(--red);color:var(--white);border:none;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:4px}
-#btn-nfl.active,#btn-nba.active,#btn-baseball.active,#btn-combined.active{background:var(--orange);color:var(--white);border-color:var(--orange)}
 .back-btn{width:100%;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:8px}
-
-/* POOL BUILDER */
-.pool-search{width:100%;padding:10px 14px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:6px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none;margin-bottom:12px}
-.pool-search:focus{border-color:var(--red)}
+/* sport buttons */
+.sport-btn{flex:1;min-width:80px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:11px 8px;border-radius:4px;cursor:pointer;border:1.5px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);transition:all .15s}
+.sport-btn.active{background:var(--orange);color:var(--white);border-color:var(--orange)}
+/* product rows */
+.prod-row{display:grid;grid-template-columns:2fr 1fr auto;gap:8px;align-items:end;margin-bottom:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:10px 12px}
+/* pool builder */
+.pool-search{width:100%;padding:10px 14px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:6px;font-family:'Barlow',sans-serif;font-size:16px;color:var(--white);outline:none;margin-bottom:12px}
 .pool-controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .pool-ctrl-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:5px 12px;border-radius:3px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted)}
-.pool-ctrl-btn:hover{color:var(--white);border-color:var(--white)}
 .pool-ctrl-btn.tier-s{border-color:var(--green);color:var(--green)}
 .pool-ctrl-btn.tier-a{border-color:var(--gold);color:var(--gold)}
-.pool-ctrl-btn.tier-b{border-color:var(--purple);color:#A78BF5}
 .pool-count{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--teal);padding:5px 12px;background:rgba(0,201,201,.1);border:1px solid rgba(0,201,201,.3);border-radius:3px}
-.player-check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:6px;max-height:480px;overflow-y:auto;padding-right:4px}
-.player-check-grid::-webkit-scrollbar{width:4px}
-.player-check-grid::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
-.player-check-grid::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
-/* PLAYER CHECK CARD */
+.player-check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:6px;max-height:420px;overflow-y:auto}
 .pcheck{border-radius:5px;padding:10px 12px;cursor:pointer;border:1.5px solid var(--border);background:rgba(255,255,255,.03);transition:all .12s;user-select:none;position:relative}
-.pcheck:hover{border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.06)}
-.pcheck.checked{border-color:var(--red);background:rgba(255,107,107,.12)}
-.pcheck.checked .pc-name{color:var(--red)}
 .pcheck.tier-s{border-left:3px solid var(--green)}
 .pcheck.tier-a{border-left:3px solid var(--gold)}
-.pcheck.tier-b{border-left:3px solid var(--purple)}
-.pcheck.checked.tier-s,.pcheck.checked.tier-a,.pcheck.checked.tier-b{border-color:var(--red);border-left-color:var(--red)}
-.pc-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--white);line-height:1.2}
-.pc-pos{font-size:10px;color:var(--muted);margin-top:2px}
+.pcheck.checked{border-color:var(--red);background:rgba(255,107,107,.12)}
+.pcheck.checked .pc-name{color:var(--red)}
+.pc-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--white)}
 .pc-ev{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:var(--gold)}
 .check-mark{position:absolute;top:7px;right:9px;font-size:14px;display:none}
 .pcheck.checked .check-mark{display:block}
-
-/* ── LIVE SCREEN ── */
-.bid-rec{border-radius:10px;padding:22px 24px;margin-bottom:14px;text-align:center}
-.bid-rec.neutral{background:rgba(255,107,107,.08);border:2px solid var(--red)}
-.bid-rec.high{background:rgba(50,200,100,.08);border:2px solid var(--green)}
-.bid-rec.low{background:rgba(0,201,201,.08);border:2px solid var(--teal)}
+/* live screen */
+.bid-rec{border-radius:10px;padding:20px 24px;margin-bottom:14px;text-align:center;background:rgba(255,107,107,.08);border:2px solid var(--red)}
 .bid-rec-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.bid-amount{font-family:'Barlow Condensed',sans-serif;font-size:80px;font-weight:900;line-height:1}
-.bid-rec.neutral .bid-amount{color:var(--red)}
-.bid-rec.high .bid-amount{color:var(--green)}
-.bid-rec.low .bid-amount{color:var(--teal)}
+.bid-amount{font-family:'Barlow Condensed',sans-serif;font-size:72px;font-weight:900;line-height:1;color:var(--red)}
 .bid-sub{font-size:13px;color:#8BAFC6;margin-top:6px}
 .bid-range{font-size:12px;color:var(--muted);margin-top:4px}
-.bid-why{font-size:11px;color:rgba(255,255,255,.3);margin-top:6px;font-style:italic}
-
-/* PROGRESS */
+/* progress */
 .prog-wrap{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:12px}
 .prog-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
 .prog-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .prog-counts{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--white)}
 .prog-bar{height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:10px}
 .prog-fill{height:100%;border-radius:4px;background:var(--red);transition:width .3s}
-.pool-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pool-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
 .ps{text-align:center;background:rgba(255,255,255,.04);border-radius:4px;padding:8px 4px}
 .ps-num{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--gold)}
 .ps-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
-
-/* ACTION BUTTONS */
+.remain-val{text-align:center;padding:8px;background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.15);border-radius:5px;margin-bottom:10px}
+.remain-val-num{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--gold);line-height:1}
+.remain-val-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;font-weight:700}
+/* action row */
 .action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .act-btn{padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;border-radius:5px;cursor:pointer;border:none;letter-spacing:.06em}
 .btn-other{background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--border)}
-.btn-other:hover{background:rgba(255,107,107,.12);color:var(--red);border-color:var(--red)}
 .btn-mine{background:var(--green);color:var(--navy);font-size:16px}
-
-/* SLOT GRID */
+/* slot grid */
 .grid-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .grid-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold)}
 .reset-btn{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);padding:5px 12px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer}
-.slot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px;margin-bottom:14px}
-
-/* SLOT CARD */
-.slot-card{border-radius:6px;padding:11px 13px;cursor:pointer;transition:all .12s;border:1.5px solid var(--border);background:rgba(255,255,255,.04);position:relative;user-select:none}
-.slot-card.available:hover{transform:translateY(-1px);border-color:var(--gold);background:rgba(245,166,35,.08)}
-.slot-card{position:relative}
-.slot-tooltip{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#0d1e35;border:1px solid var(--gold);border-radius:6px;padding:10px 14px;min-width:200px;max-width:260px;z-index:200;font-size:12px;color:#8BAFC6;line-height:1.6;box-shadow:0 4px 20px rgba(0,0,0,.6);pointer-events:none}
-.slot-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--gold)}
-.slot-tooltip h5{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:6px}
-.slot-card.available:hover .slot-tooltip{display:block}
-.slot-card.claimed .slot-tooltip,.slot-card.mine .slot-tooltip,.slot-card.passed .slot-tooltip{display:none!important}
-.slot-card.claimed{background:rgba(255,255,255,.02);border-color:rgba(255,255,255,.05);opacity:.4;cursor:pointer}
-.slot-card.pp-team{border-color:rgba(108,63,197,.5)!important}
-.slot-card.pp-team.available{background:rgba(108,63,197,.06)}
-.slot-card.pp-team.available:hover{border-color:var(--purple)!important;background:rgba(108,63,197,.12)}
-.pp-badge{position:absolute;bottom:7px;right:9px;font-size:11px;font-family:"Barlow Condensed",sans-serif;font-weight:700;color:#A78BF5;letter-spacing:.04em}
-.slot-card.mine{background:rgba(50,200,100,.1);border-color:var(--green)}
+.sort-row{display:flex;gap:6px;margin-bottom:10px}
+.sort-btn{flex:1;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);padding:7px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}
+.sort-btn.active{background:rgba(245,166,35,.15);color:var(--gold);border-color:var(--gold)}
+.slot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:7px;margin-bottom:14px}
+/* slot cards */
+.slot-card{border-radius:6px;padding:11px 13px;cursor:pointer;transition:border-color .1s,opacity .2s;border:1.5px solid var(--border);background:rgba(255,255,255,.04);position:relative;user-select:none;min-height:80px}
+.slot-card.available:hover{border-color:var(--gold);background:rgba(245,166,35,.06)}
+.slot-card.claimed{opacity:.28;filter:grayscale(60%);cursor:pointer}
+.slot-card.claimed .slot-name{text-decoration:line-through;color:var(--muted)}
+.slot-card.passed{opacity:.38;border-color:rgba(255,107,107,.2);background:rgba(255,107,107,.03);cursor:pointer}
+.slot-card.mine{background:rgba(50,200,100,.1);border-color:var(--green);border-width:2px}
+.slot-card.pp-team.available{border-color:rgba(108,63,197,.5);background:rgba(108,63,197,.06)}
+.slot-card.pp-team.available:hover{border-color:var(--purple);background:rgba(108,63,197,.12)}
 .slot-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;color:var(--white);line-height:1.2;margin-bottom:2px}
-.slot-card.claimed .slot-name,.slot-card.claimed .slot-ev{opacity:.4}
 .slot-ev{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;color:var(--gold)}
 .slot-card.mine .slot-name{color:var(--green)}
 .slot-card.mine .slot-ev{color:var(--green)}
 .slot-note{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.3}
-.slot-card.claimed .slot-note{display:none}
-.slot-badge{position:absolute;top:7px;right:9px;font-size:12px}
-
-/* CLAIMED LOG */
+.slot-card.claimed .slot-note,.slot-card.passed .slot-note{display:none}
+.slot-badge{position:absolute;top:7px;right:9px;font-size:14px}
+.pp-badge{position:absolute;bottom:6px;right:8px;font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#A78BF5}
+.slot-paid{font-size:9px;color:var(--green);font-weight:700;margin-top:2px}
+/* combined slot cards - bigger, dual team display */
+.slot-card.combined-slot{min-height:100px}
+.slot-combined-names{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:var(--white);line-height:1.25;margin-bottom:3px}
+.slot-combined-ev{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:3px}
+.slot-combined-split{font-size:10px;color:var(--muted);line-height:1.4}
+/* steal animation */
+@keyframes stealPulse{0%{box-shadow:0 0 0 0 rgba(50,200,100,.9);transform:scale(1.06)}60%{box-shadow:0 0 0 22px rgba(50,200,100,0)}100%{box-shadow:none;transform:scale(1)}}
+.slot-card.steal{animation:stealPulse 1.2s ease-out}
+@keyframes dropIn{0%{opacity:0;transform:translateX(-50%) translateY(-30px) scale(.9)}100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+@keyframes bannerPop{0%{transform:translateX(-50%) scale(.85);opacity:0}40%{transform:translateX(-50%) scale(1.08);opacity:1}60%{transform:translateX(-50%) scale(.97)}80%{transform:translateX(-50%) scale(1.03)}100%{transform:translateX(-50%) scale(1)}}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(120px) rotate(720deg);opacity:0}}
+/* log */
 .log-wrap{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px;display:none}
 .log-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .log-chips{display:flex;flex-wrap:wrap;gap:5px}
 .log-chip{font-size:11px;padding:3px 9px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-weight:700}
 .chip-other{background:rgba(255,255,255,.07);color:var(--muted);text-decoration:line-through}
 .chip-mine{background:rgba(50,200,100,.15);color:var(--green);border:1px solid rgba(50,200,100,.3)}
-.chip-passed{background:rgba(255,107,107,.1);color:var(--red);border:1px solid rgba(255,107,107,.3)}
-
-/* MY SUMMARY */
+.chip-passed{background:rgba(255,107,107,.1);color:var(--red)}
+/* my summary */
 .my-wrap{background:rgba(50,200,100,.08);border:1.5px solid var(--green);border-radius:8px;padding:16px;margin-bottom:14px;display:none}
 .my-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--green);margin-bottom:10px}
 .my-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:5px 0;border-bottom:1px solid rgba(50,200,100,.15)}
 .my-row:last-child{border:none}
-.my-row-name{color:var(--white);font-weight:600}
-.my-row-ev{color:var(--green);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px}
 .my-total-row{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid rgba(50,200,100,.3)}
 .my-total-row span{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;color:var(--white)}
 .my-total-row strong{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--green)}
-
 .hidden{display:none}
-.footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
-.footer a{color:var(--red);text-decoration:none}
-@media(max-width:600px){.g2,.g3,.pool-stats,.action-row{grid-template-columns:1fr 1fr}.bid-amount{font-size:60px}.slot-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}}
+footer{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+footer a{color:var(--red);text-decoration:none}
+@media(max-width:600px){.g3{grid-template-columns:1fr 1fr}.pool-stats{grid-template-columns:1fr 1fr}.action-row{grid-template-columns:1fr 1fr}.bid-amount{font-size:56px}.slot-grid{grid-template-columns:repeat(auto-fill,minmax(135px,1fr))}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<div class="header">
-  <div style="width:100%;max-width:900px;margin:0 auto 8px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="900" height="220">
+<!-- HEADER -->
+<div style="text-align:center;padding:16px 0 10px">
+<div style="width:100%;overflow:hidden;margin-bottom:8px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="100%" style="display:block">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#0a1628"/>
-      <stop offset="50%" style="stop-color:#0d1e35"/>
-      <stop offset="100%" style="stop-color:#0a1628"/>
-    </linearGradient>
-    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FF8C00"/>
-      <stop offset="100%" style="stop-color:#E85D04"/>
-    </linearGradient>
-    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#E0E0E0"/>
-      <stop offset="50%" style="stop-color:#FFFFFF"/>
-      <stop offset="100%" style="stop-color:#B0B0B0"/>
-    </linearGradient>
-    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFD700"/>
-      <stop offset="100%" style="stop-color:#E8850A"/>
-    </linearGradient>
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
-    </filter>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <linearGradient id="bgG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#0a1628"/><stop offset="50%" style="stop-color:#0d1e35"/><stop offset="100%" style="stop-color:#0a1628"/></linearGradient>
+    <linearGradient id="oG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF8C00"/><stop offset="100%" style="stop-color:#E85D04"/></linearGradient>
+    <linearGradient id="sG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#E0E0E0"/><stop offset="50%" style="stop-color:#FFFFFF"/><stop offset="100%" style="stop-color:#B0B0B0"/></linearGradient>
+    <linearGradient id="gT" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#FFD700"/><stop offset="100%" style="stop-color:#E8850A"/></linearGradient>
+    <filter id="sh"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/></filter>
+    <filter id="gl"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
-
-  <!-- BACKGROUND -->
-  <rect width="900" height="220" fill="url(#bgGrad)"/>
-
-  <!-- TOP + BOTTOM ORANGE BARS -->
-  <rect x="0" y="0" width="900" height="5" fill="#E85D04"/>
-  <rect x="0" y="215" width="900" height="5" fill="#E85D04"/>
-
-  <!-- CHEVRON PATTERN -->
-  <g opacity="0.05" fill="none" stroke="#FFFFFF" stroke-width="1.5">
-    <polyline points="0,60 450,20 900,60"/>
-    <polyline points="0,90 450,45 900,90"/>
-    <polyline points="0,120 450,70 900,120"/>
-    <polyline points="0,150 450,95 900,150"/>
-    <polyline points="0,180 450,120 900,180"/>
-  </g>
-
-  <!-- LEFT ORANGE ACCENT BAR -->
+  <rect width="900" height="220" fill="url(#bgG)"/>
+  <rect x="0" y="0" width="900" height="5" fill="#E85D04"/><rect x="0" y="215" width="900" height="5" fill="#E85D04"/>
+  <g opacity="0.05" fill="none" stroke="#FFFFFF" stroke-width="1.5"><polyline points="0,60 450,20 900,60"/><polyline points="0,90 450,45 900,90"/><polyline points="0,120 450,70 900,120"/><polyline points="0,150 450,95 900,150"/><polyline points="0,180 450,120 900,180"/></g>
   <rect x="0" y="0" width="6" height="220" fill="#E85D04"/>
-
-  <!-- MINI SHIELD ICON (left side) -->
-  <g transform="translate(30, 25)">
-    <!-- Shield -->
-    <path d="M 80 8 L 148 32 L 148 98 Q 148 148 80 170 Q 12 148 12 98 L 12 32 Z"
-          fill="url(#orangeGrad)" filter="url(#shadow)"/>
-    <path d="M 80 20 L 136 40 L 136 97 Q 136 140 80 158 Q 24 140 24 97 L 24 40 Z"
-          fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
-    <!-- Sword on shield -->
-    <rect x="77" y="15" width="6" height="130"
-          rx="2" fill="url(#silverGrad)"
-          transform="rotate(-30, 80, 80)" filter="url(#shadow)"/>
-    <rect x="55" y="76" width="52" height="8"
-          rx="3" fill="url(#silverGrad)"
-          transform="rotate(-30, 80, 80)"/>
-    <rect x="77" y="110" width="6" height="35"
-          rx="2" fill="#8B4513"
-          transform="rotate(-30, 80, 80)"/>
-    <!-- Lightning bolt -->
-    <polygon points="84,30 73,62 82,62 70,95 97,58 86,58 98,30"
-             fill="rgba(255,255,255,0.85)" filter="url(#glow)"/>
-    <!-- Banner -->
-    <path d="M 10 158 L 150 158 L 138 180 L 80 186 L 22 180 Z"
-          fill="#0d1e35" stroke="#E85D04" stroke-width="1.5"/>
-    <text x="80" y="176"
-          font-family="'Arial Black', Impact, sans-serif"
-          font-weight="900" font-size="20" letter-spacing="1"
-          text-anchor="middle" fill="url(#goldText)">BREAK</text>
+  <g transform="translate(30,25)">
+    <path d="M 80 8 L 148 32 L 148 98 Q 148 148 80 170 Q 12 148 12 98 L 12 32 Z" fill="url(#oG)" filter="url(#sh)"/>
+    <path d="M 80 20 L 136 40 L 136 97 Q 136 140 80 158 Q 24 140 24 97 L 24 40 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+    <rect x="77" y="15" width="6" height="130" rx="2" fill="url(#sG)" transform="rotate(-30,80,80)" filter="url(#sh)"/>
+    <rect x="55" y="76" width="52" height="8" rx="3" fill="url(#sG)" transform="rotate(-30,80,80)"/>
+    <rect x="77" y="110" width="6" height="35" rx="2" fill="#8B4513" transform="rotate(-30,80,80)"/>
+    <polygon points="84,30 73,62 82,62 70,95 97,58 86,58 98,30" fill="rgba(255,255,255,0.85)" filter="url(#gl)"/>
+    <path d="M 10 158 L 150 158 L 138 180 L 80 186 L 22 180 Z" fill="#0d1e35" stroke="#E85D04" stroke-width="1.5"/>
+    <text x="80" y="176" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="20" letter-spacing="1" text-anchor="middle" fill="url(#gT)">BREAK</text>
   </g>
-
-  <!-- MAIN TITLE -->
-  <!-- BREAK in white -->
-  <text x="220" y="128"
-        font-family="'Arial Black', Impact, sans-serif"
-        font-weight="900"
-        font-size="100"
-        letter-spacing="-2"
-        fill="#FFFFFF"
-        filter="url(#shadow)">BREAK</text>
-
-  <!-- EDGE in orange/gold -->
-  <text x="572" y="128"
-        font-family="'Arial Black', Impact, sans-serif"
-        font-weight="900"
-        font-size="100"
-        letter-spacing="-2"
-        fill="url(#goldText)"
-        filter="url(#glow)">EDGE</text>
-
-  <!-- TAGLINE -->
-  <text x="220" y="160"
-        font-family="Arial, sans-serif"
-        font-weight="700"
-        font-size="13"
-        letter-spacing="4"
-        fill="#6B8CAD">BREAK SMARTER · BID SHARPER · KNOW YOUR EDGE</text>
-
-  <!-- RIGHT ACCENT — three dots -->
-  <circle cx="858" cy="80" r="5" fill="#E85D04" opacity="0.9"/>
-  <circle cx="858" cy="110" r="5" fill="#E85D04" opacity="0.6"/>
-  <circle cx="858" cy="140" r="5" fill="#E85D04" opacity="0.3"/>
-
-  <!-- RIGHT BORDER -->
+  <text x="220" y="128" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="100" letter-spacing="-2" fill="#FFFFFF" filter="url(#sh)">BREAK</text>
+  <text x="572" y="128" font-family="'Arial Black',Impact,sans-serif" font-weight="900" font-size="100" letter-spacing="-2" fill="url(#gT)" filter="url(#gl)">EDGE</text>
+  <text x="220" y="160" font-family="Arial,sans-serif" font-weight="700" font-size="13" letter-spacing="4" fill="#6B8CAD">BREAK SMARTER · BID SHARPER · KNOW YOUR EDGE</text>
+  <circle cx="858" cy="80" r="5" fill="#E85D04" opacity="0.9"/><circle cx="858" cy="110" r="5" fill="#E85D04" opacity="0.6"/><circle cx="858" cy="140" r="5" fill="#E85D04" opacity="0.3"/>
   <rect x="894" y="0" width="6" height="220" fill="#E85D04"/>
 </svg>
 </div>
-  <div class="live-badge"><div class="live-dot"></div> LIVE AUCTION MODE</div>
-  <div class="nav-links">
-    <a class="nav-link" href="breakedge-host.html">Host</a>
-    <a class="nav-link" href="breakedge-buyer.html">Buyer</a>
-    <a class="nav-link" href="breakedge-compare.html">⚡ Compare</a>
-    <a class="nav-link" href="breakedge-mixed.html">🎲 Mixed</a>
-    <a class="nav-link active" href="#">🔴 Live</a>
-    <a class="nav-link" href="breakedge-nba.html">🏀 NBA</a>
-    <a class="nav-link" href="breakedge-research.html">Research</a>
-    <a class="nav-link" href="breakedge-backtest.html">Backtest</a>
-  </div>
+<div class="live-badge"><div class="live-dot"></div> <span id="liveModeBanner">LIVE AUCTION MODE</span></div>
+<div class="nav-links">
+  <a class="nav-link" href="index.html">🏠 Home</a>
+  <a class="nav-link" href="breakedge-host.html">Host</a>
+  <a class="nav-link" href="breakedge-buyer.html">Buyer</a>
+  <a class="nav-link" href="breakedge-compare.html">⚡ Compare</a>
+  <a class="nav-link" href="breakedge-mixed.html">🎲 Mixed</a>
+  <a class="nav-link active" href="#">🔴 Live</a>
+  <a class="nav-link" href="breakedge-nba.html">🏀 NBA</a>
+  <a class="nav-link" href="breakedge-baseball.html">⚾ Baseball</a>
+  <a class="nav-link" href="breakedge-research.html">Research</a>
+</div>
 </div>
 
 <!-- STEP INDICATOR -->
 <div class="steps" id="stepIndicator">
-  <div class="step-tab active" id="step1tab">Step 1 — Break Setup</div>
-  <div class="step-tab" id="step2tab">Step 2 — Build Your Pool</div>
-  <div class="step-tab" id="step3tab">🔴 Live Auction</div>
+  <div class="step-tab active" id="step1tab">Step 1 — Setup</div>
+  <div class="step-tab" id="step2tab">Step 2 — Pool</div>
+  <div class="step-tab" id="step3tab">🔴 Live</div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     STEP 1 — SETUP
-══════════════════════════════════════════ -->
+<!-- STEP 1 -->
 <div id="step1">
-  <!-- SPORT SELECTOR -->
+  <!-- SPORT TOGGLE -->
   <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-    <button id="btn-nfl" onclick="setSport('nfl')" style="flex:1;min-width:100px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:10px 8px;border-radius:4px;cursor:pointer;border:1.5px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);transition:all .15s" class="active">🏈 NFL</button>
-    <button id="btn-nba" onclick="setSport('nba')" style="flex:1;min-width:100px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:10px 8px;border-radius:4px;cursor:pointer;border:1.5px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);transition:all .15s">🏀 NBA</button>
-    <button id="btn-baseball" onclick="setSport('baseball')" style="flex:1;min-width:100px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:10px 8px;border-radius:4px;cursor:pointer;border:1.5px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);transition:all .15s">⚾ MLB</button>
-    <button id="btn-combined" onclick="setSport('combined')" style="flex:1;min-width:100px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:10px 8px;border-radius:4px;cursor:pointer;border:1.5px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);transition:all .15s">🎲 Multi</button>
+    <button class="sport-btn active" id="btn-nfl" onclick="setSport('nfl')">🏈 NFL</button>
+    <button class="sport-btn" id="btn-nba" onclick="setSport('nba')">🏀 NBA</button>
+    <button class="sport-btn" id="btn-baseball" onclick="setSport('baseball')">⚾ MLB</button>
+    <button class="sport-btn" id="btn-combined" onclick="setSport('combined')">🎲 Multi</button>
   </div>
+
   <div class="card">
     <div class="card-title">Break Setup</div>
     <div class="g3">
       <div class="fg">
         <label>Break Format</label>
         <select id="s-format" onchange="onFormatChange()">
-          <option value="team">Team Break (32 slots)</option>
-          <option value="player">Player Break (custom pool)</option>
+          <option value="team">Team Break</option>
+          <option value="player">Player Break</option>
         </select>
       </div>
       <div class="fg">
         <label>Market Phase</label>
         <select id="s-phase">
-          <option value="frenzy">Day 1–7 — Opening Frenzy</option>
+          <option value="frenzy">Day 1–7 — Frenzy</option>
           <option value="compress">Day 8–30 — Compression</option>
           <option value="settled">Day 31+ — Settled</option>
         </select>
       </div>
       <div class="fg" id="spotsWrap">
-        <label>Team Spots</label>
+        <label>Spots</label>
         <select id="s-spots">
           <option value="32">32 spots</option>
           <option value="64">64 spots (Double)</option>
         </select>
       </div>
     </div>
-
   </div>
 
-  <!-- PRODUCT STACK -->
   <div class="card">
     <div class="card-title">Products in This Break</div>
-    <p style="font-size:13px;color:#8BAFC6;margin-bottom:12px">Single product? Add one row. Mixed break? Add a row for each product with its box count. EV stacks across all products per team slot.</p>
+    <p style="font-size:13px;color:#8BAFC6;margin-bottom:12px">Single product? One row. Mixed break? Add a row per product.</p>
     <div id="productRows"></div>
     <button onclick="addProductRow()" style="background:rgba(255,107,107,.1);color:var(--red);border:1px solid rgba(255,107,107,.3);padding:9px 16px;border-radius:4px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;display:block;width:100%">+ Add Another Product</button>
     <div style="margin-top:12px;background:rgba(255,255,255,.04);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--muted)" id="stackSummary">Add at least one product to continue.</div>
@@ -347,63 +241,69 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);m
   <button class="next-btn" onclick="goStep2()">Next — Build Your Pool →</button>
 </div>
 
-<!-- ══════════════════════════════════════════
-     STEP 2 — POOL BUILDER (player breaks)
-     or auto-confirm for team breaks
-══════════════════════════════════════════ -->
+<!-- PAIRING EDITOR MODAL -->
+<div id="pairingModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:3000;overflow-y:auto;padding:20px">
+  <div style="max-width:600px;margin:0 auto;background:#0d1e35;border:1.5px solid var(--border);border-radius:12px;padding:24px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:6px">Edit Team Pairings</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Each slot = one NFL team + one NBA/MLB team sold together. Defaults are geographic. Edit anomalies below.</p>
+    <div id="pairingList" style="display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow-y:auto;margin-bottom:16px"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button onclick="closePairingModal()" style="background:var(--green);color:var(--navy);border:none;padding:12px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;cursor:pointer">✅ Save Pairings</button>
+      <button onclick="resetPairings()" style="background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);padding:12px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;cursor:pointer">↺ Reset to Default</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
 <div id="step2" class="hidden">
   <div class="card" id="teamConfirmCard" style="display:none">
-    <div class="card-title">Team Break — All 32 Slots Loaded</div>
-    <p style="font-size:13px;color:#8BAFC6;margin-bottom:14px" id="teamConfirmSubtitle">All 32 NFL teams are in the pool. Ready to go live.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;margin-bottom:14px" id="teamPreviewGrid"></div>
-    <button class="next-btn" onclick="goLive()">🔴 Start Live Auction</button>
-    <button class="back-btn" onclick="goStep1()">← Back to Setup</button>
-  </div>
-
-  <div id="playerPoolCard" style="display:none">
-
-    <!-- PASTE TO PARSE -->
-    <div class="card">
-      <div class="card-title">⚡ Paste the Break List — Auto-Fill Instantly</div>
-      <p style="font-size:13px;color:#8BAFC6;margin-bottom:12px">Copy the player list from Whatnot chat, Discord, or anywhere the host posted it. Paste it below — AI will identify the players automatically.</p>
-      <textarea id="pasteBox" placeholder="Paste anything here — e.g.:&#10;&#10;Player break tonight!&#10;1. Cam Ward&#10;2. Jaxson Dart&#10;3. Travis Hunter&#10;4. Josh Allen&#10;5. Tom Brady&#10;...&#10;&#10;Even messy copy-paste works." style="width:100%;height:130px;padding:12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:6px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--white);outline:none;resize:vertical;line-height:1.6"></textarea>
-      <button onclick="parseWithAI()" id="parseBtn" style="width:100%;margin-top:10px;background:var(--purple);color:var(--white);border:none;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;border-radius:4px;cursor:pointer;letter-spacing:.06em">
-        🤖 Parse with AI — Auto-Select Players
-      </button>
-      <div id="parseStatus" style="display:none;margin-top:10px;padding:10px 14px;border-radius:5px;font-size:13px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase"></div>
+    <div class="card-title" id="teamConfirmTitle">Team Break — Loaded</div>
+    <p style="font-size:13px;color:#8BAFC6;margin-bottom:10px" id="teamConfirmSub">Ready to go live.</p>
+    <div id="pairingEditRow" style="display:none;margin-bottom:12px">
+      <button onclick="openPairingModal()" style="width:100%;background:rgba(245,166,35,.08);color:var(--gold);border:1px solid rgba(245,166,35,.3);padding:9px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer">⚙️ Edit Pairings — Swap Any City Match</button>
     </div>
-
-    <!-- MANUAL POOL BUILDER -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:6px;margin-bottom:14px" id="teamPreviewGrid"></div>
+    <button class="next-btn" onclick="goLive()">🔴 Start Live Auction</button>
+    <button class="back-btn" onclick="goStep1()">← Back</button>
+  </div>
+  <div id="playerPoolCard" style="display:none">
     <div class="card">
-      <div class="card-title">Or Build Manually — Check Off Players</div>
-      <input class="pool-search" type="text" placeholder="Search players..." oninput="filterPool(this.value)" id="poolSearch"/>
+      <div class="card-title">⚡ Paste Break List — Auto-Fill</div>
+      <!-- PRO FEATURE BANNER -->
+      <div style="background:rgba(108,63,197,.12);border:1.5px solid rgba(108,63,197,.4);border-radius:6px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;color:#A78BF5;letter-spacing:.06em">🤖 AI Auto-Parse — Pro Feature</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">Paste any messy Whatnot/Discord list and AI selects players instantly</div>
+        </div>
+        <a href="https://forms.gle/breakedge-pro" target="_blank" style="flex-shrink:0;background:var(--purple);color:var(--white);border:none;padding:8px 14px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;text-decoration:none;white-space:nowrap">Join Pro Waitlist</a>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Or paste below and use the manual search to find players:</p>
+      <textarea id="pasteBox" placeholder="Paste your break list here as a reference while you search below..." style="width:100%;height:80px;padding:12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:6px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none;resize:none;line-height:1.6"></textarea>
+    </div>
+    <div class="card">
+      <div class="card-title">🔍 Search & Select Players</div>
+      <input class="pool-search" type="text" placeholder="Type a name to find instantly — e.g. Ward, Brady, Dart..." oninput="filterPool(this.value)" id="poolSearch" autofocus/>
       <div class="pool-controls">
         <button class="pool-ctrl-btn tier-s" onclick="selectTier('s')">+ All S-Tier</button>
         <button class="pool-ctrl-btn tier-a" onclick="selectTier('a')">+ All A-Tier</button>
-        <button class="pool-ctrl-btn tier-b" onclick="selectTier('b')">+ All B-Tier</button>
-        <button class="pool-ctrl-btn" onclick="clearAll()">Clear All</button>
+        <button class="pool-ctrl-btn" onclick="clearAll()" style="color:var(--muted)">Clear All</button>
         <div class="pool-count" id="poolCount">0 selected</div>
       </div>
       <div class="player-check-grid" id="playerCheckGrid"></div>
     </div>
-
-    <button class="next-btn" onclick="goLive()" id="goLiveBtn" disabled style="opacity:.4">Select at least 2 players to start →</button>
-    <button class="back-btn" onclick="goStep1()">← Back to Setup</button>
+    <button class="next-btn" onclick="goLive()" id="goLiveBtn" disabled style="opacity:.4">Select at least 2 players →</button>
+    <button class="back-btn" onclick="goStep1()">← Back</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     STEP 3 — LIVE AUCTION
-══════════════════════════════════════════ -->
+<!-- STEP 3 LIVE -->
 <div id="step3" class="hidden">
-
-  <!-- BIG BID NUMBER -->
-  <div class="bid-rec neutral" id="bidRec">
-    <div class="bid-rec-label">💡 Preset Your Bid At</div>
+  <!-- BIG BID REC -->
+  <div class="bid-rec" id="bidRec">
+    <div class="bid-rec-label">💡 Bid Ceiling For Next Slot</div>
     <div class="bid-amount" id="bidAmount">$—</div>
-    <div class="bid-sub" id="bidSub">Tap a slot below when the wheel lands on it</div>
+    <div class="bid-sub" id="bidSub">Tap a slot when the wheel lands</div>
     <div class="bid-range" id="bidRange"></div>
-    <div class="bid-why" id="bidWhy"></div>
   </div>
 
   <!-- PROGRESS -->
@@ -413,17 +313,19 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);m
       <div class="prog-counts"><span id="claimedCount">0</span> claimed · <span id="remainCount">0</span> left</div>
     </div>
     <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-    <div class="pool-stats" style="grid-template-columns:1fr 1fr 1fr">
-      <div class="ps"><div class="ps-num" id="psAvg">—</div><div class="ps-lbl">1 Spin EV</div></div>
-      <div class="ps" style="background:rgba(50,200,100,.08);border:1px solid rgba(50,200,100,.2);border-radius:4px"><div class="ps-num" style="color:var(--green)" id="psStashEv">—</div><div class="ps-lbl" style="color:var(--green)">Stash or Pass EV<br/><span style="font-size:9px;font-weight:400">(2 spins total)</span></div></div>
+    <div class="remain-val">
+      <div class="remain-val-lbl">Remaining Market Value</div>
+      <div class="remain-val-num" id="remainingValue">—</div>
+    </div>
+    <div class="pool-stats">
+      <div class="ps"><div class="ps-num" id="psAvg">—</div><div class="ps-lbl">Avg Slot EV</div></div>
+      <div class="ps" style="background:rgba(50,200,100,.08);border:1px solid rgba(50,200,100,.2)"><div class="ps-num" style="color:var(--green)" id="psStashEv">—</div><div class="ps-lbl" style="color:var(--green)">Stash/Pass EV</div></div>
       <div class="ps"><div class="ps-num" id="psSpend">$0</div><div class="ps-lbl">My Spend</div></div>
     </div>
-    <div style="margin-top:8px">
-      <span id="passWorthIt" style="display:block;padding:6px 12px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em"></span>
-    </div>
+    <span id="passWorthIt" style="display:block;padding:6px 12px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em"></span>
   </div>
 
-  <!-- ACTION BUTTONS -->
+  <!-- QUICK ACTIONS -->
   <div class="action-row">
     <button class="act-btn btn-other" onclick="quickOther()">👥 Someone Else Got It</button>
     <button class="act-btn btn-mine" onclick="quickMine()">✅ I Won This Slot!</button>
@@ -434,13 +336,13 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);m
     <div class="grid-title" id="gridTitle">Pool — Tap Slot When Wheel Lands</div>
     <button class="reset-btn" onclick="doReset()">↺ Reset</button>
   </div>
-  <div style="display:flex;gap:6px;margin-bottom:10px">
-    <button onclick="sortSlots('ev')" id="sort-ev" style="flex:1;background:rgba(245,166,35,.15);color:var(--gold);border:1px solid var(--gold);padding:7px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer">💰 Sort by Price</button>
-    <button onclick="sortSlots('name')" id="sort-name" style="flex:1;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);padding:7px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer">🔤 Sort A–Z</button>
+  <div class="sort-row">
+    <button class="sort-btn active" id="sort-ev" onclick="sortSlots('ev')">💰 By Price</button>
+    <button class="sort-btn" id="sort-az" onclick="sortSlots('name')">🔤 A–Z</button>
   </div>
   <div class="slot-grid" id="slotGrid"></div>
 
-  <!-- SPIN LOG -->
+  <!-- LOG -->
   <div class="log-wrap" id="logWrap">
     <div class="log-title">Spin Log</div>
     <div class="log-chips" id="logChips"></div>
@@ -450,1418 +352,983 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);m
   <div class="my-wrap" id="myWrap">
     <div class="my-title">✅ My Slots This Break</div>
     <div id="myList"></div>
-    <div class="my-total-row">
-      <span>Total Spent</span>
-      <strong id="myTotalSpend">$0</strong>
-    </div>
+    <div id="myExtra"></div>
+    <div class="my-total-row"><span>Total</span><strong id="myTotalSpend">$0</strong></div>
   </div>
-
 </div>
 
-<div class="footer">
-  <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--muted);line-height:1.6">⚠️ All auctions start at $1 sudden death. Deal / Fair / Hard No zones are relative value estimates based on pool EV — not guarantees. Not financial advice.</div>
-  BreakEdge Beta 🚀 &nbsp;|&nbsp; <a href="mailto:adleranalyticsllc@gmail.com">adleranalyticsllc@gmail.com</a>
-</div>
+<footer>BreakEdge Beta 🚀 · <a href="mailto:adleranalyticsllc@gmail.com">adleranalyticsllc@gmail.com</a> · <a href="https://twitter.com/BreakEdgeCards">@BreakEdgeCards</a></footer>
 </div>
 
 <script>
-// ── CONSTANTS ──
+// ══════════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════════
 const PHASE_MULT = {frenzy:1.3, compress:1.0, settled:0.8};
-const POS_COLORS = {QB:'var(--green)',WR:'var(--teal)',RB:'var(--gold)',TE:'var(--purple)',Legend:'var(--red)'};
 
-// REAL VERIFIED MARKET PRICES — 2 full case PYT breaks, same prices both times
-// These ARE the market. cardbreakersllc pricing confirmed across multiple breaks.
-const ALL_TEAMS = [
-  {id:"NYG",name:"Giants",full:"New York Giants",ev:850,tier:"s",pp:true,note:"Jaxson Dart + Skattebo RCs · 💫 PP · market high"},
-  {id:"TEN",name:"Titans",full:"Tennessee Titans",ev:550,tier:"s",pp:true,note:"Cam Ward RC — all 4 auto sets · 💫 PP"},
-  {id:"TB",name:"Bucs",full:"Tampa Bay Buccaneers",ev:330,tier:"s",pp:false,note:"Egbuka RC all 4 sets + Tom Brady EQA"},
-  {id:"BUF",name:"Bills",full:"Buffalo Bills",ev:280,tier:"s",pp:true,note:"Josh Allen EQA — 14 inserts · 💫 PP"},
-  {id:"KC",name:"Chiefs",full:"Kansas City Chiefs",ev:280,tier:"s",pp:true,note:"Mahomes EQA — every insert · 💫 PP"},
-  {id:"CHI",name:"Bears",full:"Chicago Bears",ev:220,tier:"s",pp:false,note:"Caleb Williams EQA + 4 auto signers"},
-  {id:"LV",name:"Raiders",full:"Las Vegas Raiders",ev:220,tier:"s",pp:true,note:"Jeanty RC all sets ⚠️ cooling · 💫 PP"},
-  {id:"NE",name:"Patriots",full:"New England Patriots",ev:220,tier:"s",pp:false,note:"Brady EQA + Drake Maye EQA"},
-  {id:"NO",name:"Saints",full:"New Orleans Saints",ev:220,tier:"b",pp:false,note:"Tyler Shough RC — anomaly pricing"},
-  {id:"CAR",name:"Panthers",full:"Carolina Panthers",ev:200,tier:"a",pp:false,note:"Tetairoa McMillan RC"},
-  {id:"DEN",name:"Broncos",full:"Denver Broncos",ev:200,tier:"a",pp:false,note:"Peyton Manning LY + John Elway LY"},
-  {id:"CLE",name:"Browns",full:"Cleveland Browns",ev:180,tier:"s",pp:false,note:"Shedeur + Judkins + Gabriel RCs"},
-  {id:"PHI",name:"Eagles",full:"Philadelphia Eagles",ev:180,tier:"s",pp:true,note:"Hurts EQA + Barkley EQA · 💫 PP"},
-  {id:"WSH",name:"Commanders",full:"Washington Commanders",ev:180,tier:"a",pp:false,note:"Jayden Daniels EQA"},
-  {id:"CIN",name:"Bengals",full:"Cincinnati Bengals",ev:160,tier:"a",pp:false,note:"Joe Burrow SFS + Ja'Marr Chase"},
-  {id:"SF",name:"49ers",full:"San Francisco 49ers",ev:160,tier:"s",pp:false,note:"Jerry Rice EQA + Joe Montana LY"},
-  {id:"JAX",name:"Jaguars",full:"Jacksonville Jaguars",ev:150,tier:"s",pp:true,note:"Travis Hunter RC — 3 auto sets · 💫 PP"},
-  {id:"DET",name:"Lions",full:"Detroit Lions",ev:140,tier:"a",pp:false,note:"Barry Sanders SFS + Gibbs CCA"},
-  {id:"BAL",name:"Ravens",full:"Baltimore Ravens",ev:130,tier:"s",pp:false,note:"Lamar Jackson 9 inserts + Henry EQA"},
-  {id:"DAL",name:"Cowboys",full:"Dallas Cowboys",ev:130,tier:"a",pp:false,note:"Emmitt Smith EQA + 3 legend autos"},
-  {id:"MIN",name:"Vikings",full:"Minnesota Vikings",ev:130,tier:"a",pp:true,note:"Justin Jefferson 10 inserts + Moss LY · 💫 PP"},
-  {id:"PIT",name:"Steelers",full:"Pittsburgh Steelers",ev:130,tier:"a",pp:false,note:"Aaron Rodgers SFS + Polamalu LY"},
-  {id:"SEA",name:"Seahawks",full:"Seattle Seahawks",ev:130,tier:"b",pp:false,note:"JSN base + Cooper Kupp SFS"},
-  {id:"GB",name:"Packers",full:"Green Bay Packers",ev:120,tier:"a",pp:false,note:"Brett Favre SFS + Woodson LY"},
-  {id:"IND",name:"Colts",full:"Indianapolis Colts",ev:120,tier:"a",pp:false,note:"Peyton Manning EQA + Tyler Warren RC"},
-  {id:"LAC",name:"Chargers",full:"Los Angeles Chargers",ev:120,tier:"a",pp:false,note:"Omarion Hampton RC + Herbert EQA"},
-  {id:"ATL",name:"Falcons",full:"Atlanta Falcons",ev:90,tier:"b",pp:false,note:"Michael Penix Jr. EQA"},
-  {id:"HOU",name:"Texans",full:"Houston Texans",ev:90,tier:"a",pp:false,note:"CJ Stroud EQA + Jayden Higgins RC"},
-  {id:"LAR",name:"Rams",full:"Los Angeles Rams",ev:90,tier:"b",pp:false,note:"Aaron Donald LY + Cooper Kupp SFS"},
-  {id:"ARI",name:"Cardinals",full:"Arizona Cardinals",ev:80,tier:"b",pp:false,note:"MHJ base + Trey McBride CCA"},
-  {id:"MIA",name:"Dolphins",full:"Miami Dolphins",ev:60,tier:"b",pp:false,note:"Dan Marino LY + De'Von Achane EQA"},
-  {id:"NYJ",name:"Jets",full:"New York Jets",ev:50,tier:"b",pp:false,note:"Breece Hall + Mason Taylor RC"},
+// ══════════════════════════════════════════
+// NFL TEAMS
+// ══════════════════════════════════════════
+const NFL_TEAMS = [
+  {id:"NYG",name:"Giants",ev:850,tier:"s",pp:true,note:"Dart + Skattebo RCs · PP"},
+  {id:"TEN",name:"Titans",ev:550,tier:"s",pp:true,note:"Cam Ward RC all 4 sets · PP"},
+  {id:"TB",name:"Bucs",ev:330,tier:"s",pp:false,note:"Egbuka RC + Brady EQA"},
+  {id:"BUF",name:"Bills",ev:280,tier:"s",pp:true,note:"Josh Allen EQA · PP"},
+  {id:"KC",name:"Chiefs",ev:280,tier:"s",pp:true,note:"Mahomes EQA · PP"},
+  {id:"CHI",name:"Bears",ev:220,tier:"s",pp:false,note:"Caleb Williams EQA"},
+  {id:"LV",name:"Raiders",ev:220,tier:"s",pp:true,note:"Jeanty RC · PP"},
+  {id:"NE",name:"Patriots",ev:220,tier:"s",pp:false,note:"Brady + Drake Maye EQA"},
+  {id:"NO",name:"Saints",ev:220,tier:"b",pp:false,note:"Tyler Shough RC"},
+  {id:"CAR",name:"Panthers",ev:200,tier:"a",pp:false,note:"Tetairoa McMillan RC"},
+  {id:"DEN",name:"Broncos",ev:200,tier:"a",pp:false,note:"Manning + Elway legends"},
+  {id:"CLE",name:"Browns",ev:180,tier:"s",pp:false,note:"Shedeur + Judkins RCs"},
+  {id:"PHI",name:"Eagles",ev:180,tier:"s",pp:true,note:"Hurts + Barkley EQA · PP"},
+  {id:"WSH",name:"Commanders",ev:180,tier:"a",pp:false,note:"Jayden Daniels EQA"},
+  {id:"CIN",name:"Bengals",ev:160,tier:"a",pp:false,note:"Burrow SFS + Chase"},
+  {id:"SF",name:"49ers",ev:160,tier:"s",pp:false,note:"Jerry Rice + Montana legends"},
+  {id:"JAX",name:"Jaguars",ev:150,tier:"s",pp:true,note:"Travis Hunter RC · PP"},
+  {id:"DET",name:"Lions",ev:140,tier:"a",pp:false,note:"Barry Sanders SFS"},
+  {id:"BAL",name:"Ravens",ev:130,tier:"s",pp:false,note:"Lamar Jackson + Henry"},
+  {id:"DAL",name:"Cowboys",ev:130,tier:"a",pp:false,note:"Emmitt Smith EQA"},
+  {id:"MIN",name:"Vikings",ev:130,tier:"a",pp:true,note:"Justin Jefferson · PP"},
+  {id:"PIT",name:"Steelers",ev:130,tier:"a",pp:false,note:"Rodgers SFS + Polamalu"},
+  {id:"SEA",name:"Seahawks",ev:130,tier:"b",pp:false,note:"JSN base + Kupp SFS"},
+  {id:"GB",name:"Packers",ev:120,tier:"a",pp:false,note:"Favre SFS + Woodson"},
+  {id:"IND",name:"Colts",ev:120,tier:"a",pp:false,note:"Manning EQA + Warren RC"},
+  {id:"LAC",name:"Chargers",ev:120,tier:"a",pp:false,note:"Hampton RC + Herbert EQA"},
+  {id:"ATL",name:"Falcons",ev:90,tier:"b",pp:false,note:"Penix Jr. EQA"},
+  {id:"HOU",name:"Texans",ev:90,tier:"a",pp:false,note:"Stroud EQA + Higgins RC"},
+  {id:"LAR",name:"Rams",ev:90,tier:"b",pp:false,note:"Aaron Donald + Kupp SFS"},
+  {id:"ARI",name:"Cardinals",ev:80,tier:"b",pp:false,note:"MHJ + McBride CCA"},
+  {id:"MIA",name:"Dolphins",ev:60,tier:"b",pp:false,note:"Dan Marino + Achane EQA"},
+  {id:"NYJ",name:"Jets",ev:50,tier:"b",pp:false,note:"Breece Hall + Mason Taylor RC"},
+];
+const NFL_STASH = new Set(["NYG","TEN","TB","BUF","KC","CHI","LV","NE","NO","CAR","DEN","CLE","PHI","WSH","JAX","SF"]);
+
+// ══════════════════════════════════════════
+// NBA TEAMS
+// ══════════════════════════════════════════
+const NBA_TEAMS = [
+  {id:"SAS",name:"Spurs",ev:1499,tier:"s",pp:true,note:"Wemby + Harper · PP"},
+  {id:"DAL",name:"Mavericks",ev:1299,tier:"s",pp:true,note:"Cooper Flagg + Luka PP"},
+  {id:"LAL",name:"Lakers",ev:699,tier:"s",pp:true,note:"LeBron CCA + Bronny · PP"},
+  {id:"GSW",name:"Warriors",ev:499,tier:"s",pp:true,note:"Curry CCA $11,750 · PP"},
+  {id:"CHA",name:"Hornets",ev:399,tier:"s",pp:true,note:"Knueppel CCA + ESS · PP"},
+  {id:"OKC",name:"Thunder",ev:329,tier:"s",pp:true,note:"SGA + Chet CCA · PP"},
+  {id:"UTA",name:"Jazz",ev:225,tier:"s",pp:false,note:"Ace Bailey CCA · 10 autos"},
+  {id:"PHI",name:"76ers",ev:225,tier:"a",pp:false,note:"Allen Iverson Alien Auto"},
+  {id:"DEN",name:"Nuggets",ev:200,tier:"a",pp:false,note:"Jokic CCA + Murray CCA"},
+  {id:"BOS",name:"Celtics",ev:165,tier:"s",pp:false,note:"Tatum CCA + Bird Galaxy"},
+  {id:"MEM",name:"Grizzlies",ev:165,tier:"a",pp:false,note:"Cedric Coward CCA"},
+  {id:"NOP",name:"Pelicans",ev:150,tier:"a",pp:false,note:"Derik Queen CCA"},
+  {id:"MIN",name:"Timberwolves",ev:115,tier:"a",pp:true,note:"Anthony Edwards CCA · PP"},
+  {id:"BKN",name:"Nets",ev:115,tier:"a",pp:false,note:"Egor Demin Alien + 10 autos"},
+  {id:"MIL",name:"Bucks",ev:100,tier:"b",pp:true,note:"Giannis PP · no autos"},
+  {id:"DET",name:"Pistons",ev:100,tier:"a",pp:false,note:"Chaz Lanier CCA"},
+  {id:"HOU",name:"Rockets",ev:100,tier:"a",pp:false,note:"Jalen Green + KD CCA"},
+  {id:"CLE",name:"Cavaliers",ev:100,tier:"a",pp:false,note:"Jerome + Proctor Alien"},
+  {id:"TOR",name:"Raptors",ev:100,tier:"a",pp:false,note:"Murray-Boyles CCA + ESS"},
+  {id:"CHI",name:"Bulls",ev:55,tier:"b",pp:false,note:"Essengue RC auto"},
+  {id:"IND",name:"Pacers",ev:65,tier:"a",pp:false,note:"Haliburton CCA"},
+  {id:"NYK",name:"Knicks",ev:65,tier:"a",pp:false,note:"Brunson CCA"},
+  {id:"ORL",name:"Magic",ev:65,tier:"s",pp:false,note:"Franz Wagner + Hardaway"},
+  {id:"MIA",name:"Heat",ev:50,tier:"b",pp:false,note:"Jakucionis RC"},
+  {id:"PHX",name:"Suns",ev:50,tier:"b",pp:false,note:"Khaman Maluach RC"},
+  {id:"POR",name:"Blazers",ev:50,tier:"b",pp:false,note:"Drexler Singularity"},
+  {id:"WAS",name:"Wizards",ev:50,tier:"b",pp:false,note:"Will Riley CCA"},
+  {id:"ATL",name:"Hawks",ev:30,tier:"b",pp:false,note:"Asa Newell RC"},
+  {id:"LAC",name:"Clippers",ev:40,tier:"b",pp:false,note:"Harden CCA"},
+  {id:"SAC",name:"Kings",ev:55,tier:"b",pp:false,note:"AJ Raynaud RC + Peja Alien"},
+];
+const NBA_STASH = new Set(["SAS","DAL","LAL","GSW","CHA","OKC","UTA","PHI","DEN","BOS","MEM","NOP"]);
+const NBA_PP = new Set(["SAS","DAL","LAL","GSW","CHA","OKC","MIN","MIL"]);
+
+// ══════════════════════════════════════════
+// MLB TEAMS
+// ══════════════════════════════════════════
+const MLB_TEAMS = [
+  {id:"LAD",name:"Dodgers",ev:650,tier:"s",note:"Ohtani + Glasnow autos"},
+  {id:"NYY",name:"Yankees",ev:300,tier:"s",note:"Judge auto · brand premium"},
+  {id:"OAK",name:"Athletics",ev:300,tier:"s",note:"Lawrence Butler + A's pipeline"},
+  {id:"WSH",name:"Nationals",ev:180,tier:"a",note:"CJ Abrams auto · young core"},
+  {id:"SEA",name:"Mariners",ev:150,tier:"a",note:"Julio Rodriguez auto"},
+  {id:"ATL",name:"Braves",ev:160,tier:"a",note:"Acuña auto + Strider"},
+  {id:"BOS",name:"Red Sox",ev:130,tier:"a",note:"Rafaela + Houck auto"},
+  {id:"KCR",name:"Royals",ev:120,tier:"a",note:"Bobby Witt Jr. auto"},
+  {id:"PIT",name:"Pirates",ev:120,tier:"a",note:"Paul Skenes auto"},
+  {id:"BAL",name:"Orioles",ev:120,tier:"a",note:"Henderson + Holliday RC"},
+  {id:"CHC",name:"Cubs",ev:90,tier:"b",note:"Historic brand"},
+  {id:"HOU",name:"Astros",ev:90,tier:"b",note:"Yordan Alvarez auto"},
+  {id:"NYM",name:"Mets",ev:90,tier:"b",note:"Lindor auto · big market"},
+  {id:"DET",name:"Tigers",ev:90,tier:"b",note:"Jackson Jobe RC"},
+  {id:"MIL",name:"Brewers",ev:75,tier:"b",note:"Chourio auto"},
+  {id:"PHI",name:"Phillies",ev:75,tier:"b",note:"Trea Turner auto"},
+  {id:"SFG",name:"Giants",ev:75,tier:"b",note:"Jung Hoo Lee auto"},
+  {id:"STL",name:"Cardinals",ev:75,tier:"b",note:"Arenado auto"},
+  {id:"LAA",name:"Angels",ev:70,tier:"b",note:"Schanuel RC · post-Ohtani"},
+  {id:"TEX",name:"Rangers",ev:65,tier:"b",note:"Langford RC"},
+  {id:"CIN",name:"Reds",ev:60,tier:"b",note:"Elly De La Cruz auto"},
+  {id:"TOR",name:"Blue Jays",ev:55,tier:"b",note:"Vladdy Jr. auto"},
+  {id:"MIN",name:"Twins",ev:55,tier:"b",note:"Buxton + Royce Lewis"},
+  {id:"SDP",name:"Padres",ev:50,tier:"b",note:"Tatis auto"},
+  {id:"CLE",name:"Guardians",ev:40,tier:"c",note:"Kwan auto · thin checklist"},
+  {id:"CHW",name:"White Sox",ev:40,tier:"b",note:"⚠️ Tier One anomaly $260 — Montgomery + Teel autos"},
+  {id:"ARI",name:"D-backs",ev:30,tier:"c",note:"Carroll auto"},
+  {id:"TBR",name:"Rays",ev:30,tier:"c",note:"Few star autos"},
+  {id:"MIA",name:"Marlins",ev:20,tier:"c",note:"Eury Perez RC"},
+  {id:"COL",name:"Rockies",ev:20,tier:"c",note:"Tovar RC · floor"},
+];
+const MLB_STASH = new Set(["LAD","NYY","OAK","ATL","SEA","WSH","PIT","SFG","BOS","KCR","PHI","NYM","CHC","HOU","DET","BAL"]);
+
+// ══════════════════════════════════════════
+// CITY PAIRINGS — NFL + NBA (geographic default)
+// ══════════════════════════════════════════
+// Format: {nfl: teamId, nba: teamId, label: "City Name"}
+// null = no geographic pair (anomaly — user can reassign)
+const DEFAULT_PAIRS_NFL_NBA = [
+  {nfl:"CHI",nba:"CHI",label:"Chicago"},
+  {nfl:"BOS",nba:"BOS",label:"Boston (Patriots + Celtics)"},  // NE Patriots
+  {nfl:"CLE",nba:"CLE",label:"Cleveland"},
+  {nfl:"DAL",nba:"DAL",label:"Dallas"},
+  {nfl:"DEN",nba:"DEN",label:"Denver"},
+  {nfl:"DET",nba:"DET",label:"Detroit"},
+  {nfl:"HOU",nba:"HOU",label:"Houston"},
+  {nfl:"IND",nba:"IND",label:"Indiana (Colts + Pacers)"},
+  {nfl:"LAR",nba:"LAC",label:"LA (Rams + Clippers)"},
+  {nfl:"LAC",nba:"LAL",label:"LA (Chargers + Lakers)"},
+  {nfl:"MIA",nba:"MIA",label:"Miami"},
+  {nfl:"MEM",nba:null,label:"Memphis (Grizzlies — no NFL pair)",nbaOnly:true,nbaId:"MEM"},
+  {nfl:"MIN",nba:"MIN",label:"Minnesota"},
+  {nfl:"NE",nba:"BOS",label:"Boston/NE (Patriots + Celtics)",skip:true}, // already handled
+  {nfl:"NO",nba:"NOP",label:"New Orleans"},
+  {nfl:"NYG",nba:"NYK",label:"New York (Giants + Knicks)"},
+  {nfl:"NYJ",nba:"BKN",label:"New York (Jets + Nets)"},
+  {nfl:"ORL",nba:null,label:"Orlando (Magic — no NFL pair)",nbaOnly:true,nbaId:"ORL"},
+  {nfl:"PHI",nba:"PHI",label:"Philadelphia"},
+  {nfl:"PHX",nba:null,label:"Phoenix (Suns — no NFL pair)",nbaOnly:true,nbaId:"PHX"},
+  {nfl:"POR",nba:null,label:"Portland (Blazers — no NFL pair)",nbaOnly:true,nbaId:"POR"},
+  {nfl:"SAC",nba:null,label:"Sacramento (Kings — no NFL pair)",nbaOnly:true,nbaId:"SAC"},
+  {nfl:"SF",nba:"GSW",label:"Bay Area (49ers + Warriors)"},
+  {nfl:"SEA",nba:null,label:"Seattle (Seahawks — Sonics gone)",nflOnly:true},
+  {nfl:"TB",nba:"ORL",label:"Florida (Bucs + Magic)",anomaly:true},
+  {nfl:"TEN",nba:"MEM",label:"TN/MEM (Titans + Grizzlies)",anomaly:true},
+  {nfl:"TOR",nba:null,label:"Toronto (Raptors — no NFL pair)",nbaOnly:true,nbaId:"TOR"},
+  {nfl:"WAS",nba:"WAS",label:"Washington"},
+  {nfl:"ATL",nba:"ATL",label:"Atlanta"},
+  {nfl:"CAR",nba:"CHA",label:"Carolinas (Panthers + Hornets)"},
+  {nfl:"GB",nba:"MIL",label:"Wisconsin (Packers + Bucks)"},
+  {nfl:"ARI",nba:"PHX",label:"Phoenix (Cardinals + Suns)"},
+  {nfl:"LV",nba:"SAC",label:"Nevada/CA (Raiders + Kings)",anomaly:true},
+  {nfl:"JAX",nba:"ORL",label:"Florida (Jaguars + Magic)",anomaly:true},
+  {nfl:"PIT",nba:"SAS",label:"Steelers + Spurs (no NBA in PIT)",anomaly:true},
+  {nfl:"BAL",nba:"WAS",label:"MD/DC (Ravens + Wizards)",anomaly:true},
+  {nfl:"CIN",nba:null,label:"Cincinnati (Bengals — no NBA)",nflOnly:true},
+  {nfl:"BUF",nba:"TOR",label:"Buffalo/Toronto (Bills + Raptors)",anomaly:true},
+  {nfl:"KC",nba:"OKC",label:"KC + OKC (no NBA in KC)",anomaly:true},
+  {nfl:"OKC",nba:null,label:"OKC (Thunder — no NFL)",nbaOnly:true,nbaId:"OKC"},
+  {nfl:"SAS",nba:null,label:"San Antonio (Spurs — no NFL)",nbaOnly:true,nbaId:"SAS"},
+  {nfl:"UTA",nba:null,label:"Utah (Jazz — no NFL)",nbaOnly:true,nbaId:"UTA"},
+  {nfl:"BKN",nba:null,label:"Brooklyn (Nets — no NFL, NYJ handled)",nbaOnly:true,nbaId:"BKN"},
+  {nfl:"NOP",nba:null,label:"New Orleans Pelicans (Saints handled)",nbaOnly:true,nbaId:"NOP"},
 ];
 
-// ── NBA TEAMS (Cosmic Chrome Basketball — calibrated from real break data) ──
-// Real market prices from Firehand Cards 8-box case + Main Street Breaks + Finals-era sentiment
-const NBA_TEAMS_LIVE = [
-  {id:"SAS",name:"Spurs",full:"San Antonio Spurs",ev:1499,tier:"s",pp:true,note:"Wembanyama + Dylan Harper · 2 RCs · 💫 PP Saturn+Pluto · Most sought-after team"},
-  {id:"DAL",name:"Mavericks",full:"Dallas Mavericks",ev:1299,tier:"s",pp:true,note:"Cooper Flagg CCA + ESS · Luka PP · 💫 PP Neptune · Flagg ROY"},
-  {id:"LAL",name:"Lakers",full:"Los Angeles Lakers",ev:699,tier:"s",pp:true,note:"LeBron CCA + Bronny Alien Auto · Luka PP Uranus · 💫 PP — 2 PP players"},
-  {id:"GSW",name:"Warriors",full:"Golden State Warriors",ev:499,tier:"s",pp:true,note:"Curry CCA $11,750 confirmed · 💫 PP Earth · Best confirmed eBay comp"},
-  {id:"CHA",name:"Hornets",full:"Charlotte Hornets",ev:399,tier:"s",pp:true,note:"Kon Knueppel CCA + ESS · 💫 PP Sun · Hype cooled post-Finals vs Wemby/Harper"},
-  {id:"OKC",name:"Thunder",full:"Oklahoma City Thunder",ev:329,tier:"s",pp:true,note:"SGA CCA + Chet Holmgren CCA · 💫 PP Mercury"},
-  {id:"UTA",name:"Jazz",full:"Utah Jazz",ev:225,tier:"s",pp:false,note:"Ace Bailey CCA + Walter Clayton Jr. · 10 autos · Underrated vs checklist depth"},
-  {id:"PHI",name:"76ers",full:"Philadelphia 76ers",ev:225,tier:"a",pp:false,note:"Allen Iverson Alien Auto · Heavy inserts · AI premium always holds"},
-  {id:"DEN",name:"Nuggets",full:"Denver Nuggets",ev:200,tier:"a",pp:false,note:"Jokic CCA II + Jamal Murray CCA · Jokic global premium"},
-  {id:"BOS",name:"Celtics",full:"Boston Celtics",ev:165,tier:"s",pp:false,note:"Tatum CCA + Paul Pierce Alien + Larry Bird Galaxy Greats"},
-  {id:"MEM",name:"Grizzlies",full:"Memphis Grizzlies",ev:165,tier:"a",pp:false,note:"Cedric Coward CCA + Jaylen Wells Alien Auto"},
-  {id:"NOP",name:"Pelicans",full:"New Orleans Pelicans",ev:150,tier:"a",pp:false,note:"Derik Queen CCA + Yves Missi + CJ McCollum Alien"},
-  {id:"MIN",name:"Timberwolves",full:"Minnesota Timberwolves",ev:115,tier:"a",pp:true,note:"Anthony Edwards CCA · 💫 PP Jupiter · ANT premium"},
-  {id:"BKN",name:"Nets",full:"Brooklyn Nets",ev:115,tier:"a",pp:false,note:"Egor Demin Alien Auto + Danny Wolf + 10 autos total"},
-  {id:"MIL",name:"Bucks",full:"Milwaukee Bucks",ev:100,tier:"b",pp:true,note:"Giannis PP Mars · 0 autos · Heavy inserts · 💫 PP — no autos hurts floor"},
-  {id:"DET",name:"Pistons",full:"Detroit Pistons",ev:100,tier:"a",pp:false,note:"Chaz Lanier CCA + Jerry Stackhouse Alien Auto"},
-  {id:"HOU",name:"Rockets",full:"Houston Rockets",ev:100,tier:"a",pp:false,note:"Jalen Green CCA + Kevin Durant CCA"},
-  {id:"CLE",name:"Cavaliers",full:"Cleveland Cavaliers",ev:100,tier:"a",pp:false,note:"Ty Jerome Alien + Tyrese Proctor Alien · 7 autos"},
-  {id:"TOR",name:"Raptors",full:"Toronto Raptors",ev:100,tier:"a",pp:false,note:"Collin Murray-Boyles CCA + ESS · 9 autos"},
-  {id:"CHI",name:"Bulls",full:"Chicago Bulls",ev:55,tier:"b",pp:false,note:"Noa Essengue RC auto only · Rodman Singularity insert (no auto) · thigularity"},
-  {id:"IND",name:"Pacers",full:"Indiana Pacers",ev:65,tier:"a",pp:false,note:"Tyrese Haliburton CCA + Jalen Rose Alien"},
-  {id:"NYK",name:"Knicks",full:"New York Knicks",ev:65,tier:"a",pp:false,note:"Jalen Brunson CCA + Mikal Bridges Alien"},
-  {id:"ORL",name:"Magic",full:"Orlando Magic",ev:65,tier:"s",pp:false,note:"Franz Wagner CCA + Penny Hardaway Alien · Undervalued at market"},
-  {id:"MIA",name:"Heat",full:"Miami Heat",ev:50,tier:"b",pp:false,note:"Kasparas Jakucionis RC + Kevin Love ESS"},
-  {id:"PHX",name:"Suns",full:"Phoenix Suns",ev:50,tier:"b",pp:false,note:"Khaman Maluach RC + Ryan Dunn Alien"},
-  {id:"POR",name:"Blazers",full:"Portland Trail Blazers",ev:50,tier:"b",pp:false,note:"Clyde Drexler Singularity + Yang Hansen CCA"},
-  {id:"WAS",name:"Wizards",full:"Washington Wizards",ev:50,tier:"b",pp:false,note:"Will Riley CCA + Kyshawn George Alien"},
-  {id:"ATL",name:"Hawks",full:"Atlanta Hawks",ev:30,tier:"b",pp:false,note:"Asa Newell RC + Wilkins Alien · thinnest checklist on the board — avoidien"},
-  {id:"LAC",name:"Clippers",full:"Los Angeles Clippers",ev:40,tier:"b",pp:false,note:"James Harden CCA + Yanic Konan-Niederhäuser"},
-  {id:"SAC",name:"Kings",full:"Sacramento Kings",ev:55,tier:"b",pp:false,note:"AJ Raynaud RC auto · Jason Williams Alien + Peja Alien · Raynaud adds real value"},
+// Clean pairing list: NFL+NBA pairs only (no orphans), deduped
+const NFL_NBA_DEFAULT = [
+  {id:"CHI_CHI",  nfl:"CHI", nba:"CHI",  label:"Bears + Bulls"},
+  {id:"NE_BOS",   nfl:"NE",  nba:"BOS",  label:"Patriots + Celtics"},
+  {id:"CLE_CLE",  nfl:"CLE", nba:"CLE",  label:"Browns + Cavaliers"},
+  {id:"DAL_DAL",  nfl:"DAL", nba:"DAL",  label:"Cowboys + Mavericks"},
+  {id:"DEN_DEN",  nfl:"DEN", nba:"DEN",  label:"Broncos + Nuggets"},
+  {id:"DET_DET",  nfl:"DET", nba:"DET",  label:"Lions + Pistons"},
+  {id:"HOU_HOU",  nfl:"HOU", nba:"HOU",  label:"Texans + Rockets"},
+  {id:"IND_IND",  nfl:"IND", nba:"IND",  label:"Colts + Pacers"},
+  {id:"LAR_LAC",  nfl:"LAR", nba:"LAC",  label:"Rams + Clippers"},
+  {id:"LAC_LAL",  nfl:"LAC", nba:"LAL",  label:"Chargers + Lakers"},
+  {id:"MIA_MIA",  nfl:"MIA", nba:"MIA",  label:"Dolphins + Heat"},
+  {id:"MIN_MIN",  nfl:"MIN", nba:"MIN",  label:"Vikings + Timberwolves"},
+  {id:"NO_NOP",   nfl:"NO",  nba:"NOP",  label:"Saints + Pelicans"},
+  {id:"NYG_NYK",  nfl:"NYG", nba:"NYK",  label:"Giants + Knicks"},
+  {id:"NYJ_BKN",  nfl:"NYJ", nba:"BKN",  label:"Jets + Nets"},
+  {id:"PHI_PHI",  nfl:"PHI", nba:"PHI",  label:"Eagles + 76ers"},
+  {id:"SF_GSW",   nfl:"SF",  nba:"GSW",  label:"49ers + Warriors"},
+  {id:"WAS_WAS",  nfl:"WSH", nba:"WAS",  label:"Commanders + Wizards"},
+  {id:"ATL_ATL",  nfl:"ATL", nba:"ATL",  label:"Falcons + Hawks"},
+  {id:"CAR_CHA",  nfl:"CAR", nba:"CHA",  label:"Panthers + Hornets"},
+  {id:"GB_MIL",   nfl:"GB",  nba:"MIL",  label:"Packers + Bucks"},
+  {id:"ARI_PHX",  nfl:"ARI", nba:"PHX",  label:"Cardinals + Suns"},
+  // Anomalies
+  {id:"TEN_MEM",  nfl:"TEN", nba:"MEM",  label:"Titans + Grizzlies",   anomaly:true},
+  {id:"TB_ORL",   nfl:"TB",  nba:"ORL",  label:"Bucs + Magic",         anomaly:true},
+  {id:"LV_SAC",   nfl:"LV",  nba:"SAC",  label:"Raiders + Kings",      anomaly:true},
+  {id:"JAX_ORL",  nfl:"JAX", nba:"ORL",  label:"Jaguars + Magic",      anomaly:true},
+  {id:"PIT_SAS",  nfl:"PIT", nba:"SAS",  label:"Steelers + Spurs",     anomaly:true},
+  {id:"BAL_WAS",  nfl:"BAL", nba:"WAS",  label:"Ravens + Wizards",     anomaly:true},
+  {id:"BUF_TOR",  nfl:"BUF", nba:"TOR",  label:"Bills + Raptors",      anomaly:true},
+  {id:"KC_OKC",   nfl:"KC",  nba:"OKC",  label:"Chiefs + Thunder",     anomaly:true},
+  // Unmatched NFL (no NBA city)
+  {id:"CIN_solo", nfl:"CIN", nba:"IND",  label:"Bengals + Pacers (closest)",  anomaly:true},
+  {id:"SEA_POR",  nfl:"SEA", nba:"POR",  label:"Seahawks + Blazers",   anomaly:true},
+  {id:"WSH_WAS",  nfl:"WSH", nba:"WAS",  label:"Commanders + Wizards", skip:true}, // dup of WAS_WAS
+  // Unmatched NBA (no NFL city) — paired with nearest
+  {id:"UTA_DEN",  nfl:"DEN", nba:"UTA",  label:"Broncos + Jazz (closest)", anomaly:true},
+  {id:"SAS_PIT",  nfl:"PIT", nba:"SAS",  label:"Steelers + Spurs",    skip:true}, // dup
 ];
 
-// PP teams for NBA (Planetary Pursuit featured players)
-const NBA_PP_TEAMS = new Set(["SAS","DAL","LAL","GSW","CHA","OKC","MIN","MIL"]);
-const NBA_STASH_TEAMS = new Set(["SAS","DAL","LAL","GSW","CHA","OKC","UTA","PHI","DEN","BOS","MEM","NOP"]);
+// Active pairings (user-editable, starts as default)
+let activePairs = null; // null = use NFL_NBA_DEFAULT
+let currentPairMode = 'nfl_nba'; // 'nfl_nba' | 'nfl_mlb' | 'nba_mlb' | 'all3'
 
-// ── MLB TEAMS (Chrome Platinum 12-box June 20 calibration — real break data) ──
-const MLB_TEAMS_LIVE = [
-  {id:"LAD",name:"Dodgers",full:"Los Angeles Dodgers",ev:650,tier:"s",note:"Ohtani + Glasnow autos · Deep checklist · Market anchor"},
-  {id:"NYY",name:"Yankees",full:"New York Yankees",ev:300,tier:"s",note:"Judge auto · Historic brand premium"},
-  {id:"OAK",name:"Athletics",full:"Oakland Athletics",ev:300,tier:"s",note:"Lawrence Butler + A's prospect pipeline · Surprisingly strong"},
-  {id:"WSH",name:"Nationals",full:"Washington Nationals",ev:180,tier:"a",note:"CJ Abrams auto · Young core · Tier One anomaly: CHW > WSH"},
-  {id:"ATL",name:"Braves",full:"Atlanta Braves",ev:160,tier:"a",note:"Acuña auto · Strider + deep roster"},
-  {id:"BOS",name:"Red Sox",full:"Boston Red Sox",ev:130,tier:"a",note:"Ceddanne Rafaela · Tanner Houck auto"},
-  {id:"KCR",name:"Royals",full:"Kansas City Royals",ev:120,tier:"a",note:"Bobby Witt Jr. auto · Breakout team premium"},
-  {id:"PIT",name:"Pirates",full:"Pittsburgh Pirates",ev:120,tier:"a",note:"Paul Skenes auto · Top pitching prospect"},
-  {id:"SEA",name:"Mariners",full:"Seattle Mariners",ev:150,tier:"a",note:"Julio Rodriguez auto · Castillo · Strong roster depth"},
-  {id:"CHC",name:"Cubs",full:"Chicago Cubs",ev:90,tier:"b",note:"Brennen Davis RC · historic brand"},
-  {id:"HOU",name:"Astros",full:"Houston Astros",ev:90,tier:"b",note:"Yordan Alvarez auto · dynasty holdover"},
-  {id:"NYM",name:"Mets",full:"New York Mets",ev:90,tier:"b",note:"Lindor auto · Soto · big market"},
-  {id:"DET",name:"Tigers",full:"Detroit Tigers",ev:90,tier:"b",note:"Jackson Jobe RC · Top pitching prospect"},
-  {id:"MIL",name:"Brewers",full:"Milwaukee Brewers",ev:75,tier:"b",note:"Jackson Chourio auto · Burnes gone but Chourio carries"},
-  {id:"PHI",name:"Phillies",full:"Philadelphia Phillies",ev:75,tier:"b",note:"Trea Turner auto · Harper premium fading"},
-  {id:"SFG",name:"Giants",full:"San Francisco Giants",ev:75,tier:"b",note:"Jung Hoo Lee auto · Prospect depth"},
-  {id:"STL",name:"Cardinals",full:"St. Louis Cardinals",ev:75,tier:"b",note:"Nolan Arenado auto · Wainwright legacy insert"},
-  {id:"TEX",name:"Rangers",full:"Texas Rangers",ev:65,tier:"b",note:"Wyatt Langford RC · WS premium fading"},
-  {id:"LAA",name:"Angels",full:"Los Angeles Angels",ev:70,tier:"b",note:"Post-Ohtani · Nolan Schanuel RC"},
-  {id:"CIN",name:"Reds",full:"Cincinnati Reds",ev:60,tier:"b",note:"Elly De La Cruz auto · Speed premium"},
-  {id:"SDP",name:"Padres",full:"San Diego Padres",ev:50,tier:"b",note:"Tatis auto · Machado · Tier One undervalued"},
-  {id:"TOR",name:"Blue Jays",full:"Toronto Blue Jays",ev:55,tier:"b",note:"Vladdy Jr. auto · Bichette"},
-  {id:"MIN",name:"Twins",full:"Minnesota Twins",ev:55,tier:"b",note:"Byron Buxton auto · Royce Lewis"},
-  {id:"BAL",name:"Orioles",full:"Baltimore Orioles",ev:120,tier:"a",note:"Gunnar Henderson auto · Jackson Holliday RC · Top prospect org"},
-  {id:"CLE",name:"Guardians",full:"Cleveland Guardians",ev:40,tier:"c",note:"Steven Kwan auto · thin checklist"},
-  {id:"TBR",name:"Rays",full:"Tampa Bay Rays",ev:30,tier:"c",note:"Analytically built roster · few star autos"},
-  {id:"MIA",name:"Marlins",full:"Miami Marlins",ev:20,tier:"c",note:"Eury Perez RC · rebuilding"},
-  {id:"COL",name:"Rockies",full:"Colorado Rockies",ev:20,tier:"c",note:"Ezequiel Tovar RC · floor team"},
-  {id:"ARI",name:"Diamondbacks",full:"Arizona Diamondbacks",ev:30,tier:"c",note:"Corbin Carroll auto · WS run premium fading"},
-  {id:"CHW",name:"White Sox",full:"Chicago White Sox",ev:40,tier:"b",note:"⚠️ ANOMALY: Tier One $260 (#3 overall!) — Colson Montgomery + Kyle Teel + Grant Taylor autos. Floor in Chrome Platinum but chase in Tier One."},
-];
-const MLB_STASH_TEAMS = new Set(["LAD","NYY","OAK","ATL","SEA","WSH","PIT","SFG","BOS","KCR","PHI","NYM","CHC","HOU","DET","BAL"]);
-
-// ── COMBINED NFL + NBA GEOGRAPHIC PAIRINGS ──
-// Each slot = NFL team + paired NBA team
-// EV = NFL team EV + NBA team EV combined
-const COMBINED_PAIRS = [
-  {id:"SAS_PIT",name:"Spurs + Steelers",full:"San Antonio Spurs / Pittsburgh Steelers",ev:0,tier:"s",pp:true,
-   nfl:"PIT",nba:"SAS",note:"Wemby+Harper + Rodgers SFS · 💫 PP — NBA side dominates"},
-  {id:"GSW_SF",name:"Warriors + 49ers",full:"Golden State Warriors / San Francisco 49ers",ev:0,tier:"s",pp:true,
-   nfl:"SF",nba:"GSW",note:"Curry CCA $11,750 + Rice EQA + Montana LY · 💫 PP both sides"},
-  {id:"MIA_MIA",name:"Heat + Dolphins",full:"Miami Heat / Miami Dolphins",ev:0,tier:"a",pp:false,
-   nfl:"MIA",nba:"MIA",note:"Marino LY + Achane EQA · Jakucionis RC"},
-  {id:"MIL_GB",name:"Bucks + Packers",full:"Milwaukee Bucks / Green Bay Packers",ev:0,tier:"a",pp:true,
-   nfl:"GB",nba:"MIL",note:"Giannis PP Mars + Favre SFS + Woodson LY · 💫 PP Giannis"},
-  {id:"CHI_CHI",name:"Bulls + Bears",full:"Chicago Bulls / Chicago Bears",ev:0,tier:"a",pp:false,
-   nfl:"CHI",nba:"CHI",note:"Caleb Williams EQA + Essengue RC · Williams drives NFL value"},
-  {id:"LAL_LAR",name:"Lakers + Rams",full:"Los Angeles Lakers / Los Angeles Rams",ev:0,tier:"s",pp:true,
-   nfl:"LAR",nba:"LAL",note:"LeBron CCA + Bronny Alien + Aaron Donald LY · 💫 PP LeBron+Luka"},
-  {id:"NYK_NYG",name:"Knicks + Giants",full:"New York Knicks / New York Giants",ev:0,tier:"s",pp:true,
-   nfl:"NYG",nba:"NYK",note:"Dart + Skattebo (NFL massive) + Brunson CCA · 💫 PP both"},
-  {id:"BKN_NYJ",name:"Nets + Jets",full:"Brooklyn Nets / New York Jets",ev:0,tier:"b",pp:false,
-   nfl:"NYJ",nba:"BKN",note:"Demin Alien Auto + Mason Taylor RC · bottom of both markets"},
-  {id:"BOS_NE",name:"Celtics + Patriots",full:"Boston Celtics / New England Patriots",ev:0,tier:"s",pp:false,
-   nfl:"NE",nba:"BOS",note:"Brady EQA + Maye EQA + Tatum CCA + Pierce Alien · 🔥 stacked"},
-  {id:"CLE_CLE",name:"Cavaliers + Browns",full:"Cleveland Cavaliers / Cleveland Browns",ev:0,tier:"a",pp:false,
-   nfl:"CLE",nba:"CLE",note:"Shedeur + Judkins + Ty Jerome Alien · solid RC stack"},
-  {id:"DEN_DEN",name:"Nuggets + Broncos",full:"Denver Nuggets / Denver Broncos",ev:0,tier:"a",pp:false,
-   nfl:"DEN",nba:"DEN",note:"Jokic CCA + Peyton Manning LY + Elway LY · legend-heavy"},
-  {id:"DAL_DAL",name:"Mavericks + Cowboys",full:"Dallas Mavericks / Dallas Cowboys",ev:0,tier:"s",pp:true,
-   nfl:"DAL",nba:"DAL",note:"Flagg CCA + Emmitt Smith EQA · 💫 PP Flagg both products"},
-  {id:"PHX_ARI",name:"Suns + Cardinals",full:"Phoenix Suns / Arizona Cardinals",ev:0,tier:"b",pp:false,
-   nfl:"ARI",nba:"PHX",note:"Maluach RC + McBride CCA · floor pairing"},
-  {id:"SAC_LV",name:"Kings + Raiders",full:"Sacramento Kings / Las Vegas Raiders",ev:0,tier:"a",pp:true,
-   nfl:"LV",nba:"SAC",note:"Jeanty RC ⚠️ cooling + AJ Raynaud RC + Peja Alien · 💫 PP Jeanty"},
-  {id:"OKC_OKC",name:"Thunder + ???",full:"Oklahoma City Thunder / No NFL team",ev:0,tier:"s",pp:true,
-   nfl:null,nba:"OKC",note:"SGA CCA + Chet CCA · 💫 PP Mercury — OKC has no NFL pair"},
-  {id:"MIN_MIN",name:"Vikings + T-Wolves",full:"Minnesota Vikings / Minnesota Timberwolves",ev:0,tier:"a",pp:true,
-   nfl:"MIN",nba:"MIN",note:"Jefferson 10 inserts + Moss LY + Edwards CCA · 💫 PP both"},
-  {id:"IND_IND",name:"Pacers + Colts",full:"Indiana Pacers / Indianapolis Colts",ev:0,tier:"a",pp:false,
-   nfl:"IND",nba:"IND",note:"Manning EQA + Warren RC + Haliburton CCA · solid legends"},
-  {id:"MEM_TEN",name:"Grizzlies + Titans",full:"Memphis Grizzlies / Tennessee Titans",ev:0,tier:"s",pp:true,
-   nfl:"TEN",nba:"MEM",note:"Cam Ward RC (NFL monster) + Coward CCA · 💫 PP Ward — NFL dominates"},
-  {id:"NOP_NO",name:"Pelicans + Saints",full:"New Orleans Pelicans / New Orleans Saints",ev:0,tier:"a",pp:false,
-   nfl:"NO",nba:"NOP",note:"Tyler Shough RC + Derik Queen CCA · anomaly pricing both"},
-  {id:"ATL_ATL",name:"Hawks + Falcons",full:"Atlanta Hawks / Atlanta Falcons",ev:0,tier:"b",pp:false,
-   nfl:"ATL",nba:"ATL",note:"Penix Jr. EQA + Asa Newell RC · thinnest pairing on the board"},
-  {id:"CHA_CAR",name:"Hornets + Panthers",full:"Charlotte Hornets / Carolina Panthers",ev:0,tier:"s",pp:true,
-   nfl:"CAR",nba:"CHA",note:"Knueppel CCA + ESS + Tetairoa McMillan RC · 💫 PP Knueppel"},
-  {id:"ORL_JAX",name:"Magic + Jaguars",full:"Orlando Magic / Jacksonville Jaguars",ev:0,tier:"s",pp:true,
-   nfl:"JAX",nba:"ORL",note:"Travis Hunter RC + Franz Wagner CCA + Hardaway Alien · 💫 PP Hunter"},
-  {id:"PHI_PHI",name:"76ers + Eagles",full:"Philadelphia 76ers / Philadelphia Eagles",ev:0,tier:"s",pp:true,
-   nfl:"PHI",nba:"PHI",note:"Hurts EQA + Barkley EQA + Iverson Alien · 💫 PP both sides"},
-  {id:"WAS_WAS",name:"Wizards + Commanders",full:"Washington Wizards / Washington Commanders",ev:0,tier:"a",pp:false,
-   nfl:"WSH",nba:"WAS",note:"Daniels EQA + Will Riley CCA · Daniels drives NFL value"},
-  {id:"HOU_HOU",name:"Rockets + Texans",full:"Houston Rockets / Houston Texans",ev:0,tier:"a",pp:false,
-   nfl:"HOU",nba:"HOU",note:"Stroud EQA + Green CCA + Durant CCA · solid stack"},
-  {id:"TOR_BUF",name:"Raptors + Bills",full:"Toronto Raptors / Buffalo Bills",ev:0,tier:"s",pp:true,
-   nfl:"BUF",nba:"TOR",note:"Josh Allen EQA + Murray-Boyles CCA · 💫 PP Allen — NFL dominates"},
-  {id:"LAC_LAC",name:"Clippers + Chargers",full:"Los Angeles Clippers / Los Angeles Chargers",ev:0,tier:"a",pp:false,
-   nfl:"LAC",nba:"LAC",note:"Hampton RC + Herbert EQA + Harden CCA · solid"},
-  {id:"POR_SEA",name:"Blazers + Seahawks",full:"Portland Trail Blazers / Seattle Seahawks",ev:0,tier:"b",pp:false,
-   nfl:"SEA",nba:"POR",note:"Drexler Singularity + JSN base + Milroe CCA · weak pairing"},
-  {id:"DET_DET",name:"Pistons + Lions",full:"Detroit Pistons / Detroit Lions",ev:0,tier:"a",pp:false,
-   nfl:"DET",nba:"DET",note:"Barry Sanders SFS + Gibbs CCA + Chaz Lanier CCA · Sanders premium"},
-  {id:"NYK_NYJ",name:"Nets + Jets",full:"Brooklyn Nets / New York Jets",ev:0,tier:"b",pp:false,
-   nfl:"NYJ",nba:"BKN",note:"Mason Taylor RC + Demin Alien Auto · floor pairing"},
-];
-
-// Pre-calculate combined EVs for each pairing
-function initCombinedPairs(){
-  const nflEVs = {};
-  ALL_TEAMS.forEach(t=>{ nflEVs[t.id] = t.ev; });
-  const nbaEVs = {};
-  NBA_TEAMS_LIVE.forEach(t=>{ nbaEVs[t.id] = t.ev; });
-  
-  COMBINED_PAIRS.forEach(p=>{
-    const nflEV = p.nfl ? (nflEVs[p.nfl] || 0) : 0;
-    const nbaEV = p.nba ? (nbaEVs[p.nba] || 0) : 0;
-    p.ev = nflEV + nbaEV;
+function getActivePairs(){
+  if(activePairs) return activePairs;
+  // Build clean deduped default
+  const seen = new Set();
+  return NFL_NBA_DEFAULT.filter(p=>{
+    if(p.skip) return false;
+    if(seen.has(p.nfl+'_'+p.nba)) return false;
+    seen.add(p.nfl+'_'+p.nba);
+    return true;
   });
 }
 
-// Current sport
-let currentSport = 'nfl';
-
-function setSport(sport){
-  currentSport = sport;
-  // Reset button styles
-  ['btn-nfl','btn-nba','btn-baseball','btn-combined'].forEach(id=>{
-    const el = document.getElementById(id);
-    if(el) el.classList.remove('active');
-  });
-  const activeBtn = document.getElementById('btn-'+sport);
-  if(activeBtn) activeBtn.classList.add('active');
-
-  // Reset the break
-  pool = [];
-  claimed = [];
-  cfg = {};
-
-  // Update product dropdown options
-  const prodRows = document.getElementById('productRows');
-  if(prodRows) prodRows.innerHTML = '';
-
-  // Update sport label
-  const banner = document.getElementById('liveModeBanner');
-  if(banner){
-    const labels = {nfl:'🔴 LIVE AUCTION MODE — NFL', nba:'🔴 LIVE AUCTION MODE — NBA', baseball:'🔴 LIVE AUCTION MODE — MLB', combined:'🔴 LIVE AUCTION MODE — MULTI-SPORT'};
-    banner.textContent = labels[sport] || '🔴 LIVE AUCTION MODE';
-  }
-
-  // Go back to step 1
-  setStep(1);
-
-  // Re-init with default product(s) for this sport
-  if(sport === 'nba'){
-    addProductRow('nba_cosmic', 8);
-  } else if(sport === 'baseball'){
-    addProductRow('mlb_chrome_plat', 12);
-  } else if(sport === 'combined'){
-    addProductRow('cosmic', 1);
-    addProductRow('nba_cosmic', 8);
-    addProductRow('mlb_chrome_plat', 12);
-  } else {
-    addProductRow('cosmic', 1);
-  }
-}
-
-function getActiveTeams(){
-  if(currentSport === 'nba') return NBA_TEAMS_LIVE;
-  if(currentSport === 'baseball') return MLB_TEAMS_LIVE;
-  if(currentSport === 'combined'){
-    return COMBINED_PAIRS;
-  }
-  return ALL_TEAMS;
-}
-function getActivePPTeams(){
-  if(currentSport === 'nba') return NBA_PP_TEAMS;
-  if(currentSport === 'baseball') return new Set(); // no PP in baseball
-  return STASH_TEAMS;
-}
-function getActiveStashTeams(){
-  if(currentSport === 'nba') return NBA_STASH_TEAMS;
-  if(currentSport === 'baseball') return MLB_STASH_TEAMS;
-  return STASH_TEAMS;
-}
-
+// ══════════════════════════════════════════
+// NFL PLAYERS (player break)
+// ══════════════════════════════════════════
 const ALL_PLAYERS = [
-  {id:"brady",name:"Tom Brady",pos:"Legend",ev:42,tier:"s",note:"EQA on-card ⭐ — GOAT"},
-  {id:"rice",name:"Jerry Rice",pos:"Legend",ev:38,tier:"s",note:"EQA + SFS both on-card ⭐"},
-  {id:"ward",name:"Cam Ward",pos:"QB",ev:38,tier:"s",note:"ALL 4 auto sets · every insert"},
+  {id:"brady",name:"Tom Brady",pos:"Legend",ev:42,tier:"s",note:"EQA on-card"},
+  {id:"rice",name:"Jerry Rice",pos:"Legend",ev:38,tier:"s",note:"EQA + SFS both"},
+  {id:"ward",name:"Cam Ward",pos:"QB",ev:38,tier:"s",note:"ALL 4 auto sets"},
   {id:"allen",name:"Josh Allen",pos:"QB",ev:36,tier:"s",note:"EQA · 11 inserts + PP"},
-  {id:"manning",name:"Peyton Manning",pos:"Legend",ev:36,tier:"s",note:"SFS + EQA both on-card ⭐"},
+  {id:"manning",name:"Peyton Manning",pos:"Legend",ev:36,tier:"s",note:"SFS + EQA on-card"},
   {id:"mahomes",name:"Pat Mahomes",pos:"QB",ev:34,tier:"s",note:"EQA · 11 inserts + PP"},
-  {id:"dart",name:"Jaxson Dart",pos:"QB",ev:32,tier:"s",note:"ALL 4 auto sets · PP featured"},
+  {id:"dart",name:"Jaxson Dart",pos:"QB",ev:32,tier:"s",note:"ALL 4 auto sets · PP"},
   {id:"hurts",name:"Jalen Hurts",pos:"QB",ev:26,tier:"s",note:"EQA on-card"},
-  {id:"barkley",name:"Saquon Barkley",pos:"RB",ev:24,tier:"s",note:"EQA · monster season premium"},
-  {id:"hunter",name:"Travis Hunter",pos:"WR",ev:24,tier:"s",note:"3 auto sets · dual-threat +50%"},
+  {id:"barkley",name:"Saquon Barkley",pos:"RB",ev:24,tier:"s",note:"EQA · monster season"},
+  {id:"hunter",name:"Travis Hunter",pos:"WR",ev:24,tier:"s",note:"3 auto sets · dual-threat"},
   {id:"egbuka",name:"Emeka Egbuka",pos:"WR",ev:22,tier:"s",note:"ALL 4 auto sets"},
-  {id:"jeanty",name:"Ashton Jeanty",pos:"RB",ev:18,tier:"a",note:"4 sets ⚠️ Chrome down -68%"},
-  {id:"skattebo",name:"Cam Skattebo",pos:"RB",ev:18,tier:"s",note:"PP Pluto featured · deep inserts"},
-  {id:"hampton",name:"Omarion Hampton",pos:"RB",ev:18,tier:"s",note:"3 auto sets · Herbert connection"},
-  {id:"shedeur",name:"Shedeur Sanders",pos:"QB",ev:18,tier:"a",note:"2 auto sets · starter uncertain"},
-  {id:"maye",name:"Drake Maye",pos:"QB",ev:20,tier:"a",note:"EQA on-card · slow burn"},
+  {id:"jeanty",name:"Ashton Jeanty",pos:"RB",ev:18,tier:"a",note:"4 sets · Chrome down"},
+  {id:"skattebo",name:"Cam Skattebo",pos:"RB",ev:18,tier:"s",note:"PP Pluto featured"},
+  {id:"hampton",name:"Omarion Hampton",pos:"RB",ev:18,tier:"s",note:"3 auto sets"},
+  {id:"shedeur",name:"Shedeur Sanders",pos:"QB",ev:18,tier:"a",note:"2 auto sets"},
+  {id:"maye",name:"Drake Maye",pos:"QB",ev:20,tier:"a",note:"EQA on-card"},
   {id:"kittle",name:"George Kittle",pos:"TE",ev:18,tier:"a",note:"CCA on-card"},
-  {id:"warren",name:"Tyler Warren",pos:"TE",ev:14,tier:"a",note:"3 auto sets · Bowers comp"},
+  {id:"warren",name:"Tyler Warren",pos:"TE",ev:14,tier:"a",note:"3 auto sets"},
   {id:"mcmillan",name:"Tetairoa McMillan",pos:"WR",ev:16,tier:"a",note:"2 auto sets · 9 inserts"},
-  {id:"burden",name:"Luther Burden III",pos:"WR",ev:14,tier:"a",note:"3 auto sets · Caleb connection"},
-  {id:"gabriel",name:"Dillon Gabriel",pos:"QB",ev:10,tier:"a",note:"SFS on-card · backup role"},
-  {id:"shough",name:"Tyler Shough",pos:"QB",ev:9,tier:"b",note:"SFS on-card · starter NO"},
+  {id:"burden",name:"Luther Burden III",pos:"WR",ev:14,tier:"a",note:"3 auto sets"},
+  {id:"gabriel",name:"Dillon Gabriel",pos:"QB",ev:10,tier:"a",note:"SFS on-card"},
+  {id:"shough",name:"Tyler Shough",pos:"QB",ev:9,tier:"b",note:"SFS on-card"},
   {id:"golden",name:"Matthew Golden",pos:"WR",ev:7,tier:"b",note:"2 auto sets"},
   {id:"harvey",name:"RJ Harvey",pos:"RB",ev:6,tier:"b",note:"2 auto sets"},
   {id:"taylor",name:"Mason Taylor",pos:"TE",ev:8,tier:"b",note:"2 auto sets · Jets"},
   {id:"judkins",name:"Quinshon Judkins",pos:"RB",ev:11,tier:"a",note:"3 auto sets · CLE"},
-  {id:"henderson",name:"TreVeyon Henderson",pos:"RB",ev:18,tier:"a",note:"3 auto sets · SFS on-card"},
-  {id:"lane",name:"Jaylin Lane",pos:"WR",ev:7,tier:"b",note:"2 auto sets · WSH"},
-  {id:"johnson",name:"Kaleb Johnson",pos:"RB",ev:8,tier:"b",note:"2 auto sets · PIT"},
+  {id:"henderson",name:"TreVeyon Henderson",pos:"RB",ev:18,tier:"a",note:"3 auto sets · SFS"},
   {id:"higgins",name:"Jayden Higgins",pos:"WR",ev:10,tier:"a",note:"2 auto sets · HOU"},
 ];
+const STASH_PLAYERS = new Set(["ward","dart","hunter","egbuka","brady","rice","allen","mahomes","manning","barkley","hurts","skattebo","hampton","shedeur","maye","kittle","warren"]);
 
-// ── STATE ──
-let cfg = {};
-let pool = []; // active slots in this break
-let claimed = []; // {id, name, ev, mine, paid}
-let checkedPlayers = new Set(); // for pool builder
-let poolFilter = '';
-
-// ── PRODUCT DATABASE ──
+// ══════════════════════════════════════════
+// PRODUCTS
+// ══════════════════════════════════════════
 const PRODUCTS = {
-  cosmic:{
-    name:"2025 Topps Cosmic Chrome Football",
-    short:"Cosmic Chrome",
-    defaultBoxes:1,
-    teamEV:{
-      TEN:60,BUF:55,NYG:52,TB:52,JAX:50,SF:50,PHI:48,KC:48,CHI:48,NE:42,
-      BAL:42,CLE:45,LAC:40,DAL:34,CIN:32,IND:32,WSH:28,CAR:28,DEN:30,
-      DET:30,MIN:30,GB:28,HOU:26,MIA:26,PIT:26,ARI:22,LV:48,NO:16,
-      LAR:18,NYJ:18,SEA:18,ATL:16
-    }
-  },
-  chrome:{
-    name:"2025 Topps Chrome Football",
-    short:"Chrome",
-    defaultBoxes:1,
-    teamEV:{
-      TEN:40,BUF:42,NYG:44,TB:38,JAX:36,SF:38,PHI:40,KC:38,CHI:36,NE:34,
-      BAL:32,CLE:40,LAC:30,DAL:28,CIN:26,IND:28,WSH:24,CAR:24,DEN:22,
-      DET:24,MIN:22,GB:20,HOU:20,MIA:20,PIT:18,ARI:16,LV:38,NO:14,
-      LAR:14,NYJ:14,SEA:14,ATL:12
-    }
-  },
-  signature:{
-    name:"2025 Topps Signature Class Football",
-    short:"Signature Class",
-    defaultBoxes:1,
-    teamEV:{
-      TEN:28,BUF:30,NYG:32,TB:28,JAX:24,SF:28,PHI:30,KC:28,CHI:26,NE:30,
-      BAL:22,CLE:30,LAC:20,DAL:24,CIN:18,IND:22,WSH:18,CAR:18,DEN:20,
-      DET:18,MIN:18,GB:20,HOU:15,MIA:15,PIT:16,ARI:13,LV:26,NO:11,
-      LAR:13,NYJ:11,SEA:11,ATL:10
-    }
-  },
-  finest:{
-    name:"2025 Topps Finest Football",
-    short:"Finest",
-    defaultBoxes:1,
-    teamEV:{
-      TEN:38,BUF:40,NYG:42,TB:36,JAX:32,SF:36,PHI:38,KC:36,CHI:34,NE:36,
-      BAL:30,CLE:40,LAC:28,DAL:30,CIN:26,IND:30,WSH:24,CAR:24,DEN:26,
-      DET:24,MIN:24,GB:24,HOU:20,MIA:20,PIT:22,ARI:18,LV:36,NO:16,
-      LAR:18,NYJ:16,SEA:16,ATL:14
-    }
-  },
-  // ── NBA PRODUCTS ──
-  nba_cosmic:{
-    name:"2025-26 Topps Cosmic Chrome Basketball",
-    short:"NBA Cosmic",
-    defaultBoxes:8,
-    teamEV:{
-      SAS:1499,DAL:1299,LAL:699,GSW:499,CHA:399,OKC:329,UTA:225,PHI:225,
-      DEN:200,BOS:165,MEM:165,NOP:150,MIN:115,BKN:115,MIL:100,DET:100,
-      HOU:100,CLE:100,TOR:100,CHI:55,IND:65,NYK:65,ORL:65,MIA:50,
-      PHX:50,POR:50,WAS:50,ATL:30,LAC:40,SAC:55
-    }
-  },
-  nba_cactus:{
-    name:"2025-26 Topps Chrome × Cactus Jack Basketball",
-    short:"Cactus Jack",
-    defaultBoxes:12,
-    teamEV:{
-      DAL:425,SAS:345,CHA:235,LAL:185,GSW:135,UTA:100,PHI:100,BOS:90,
-      OKC:90,DEN:85,MEM:70,NOP:65,BKN:50,DET:50,CHI:40,MIL:40,
-      MIN:40,HOU:40,CLE:40,IND:40,TOR:40,ORL:30,NYK:25,WAS:25,
-      MIA:25,PHX:25,POR:25,ATL:20,LAC:20,SAC:20
-    }
-  },
-  nba_signature:{
-    name:"2025-26 Topps Signature Class Basketball",
-    short:"Sig Class",
-    defaultBoxes:12,
-    teamEV:{
-      DAL:1550,SAS:950,CHA:550,LAL:450,GSW:350,OKC:350,UTA:230,PHI:140,
-      NOP:130,NYK:130,MEM:120,BKN:115,MIN:105,MIL:95,BOS:95,DEN:95,
-      SAC:90,DET:75,HOU:75,IND:70,CLE:60,ORL:60,WAS:60,CHI:45,
-      MIA:50,TOR:50,POR:50,PHX:40,ATL:40,LAC:40
-    }
-  },
-    defaultBoxes:12,
-    teamEV:{
-      SAS:1100,DAL:999,LAL:499,GSW:399,CHA:299,OKC:249,UTA:175,PHI:175,
-      DEN:150,BOS:130,MEM:130,NOP:115,MIN:90,BKN:90,MIL:80,DET:75,
-      HOU:75,CLE:75,TOR:75,CHI:75,IND:50,NYK:50,ORL:50,MIA:40,
-      PHX:40,POR:40,WAS:40,ATL:30,LAC:30,SAC:30
-    }
-  },
-  nba_bowman:{
-    name:"2025-26 Bowman Basketball",
-    short:"Bowman",
-    defaultBoxes:12,
-    teamEV:{
-      SAS:500,DAL:450,LAL:250,GSW:200,CHA:150,OKC:120,UTA:90,PHI:90,
-      DEN:80,BOS:70,MEM:70,NOP:60,MIN:50,BKN:50,MIL:45,DET:40,
-      HOU:40,CLE:40,TOR:40,CHI:40,IND:30,NYK:30,ORL:30,MIA:25,
-      PHX:25,POR:25,WAS:25,ATL:20,LAC:20,SAC:20
-    }
-  },
-  nba_sapphire:{
-    name:"2025-26 Bowman Sapphire Basketball",
-    short:"Bowman Sapphire",
-    defaultBoxes:12,
-    teamEV:{
-      SAS:750,DAL:650,LAL:350,GSW:275,CHA:200,OKC:160,UTA:120,PHI:120,
-      DEN:110,BOS:95,MEM:95,NOP:85,MIN:70,BKN:70,MIL:60,DET:55,
-      HOU:55,CLE:55,TOR:55,CHI:55,IND:40,NYK:40,ORL:40,MIA:35,
-      PHX:35,POR:35,WAS:35,ATL:28,LAC:28,SAC:28
-    }
-  },
-  // ── MLB PRODUCTS ──
-  mlb_chrome_plat:{
-    name:"2026 Topps Chrome Platinum Baseball",
-    short:"Chrome Platinum",
-    defaultBoxes:12,
-    teamEV:{
-      LAD:650,NYY:300,OAK:300,WSH:180,SEA:150,ATL:160,BAL:120,KCR:120,
-      PIT:120,BOS:130,CHC:90,HOU:90,NYM:90,DET:90,MIL:75,PHI:75,
-      SFG:75,STL:75,LAA:70,TOR:55,MIN:55,TEX:65,SDP:50,CIN:60,
-      TBR:30,CLE:40,CHW:40,MIA:20,COL:20,ARI:30
-    }
-  },
-  mlb_tier_one:{
-    name:"2026 Topps Tier One Baseball",
-    short:"Tier One",
-    defaultBoxes:6,
-    teamEV:{
-      LAD:350,NYY:300,CHW:260,MIL:160,OAK:160,BOS:150,PIT:145,ATL:140,
-      KCR:140,NYM:130,PHI:130,SEA:130,CIN:125,DET:95,SFG:95,BAL:90,
-      CHC:110,LAA:110,WSH:100,TOR:70,MIN:55,SDP:55,TEX:55,COL:50,
-      TBR:45,ARI:40,CLE:35,MIA:30,HOU:90,STL:75
-    }
-  },
-  mlb_dynasty:{
-    name:"2026 Topps Dynasty Baseball",
-    short:"Dynasty",
-    defaultBoxes:5,
-    teamEV:{
-      LAD:2850,NYY:1450,LAA:990,OAK:700,ATL:650,SEA:650,WSH:650,PIT:500,
-      SFG:400,BOS:375,KCR:375,PHI:370,NYM:370,CHC:370,HOU:340,DET:320,
-      BAL:350,MIL:200,TEX:225,SDP:230,STL:230,MIN:150,COL:80,CIN:120,
-      CLE:120,MIA:120,TBR:120,TOR:120,ARI:120,CHW:50
-    }
-  },
-  mlb_inception:{
-    name:"2026 Topps Inception Baseball",
-    short:"Inception",
-    defaultBoxes:8,
-    teamEV:{
-      LAD:130,NYY:90,OAK:250,WSH:140,PIT:60,ATL:45,BAL:40,BOS:40,
-      CHC:40,CIN:40,SFG:30,SDP:30,HOU:30,LAA:30,NYM:30,KCR:30,
-      DET:25,PHI:25,SEA:25,STL:25,TEX:45,TBR:25,TOR:20,MIL:20,
-      MIN:20,CLE:20,CHW:20,MIA:20,COL:15,ARI:15
-    }
-  }
+  // NFL
+  cosmic:{name:"2025 Topps Cosmic Chrome Football",short:"Cosmic",defaultBoxes:1,teamEV:{NYG:52,TEN:60,TB:52,BUF:55,KC:48,CHI:48,LV:48,NE:42,NO:16,CAR:28,DEN:30,CLE:45,PHI:48,WSH:28,CIN:32,SF:50,JAX:50,DET:30,BAL:42,DAL:34,MIN:30,PIT:26,SEA:18,GB:28,IND:32,LAC:40,ATL:16,HOU:26,LAR:18,ARI:22,MIA:26,NYJ:18}},
+  chrome:{name:"2025 Topps Chrome Football",short:"Chrome",defaultBoxes:1,teamEV:{NYG:44,TEN:40,TB:38,BUF:42,KC:38,CHI:36,LV:38,NE:34,NO:14,CAR:24,DEN:22,CLE:40,PHI:40,WSH:24,CIN:26,SF:38,JAX:36,DET:24,BAL:32,DAL:28,MIN:22,PIT:18,SEA:14,GB:20,IND:28,LAC:30,ATL:12,HOU:20,LAR:14,ARI:16,MIA:20,NYJ:14}},
+  signature:{name:"2025 Topps Signature Class Football",short:"Sig Class",defaultBoxes:1,teamEV:{NYG:32,TEN:28,TB:28,BUF:30,KC:28,CHI:26,LV:26,NE:30,NO:11,CAR:18,DEN:20,CLE:30,PHI:30,WSH:18,CIN:18,SF:28,JAX:24,DET:18,BAL:22,DAL:24,MIN:18,PIT:16,SEA:11,GB:20,IND:22,LAC:20,ATL:10,HOU:15,LAR:13,ARI:13,MIA:15,NYJ:11}},
+  finest:{name:"2025 Topps Finest Football",short:"Finest",defaultBoxes:1,teamEV:{NYG:42,TEN:38,TB:36,BUF:40,KC:36,CHI:34,LV:36,NE:36,NO:16,CAR:24,DEN:26,CLE:40,PHI:38,WSH:24,CIN:26,SF:36,JAX:32,DET:24,BAL:30,DAL:30,MIN:24,PIT:22,SEA:16,GB:24,IND:30,LAC:28,ATL:14,HOU:20,LAR:18,ARI:18,MIA:20,NYJ:16}},
+  // NBA
+  nba_cosmic:{name:"2025-26 Topps Cosmic Chrome Basketball",short:"NBA Cosmic",defaultBoxes:8,teamEV:{SAS:1499,DAL:1299,LAL:699,GSW:499,CHA:399,OKC:329,UTA:225,PHI:225,DEN:200,BOS:165,MEM:165,NOP:150,MIN:115,BKN:115,MIL:100,DET:100,HOU:100,CLE:100,TOR:100,CHI:55,IND:65,NYK:65,ORL:65,MIA:50,PHX:50,POR:50,WAS:50,ATL:30,LAC:40,SAC:55}},
+  nba_cactus:{name:"2025-26 Topps Cactus Jack Basketball",short:"Cactus Jack",defaultBoxes:12,teamEV:{DAL:425,SAS:345,CHA:235,LAL:185,GSW:135,UTA:100,PHI:100,BOS:90,OKC:90,DEN:85,MEM:70,NOP:65,BKN:50,DET:50,CHI:40,MIL:40,MIN:40,HOU:40,CLE:40,IND:40,TOR:40,ORL:30,NYK:25,WAS:25,MIA:25,PHX:25,POR:25,ATL:20,LAC:20,SAC:20}},
+  nba_signature:{name:"2025-26 Topps Signature Class Basketball",short:"NBA Sig Class",defaultBoxes:12,teamEV:{DAL:1550,SAS:950,CHA:550,LAL:450,GSW:350,OKC:350,UTA:230,PHI:140,NOP:130,NYK:130,MEM:120,BKN:115,MIN:105,MIL:95,BOS:95,DEN:95,SAC:90,DET:75,HOU:75,IND:70,CLE:60,ORL:60,WAS:60,CHI:45,MIA:50,TOR:50,POR:50,PHX:40,ATL:40,LAC:40}},
+  nba_bowman:{name:"2025-26 Bowman Basketball",short:"Bowman",defaultBoxes:12,teamEV:{SAS:500,DAL:450,LAL:250,GSW:200,CHA:150,OKC:120,UTA:90,PHI:90,DEN:80,BOS:70,MEM:70,NOP:60,MIN:50,BKN:50,MIL:45,DET:40,HOU:40,CLE:40,TOR:40,CHI:40,IND:30,NYK:30,ORL:30,MIA:25,PHX:25,POR:25,WAS:25,ATL:20,LAC:20,SAC:20}},
+  nba_sapphire:{name:"2025-26 Bowman Sapphire Basketball",short:"Sapphire",defaultBoxes:12,teamEV:{SAS:750,DAL:650,LAL:350,GSW:275,CHA:200,OKC:160,UTA:120,PHI:120,DEN:110,BOS:95,MEM:95,NOP:85,MIN:70,BKN:70,MIL:60,DET:55,HOU:55,CLE:55,TOR:55,CHI:55,IND:40,NYK:40,ORL:40,MIA:35,PHX:35,POR:35,WAS:35,ATL:28,LAC:28,SAC:28}},
+  // MLB
+  mlb_chrome_plat:{name:"2026 Topps Chrome Platinum Baseball",short:"Chrome Plat",defaultBoxes:12,teamEV:{LAD:650,NYY:300,OAK:300,WSH:180,SEA:150,ATL:160,BAL:120,KCR:120,PIT:120,BOS:130,CHC:90,HOU:90,NYM:90,DET:90,MIL:75,PHI:75,SFG:75,STL:75,LAA:70,TOR:55,MIN:55,TEX:65,SDP:50,CIN:60,TBR:30,CLE:40,CHW:40,MIA:20,COL:20,ARI:30}},
+  mlb_tier_one:{name:"2026 Topps Tier One Baseball",short:"Tier One",defaultBoxes:6,teamEV:{LAD:350,NYY:300,CHW:260,MIL:160,OAK:160,BOS:150,PIT:145,ATL:140,KCR:140,NYM:130,PHI:130,SEA:130,CIN:125,DET:95,SFG:95,BAL:90,CHC:110,LAA:110,WSH:100,TOR:70,MIN:55,SDP:55,TEX:55,COL:50,TBR:45,ARI:40,CLE:35,MIA:30,HOU:90,STL:75}},
+  mlb_dynasty:{name:"2026 Topps Dynasty Baseball",short:"Dynasty",defaultBoxes:5,teamEV:{LAD:2850,NYY:1450,LAA:990,OAK:700,ATL:650,SEA:650,WSH:650,PIT:500,SFG:400,BOS:375,KCR:375,PHI:370,NYM:370,CHC:370,HOU:340,DET:320,BAL:350,MIL:200,TEX:225,SDP:230,STL:230,MIN:150,COL:80,CIN:120,CLE:120,MIA:120,TBR:120,TOR:120,ARI:120,CHW:50}},
+  mlb_inception:{name:"2026 Topps Inception Baseball",short:"Inception",defaultBoxes:8,teamEV:{LAD:130,NYY:90,OAK:250,WSH:140,PIT:60,ATL:45,BAL:40,BOS:40,CHC:40,CIN:40,SFG:30,SDP:30,HOU:30,LAA:30,NYM:30,KCR:30,DET:25,PHI:25,SEA:25,STL:25,TEX:45,TBR:25,TOR:20,MIL:20,MIN:20,CLE:20,CHW:20,MIA:20,COL:15,ARI:15}},
 };
 
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let currentSport = 'nfl';
+let pool = [];
+let claimed = [];
+let cfg = {};
+let checkedPlayers = new Set();
+let currentSort = 'ev';
 let productRowCount = 0;
 
-function addProductRow(key='cosmic', boxes=1){
-  productRowCount++;
-  const rid = 'pr_'+productRowCount;
-  const div = document.createElement('div');
-  div.id = rid;
-  div.style.cssText = 'display:grid;grid-template-columns:2fr 1fr auto;gap:8px;align-items:end;margin-bottom:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:10px 12px';
-  
-  const nflOptions = `
-    <option value="cosmic" ${key==='cosmic'?'selected':''}>2025 Topps Cosmic Chrome Football</option>
-    <option value="chrome" ${key==='chrome'?'selected':''}>2025 Topps Chrome Football</option>
-    <option value="signature" ${key==='signature'?'selected':''}>2025 Topps Signature Class Football</option>
-    <option value="finest" ${key==='finest'?'selected':''}>2025 Topps Finest Football</option>`;
-  const nbaOptions = `
-    <option value="nba_cosmic" ${key==='nba_cosmic'?'selected':''}>2025-26 Topps Cosmic Chrome Basketball</option>
-    <option value="nba_cactus" ${key==='nba_cactus'?'selected':''}>2025-26 Topps Chrome × Cactus Jack</option>
-    <option value="nba_signature" ${key==='nba_signature'?'selected':''}>2025-26 Topps Signature Class Basketball</option>
-    <option value="nba_bowman" ${key==='nba_bowman'?'selected':''}>2025-26 Bowman Basketball</option>
-    <option value="nba_sapphire" ${key==='nba_sapphire'?'selected':''}>2025-26 Bowman Sapphire</option>`;
-  const mlbOptions = `
-    <option value="mlb_chrome_plat" ${key==='mlb_chrome_plat'?'selected':''}>2026 Topps Chrome Platinum Baseball</option>
-    <option value="mlb_tier_one" ${key==='mlb_tier_one'?'selected':''}>2026 Topps Tier One Baseball</option>
-    <option value="mlb_dynasty" ${key==='mlb_dynasty'?'selected':''}>2026 Topps Dynasty Baseball</option>
-    <option value="mlb_inception" ${key==='mlb_inception'?'selected':''}>2026 Topps Inception Baseball</option>`;
-  const allOptions = `<optgroup label="🏈 NFL">${nflOptions}</optgroup><optgroup label="🏀 NBA">${nbaOptions}</optgroup><optgroup label="⚾ MLB">${mlbOptions}</optgroup>`;
+// ══════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════
+function getTeams(){ return currentSport==='nba'?NBA_TEAMS:currentSport==='baseball'?MLB_TEAMS:NFL_TEAMS; }
+function getStash(){ return currentSport==='nba'?NBA_STASH:currentSport==='baseball'?MLB_STASH:NFL_STASH; }
+function getPP(){ return currentSport==='nba'?NBA_PP:new Set(); }
 
-  const sportOptions = currentSport==='nba' ? nbaOptions : currentSport==='baseball' ? mlbOptions : currentSport==='combined' ? allOptions : nflOptions;
-  
-  div.innerHTML = `
-    <div class="fg" style="margin:0">
-      <label>Product</label>
-      <select id="${rid}_key" onchange="updateStack()">
-        ${sportOptions}
-      </select>
-    </div>
-    <div class="fg" style="margin:0">
-      <label>Boxes</label>
-      <input type="number" id="${rid}_boxes" value="${boxes}" min="1" max="12" oninput="updateStack()"/>
-    </div>
-    <button onclick="removeProductRow('${rid}')" style="background:rgba(255,107,107,.1);color:var(--red);border:1px solid rgba(255,107,107,.3);padding:9px 12px;border-radius:4px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;align-self:end">✕</button>
-  `;
-  document.getElementById('productRows').appendChild(div);
-  updateStack();
-}
+function getPhase(){ return document.getElementById('s-phase').value; }
+function getPM(){ return PHASE_MULT[getPhase()]||1.0; }
 
-function removeProductRow(rid){
-  const el = document.getElementById(rid);
-  if(el) el.remove();
-  updateStack();
-}
-
-function getProductRows(){
-  const rows = document.querySelectorAll('#productRows > div');
-  return Array.from(rows).map(r=>{
-    const rid = r.id;
-    return {
-      key: document.getElementById(rid+'_key').value,
-      boxes: +document.getElementById(rid+'_boxes').value || 1
-    };
-  });
-}
-
-function getCombinedTeamEV(teamId, phaseMult){
-  const rows = getProductRows();
-  if(!rows.length) return 0;
-  return Math.round(rows.reduce((sum, r)=>{
-    const prod = PRODUCTS[r.key];
-    const baseEV = prod ? (prod.teamEV[teamId] || 20) : 20;
-    return sum + baseEV * r.boxes;
-  }, 0) * phaseMult);
-}
-
-function updateStack(){
-  const rows = getProductRows();
-  const summary = document.getElementById('stackSummary');
-  if(!rows.length){
-    summary.textContent = 'Add at least one product to continue.';
-    return;
-  }
-  const phase = document.getElementById('s-phase').value;
-  const pm = PHASE_MULT[phase];
-  const parts = rows.map(r=>`${r.boxes}× ${PRODUCTS[r.key]?.short||r.key}`);
-  const totalBoxes = rows.reduce((s,r)=>s+r.boxes,0);
-  if(currentSport === 'baseball'){
-    const topLAD = getCombinedTeamEV('LAD', pm);
-    const topNYY = getCombinedTeamEV('NYY', pm);
-    summary.innerHTML = `<strong style="color:var(--white)">${parts.join(' + ')}</strong> · ${totalBoxes} total boxes<br/><span style="color:var(--muted)">Sample EVs at current phase: LAD $${topLAD} · NYY $${topNYY} · OAK $${getCombinedTeamEV('OAK',pm)}</span>`;
-  } else if(currentSport === 'nba'){
-    const topDAL = getCombinedTeamEV('DAL', pm);
-    const topSAS = getCombinedTeamEV('SAS', pm);
-    summary.innerHTML = `<strong style="color:var(--white)">${parts.join(' + ')}</strong> · ${totalBoxes} total boxes<br/><span style="color:var(--muted)">Sample EVs at current phase: DAL $${topDAL} · SAS $${topSAS} · LAL $${getCombinedTeamEV('LAL',pm)}</span>`;
-  } else {
-    const topTEN = getCombinedTeamEV('TEN', pm);
-    const topBUF = getCombinedTeamEV('BUF', pm);
-    summary.innerHTML = `<strong style="color:var(--white)">${parts.join(' + ')}</strong> · ${totalBoxes} total boxes<br/><span style="color:var(--muted)">Sample combined EVs at current phase: TEN $${topTEN} · BUF $${topBUF} · NYG $${getCombinedTeamEV('NYG',pm)}</span>`;
-  }
-}
-
-// ── STEP NAVIGATION ──
-function setStep(n){
-  [1,2,3].forEach(i=>{
-    document.getElementById('step'+i).classList.toggle('hidden', i!==n);
-    const tab = document.getElementById('step'+i+'tab');
-    tab.className = 'step-tab ' + (i<n?'done':i===n?'active':'');
-  });
-}
-
-function onFormatChange(){
-  const f = document.getElementById('s-format').value;
-  document.getElementById('spotsWrap').style.display = f==='team' ? '' : 'none';
-}
-
-function goStep1(){ setStep(1); }
-
-function goStep2(){
-  cfg.format = document.getElementById('s-format').value;
-  cfg.phase = document.getElementById('s-phase').value;
-  cfg.spots = +document.getElementById('s-spots').value;
-  cfg.mult = PHASE_MULT[cfg.phase];
-  cfg.productRows = getProductRows();
-  if(!cfg.productRows.length){ alert('Add at least one product first.'); return; }
-  setStep(2);
-
-  if(cfg.format === 'team'){
-    document.getElementById('teamConfirmCard').style.display = '';
-    document.getElementById('playerPoolCard').style.display = 'none';
-    const grid = document.getElementById('teamPreviewGrid');
-    const prodLabel = cfg.productRows.map(r=>`${r.boxes}× ${PRODUCTS[r.key]?.short||r.key}`).join(' + ');
-    const previewTeams = currentSport === 'nba' ? NBA_TEAMS_LIVE : currentSport === 'baseball' ? MLB_TEAMS_LIVE : ALL_TEAMS;
-    grid.innerHTML = previewTeams.map(t=>{
-      const ev = getCombinedTeamEV(t.id, cfg.mult);
-      const tierColor = t.tier==='s'?'var(--green)':t.tier==='a'?'var(--gold)':'#A78BF5';
-      return `<div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:8px 10px;border-left:3px solid ${tierColor}"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;color:var(--white)">${t.name}</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--gold)">$${ev}</div></div>`;
-    }).join('');
-    // Update confirm card title and subtitle
-    const teamCount = currentSport === 'nba' ? 30 : currentSport === 'baseball' ? 30 : 32;
-    const sportLabel = currentSport === 'nba' ? 'NBA' : currentSport === 'baseball' ? 'MLB' : currentSport === 'combined' ? 'Multi-Sport' : 'NFL';
-    document.querySelector('#teamConfirmCard .card-title').textContent = `Team Break — ${prodLabel} · ${teamCount} Slots Loaded`;
-    const sub = document.getElementById('teamConfirmSubtitle');
-    if(sub) sub.textContent = `All ${teamCount} ${sportLabel} teams are in the pool. Ready to go live.`;
-  } else {
-    document.getElementById('teamConfirmCard').style.display = 'none';
-    document.getElementById('playerPoolCard').style.display = '';
-    checkedPlayers.clear();
-    renderPoolBuilder('');
-    updatePoolCount();
-  }
-}
-
-// ── POOL BUILDER ──
-function renderPoolBuilder(filter){
-  const grid = document.getElementById('playerCheckGrid');
-  const f = filter.toLowerCase();
-  const sorted = [...ALL_PLAYERS].sort((a,b)=>{
-    const o={s:0,a:1,b:2}; return o[a.tier]-o[b.tier]||b.ev-a.ev;
-  });
-  grid.innerHTML = sorted.filter(p=>!f||p.name.toLowerCase().includes(f)||p.pos.toLowerCase().includes(f)).map(p=>{
-    const checked = checkedPlayers.has(p.id);
-    const posColor = POS_COLORS[p.pos]||'var(--muted)';
-    const ev = Math.round(p.ev * cfg.boxes * cfg.mult);
-    return `<div class="pcheck tier-${p.tier} ${checked?'checked':''}" onclick="togglePlayer('${p.id}')" id="pc_${p.id}">
-      <div class="check-mark">✓</div>
-      <div class="pc-name">${p.name}</div>
-      <div class="pc-pos"><span style="color:${posColor};font-weight:700">${p.pos}</span></div>
-      <div class="pc-ev">$${ev}</div>
-    </div>`;
-  }).join('');
-}
-
-function togglePlayer(id){
-  if(checkedPlayers.has(id)) checkedPlayers.delete(id);
-  else checkedPlayers.add(id);
-  const el = document.getElementById('pc_'+id);
-  if(el) el.classList.toggle('checked', checkedPlayers.has(id));
-  updatePoolCount();
-}
-
-function updatePoolCount(){
-  const n = checkedPlayers.size;
-  document.getElementById('poolCount').textContent = n + ' selected';
-  const btn = document.getElementById('goLiveBtn');
-  btn.disabled = n < 2;
-  btn.style.opacity = n < 2 ? '.4' : '1';
-}
-
-function filterPool(v){
-  poolFilter = v;
-  renderPoolBuilder(v);
-}
-
-function selectTier(tier){
-  ALL_PLAYERS.filter(p=>p.tier===tier).forEach(p=>checkedPlayers.add(p.id));
-  renderPoolBuilder(document.getElementById('poolSearch').value);
-  updatePoolCount();
-}
-
-function clearAll(){
-  checkedPlayers.clear();
-  renderPoolBuilder(document.getElementById('poolSearch').value);
-  updatePoolCount();
-}
-
-// ── GO LIVE ──
-function goLive(){
-  if(cfg.format === 'team'){
-    const activeTeams = currentSport === 'nba' ? NBA_TEAMS_LIVE : currentSport === 'baseball' ? MLB_TEAMS_LIVE : ALL_TEAMS;
-    let base = activeTeams;
-    if(cfg.spots === 64) base = [...activeTeams, ...activeTeams.map(t=>({...t,id:t.id+'_2'}))];
-    pool = base.map(t=>({
-      ...t,
-      ev: getCombinedTeamEV(t.id.replace('_2',''), cfg.mult),
-      status:'available'
-    }));
-    // Build product label for display
-    const prodLabel = cfg.productRows.map(r=>`${r.boxes}× ${PRODUCTS[r.key]?.short||r.key}`).join(' + ');
-    document.getElementById('gridTitle').textContent = `Pool — ${prodLabel} · Tap Slot When Wheel Lands`;
-  } else {
-    if(checkedPlayers.size < 2){ alert('Select at least 2 players.'); return; }
-    const boxes = cfg.productRows.reduce((s,r)=>s+r.boxes,0);
-    pool = ALL_PLAYERS
-      .filter(p=>checkedPlayers.has(p.id))
-      .map(p=>({...p, ev:Math.round(p.ev * boxes * cfg.mult), status:'available'}));
-  }
-  claimed = [];
-  setStep(3);
-  renderSlots();
-  updateBidRec();
-}
-
-// ── BID LOGIC ──
 function getAvail(){ return pool.filter(s=>s.status==='available'); }
 
 function getStats(){
   const avail = getAvail();
   if(!avail.length) return {avg:0,high:0,low:0,count:0};
   const evs = avail.map(s=>s.ev);
-  return {
-    avg: Math.round(evs.reduce((a,b)=>a+b,0)/evs.length),
-    high: Math.max(...evs),
-    low: Math.min(...evs),
-    count: avail.length
-  };
+  return {avg:Math.round(evs.reduce((a,b)=>a+b,0)/evs.length),high:Math.max(...evs),low:Math.min(...evs),count:avail.length};
 }
 
-function bidFor(slotEv){
-  // Deal ceiling = 65% of slot EV
-  return Math.max(1, Math.round(slotEv * 0.65));
+function isChaseSlot(slot){
+  const stash = getStash();
+  const baseId = slot.id.replace('_2','');
+  return cfg.format==='team' ? stash.has(baseId) : STASH_PLAYERS.has(slot.id);
 }
 
-function updateBidRec(){
-  const stats = getStats();
-  const total = pool.length;
-  const claimedCount = total - stats.count;
+function getSlotEV(teamId, rows, pm){
+  return Math.round(rows.reduce((sum,r)=>{
+    const prod = PRODUCTS[r.key];
+    const base = prod ? (prod.teamEV[teamId]||15) : 15;
+    return sum + base * r.boxes;
+  },0) * pm);
+}
 
-  // Progress
-  document.getElementById('claimedCount').textContent = claimedCount;
-  document.getElementById('remainCount').textContent = stats.count;
-  document.getElementById('progFill').style.width = total ? Math.round((claimedCount/total)*100)+'%' : '0%';
-  document.getElementById('psAvg').textContent = stats.avg ? '$'+stats.avg : '—';
-
-  // ── STASH/PASS EV — CORRECT PROBABILITY MATH ──
-  // Stash/Pass = 2 spins total. You get to keep EITHER your first spin (if good)
-  // OR pass it and take whatever spin 2 gives you (yours no matter what).
-  //
-  // Optimal strategy: keep first spin if it's a stash name, pass if not.
-  //
-  // E[stash/pass] = P(first = chase) × E[chase] + P(first = non-chase) × [E[non-chase] + E[spin2 from remaining]]
-  //
-  // Where E[spin2 from remaining after a non-chase was removed] is probability-weighted:
-  //   = (chaseCount / (n-1)) × avgChaseEv + ((n-1-chaseCount) / (n-1)) × avgNonChaseEv
-
-  const availSlots = getAvail();
-  const n = availSlots.length;
-
-  // Split pool into chase vs non-chase
-  const chaseSlots = availSlots.filter(s => {
-    const baseId = s.id.replace('_2','');
-    return cfg.format === 'team' ? STASH_TEAMS.has(baseId) : STASH_PLAYERS.has(s.id);
+// ══════════════════════════════════════════
+// SPORT TOGGLE
+// ══════════════════════════════════════════
+function setSport(sport){
+  currentSport = sport;
+  ['nfl','nba','baseball','combined'].forEach(s=>{
+    const el = document.getElementById('btn-'+s);
+    if(el) el.classList.toggle('active', s===sport);
   });
-  const nonChaseSlots = availSlots.filter(s => {
-    const baseId = s.id.replace('_2','');
-    return cfg.format === 'team' ? !STASH_TEAMS.has(baseId) : !STASH_PLAYERS.has(s.id);
-  });
-
-  const nChase = chaseSlots.length;
-  const nNon = nonChaseSlots.length;
-  const avgChase = nChase ? Math.round(chaseSlots.reduce((s,sl)=>s+sl.ev,0)/nChase) : 0;
-  const avgNon = nNon ? Math.round(nonChaseSlots.reduce((s,sl)=>s+sl.ev,0)/nNon) : 0;
-
-  let stashPassEv = 0;
-
-  if(n <= 1){
-    stashPassEv = stats.avg;
-  } else {
-    // P(first spin = chase) = nChase / n
-    // P(first spin = non-chase) = nNon / n
-    const pChase = nChase / n;
-    const pNon = nNon / n;
-
-    // If first spin is a chase name → STASH it. EV = avgChase.
-    const evIfChaseFirst = avgChase;
-
-    // If first spin is non-chase → PASS it, take second spin.
-    // After removing one non-chase slot from pool, remaining has:
-    //   nChase chase slots and (nNon - 1) non-chase slots, total n-1
-    const nRemChase = nChase;
-    const nRemNon = Math.max(0, nNon - 1);
-    const nRem = n - 1;
-    // E[second spin] = probability-weighted avg of remaining pool
-    const evSpin2 = nRem > 0
-      ? Math.round((nRemChase * avgChase + nRemNon * avgNon) / nRem)
-      : avgChase;
-    // EV of passing = E[non-chase first] (discarded) + E[spin2]
-    // Since you discard the first spin when passing, EV = just the second spin
-    const evIfNonFirst = evSpin2;
-
-    // Combined stash/pass EV
-    stashPassEv = Math.round(pChase * evIfChaseFirst + pNon * evIfNonFirst);
+  pool=[]; claimed=[]; cfg={};
+  const pr = document.getElementById('productRows');
+  if(pr) pr.innerHTML='';
+  productRowCount = 0;
+  const banner = document.getElementById('liveModeBanner');
+  if(banner){
+    const labels = {nfl:'LIVE — NFL',nba:'LIVE — NBA',baseball:'LIVE — MLB',combined:'LIVE — MULTI'};
+    banner.textContent = labels[sport]||'LIVE AUCTION MODE';
   }
+  setStep(1);
+  if(sport==='nba') addProductRow('nba_cosmic',1);
+  else if(sport==='baseball') addProductRow('mlb_chrome_plat',1);
+  else if(sport==='combined'){ addProductRow('cosmic',1); addProductRow('nba_cosmic',1); }
+  else addProductRow('cosmic',1);
+}
 
-  document.getElementById('psStashEv').textContent = stashPassEv ? '$'+stashPassEv : '—';
+// ══════════════════════════════════════════
+// PRODUCT ROWS
+// ══════════════════════════════════════════
+function addProductRow(key, boxes){
+  productRowCount++;
+  const rid = 'pr_'+productRowCount;
+  const defaultKey = key || (currentSport==='nba'?'nba_cosmic':currentSport==='baseball'?'mlb_chrome_plat':'cosmic');
+  const defaultBoxes = boxes !== undefined ? boxes : 1; // always default to 1 box in Live
 
-  // Analysis line
-  const pwi = document.getElementById('passWorthIt');
-  const diff = stashPassEv - stats.avg;
-  const pct = stats.avg ? Math.round((diff / stats.avg) * 100) : 0;
+  const nflOpts = `<option value="cosmic" ${defaultKey==='cosmic'?'selected':''}>2025 Cosmic Chrome Football</option><option value="chrome" ${defaultKey==='chrome'?'selected':''}>2025 Chrome Football</option><option value="signature" ${defaultKey==='signature'?'selected':''}>2025 Signature Class Football</option><option value="finest" ${defaultKey==='finest'?'selected':''}>2025 Finest Football</option>`;
+  const nbaOpts = `<option value="nba_cosmic" ${defaultKey==='nba_cosmic'?'selected':''}>2025-26 Cosmic Chrome Basketball</option><option value="nba_cactus" ${defaultKey==='nba_cactus'?'selected':''}>2025-26 Cactus Jack Basketball</option><option value="nba_signature" ${defaultKey==='nba_signature'?'selected':''}>2025-26 Signature Class Basketball</option><option value="nba_bowman" ${defaultKey==='nba_bowman'?'selected':''}>2025-26 Bowman Basketball</option><option value="nba_sapphire" ${defaultKey==='nba_sapphire'?'selected':''}>2025-26 Bowman Sapphire</option>`;
+  const mlbOpts = `<option value="mlb_chrome_plat" ${defaultKey==='mlb_chrome_plat'?'selected':''}>2026 Chrome Platinum Baseball</option><option value="mlb_tier_one" ${defaultKey==='mlb_tier_one'?'selected':''}>2026 Tier One Baseball</option><option value="mlb_dynasty" ${defaultKey==='mlb_dynasty'?'selected':''}>2026 Dynasty Baseball</option><option value="mlb_inception" ${defaultKey==='mlb_inception'?'selected':''}>2026 Inception Baseball</option>`;
+  const allOpts = `<optgroup label="🏈 NFL">${nflOpts}</optgroup><optgroup label="🏀 NBA">${nbaOpts}</optgroup><optgroup label="⚾ MLB">${mlbOpts}</optgroup>`;
+  const opts = currentSport==='nba'?nbaOpts:currentSport==='baseball'?mlbOpts:currentSport==='combined'?allOpts:nflOpts;
 
-  if(n <= 1){
-    pwi.textContent = '⚠️ Last slot — no second spin';
-    pwi.style.background = 'rgba(245,166,35,.15)';
-    pwi.style.color = 'var(--gold)';
-  } else if(nChase === 0){
-    pwi.textContent = '⚠️ No chase names left — stash/pass offers no extra upside over single spin';
-    pwi.style.background = 'rgba(245,166,35,.15)';
-    pwi.style.color = 'var(--gold)';
-  } else {
-    const chaseOdds = Math.round((nChase / n) * 100);
-    const chaseNames = chaseSlots.sort((a,b)=>b.ev-a.ev).slice(0,3).map(s=>s.name).join(', ');
-    if(diff > stats.avg * 0.20){
-      pwi.textContent = `🔥 Stash/Pass adds +$${diff} (+${pct}%) — ${nChase} chase names left (${chaseOdds}% chance): ${chaseNames}`;
-      pwi.style.background = 'rgba(50,200,100,.1)';
-      pwi.style.color = 'var(--green)';
-    } else if(diff > 0){
-      pwi.textContent = `→ Stash/Pass adds +$${diff} (+${pct}%) — ${nChase} chase name${nChase!==1?'s':''} left at ${chaseOdds}% odds: ${chaseNames}`;
-      pwi.style.background = 'rgba(255,255,255,.05)';
-      pwi.style.color = 'var(--muted)';
+  const div = document.createElement('div');
+  div.id = rid;
+  div.className = 'prod-row';
+  div.innerHTML = `
+    <div class="fg" style="margin:0"><label>Product</label><select id="${rid}_key" onchange="updateStack()">${opts}</select></div>
+    <div class="fg" style="margin:0"><label>Boxes</label><input type="number" id="${rid}_boxes" value="${defaultBoxes}" min="1" max="24" oninput="updateStack()"/></div>
+    <button onclick="removeRow('${rid}')" style="background:rgba(255,107,107,.1);color:var(--red);border:1px solid rgba(255,107,107,.3);padding:9px 12px;border-radius:4px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;align-self:end">✕</button>`;
+  document.getElementById('productRows').appendChild(div);
+  updateStack();
+}
+
+function removeRow(rid){ const el=document.getElementById(rid); if(el)el.remove(); updateStack(); }
+
+function getRows(){
+  return Array.from(document.querySelectorAll('#productRows > div')).map(r=>({
+    key: document.getElementById(r.id+'_key').value,
+    boxes: +document.getElementById(r.id+'_boxes').value||1
+  }));
+}
+
+function updateStack(){
+  const rows = getRows();
+  const summary = document.getElementById('stackSummary');
+  if(!rows.length){ summary.textContent='Add at least one product to continue.'; return; }
+  const pm = getPM();
+  const parts = rows.map(r=>`${r.boxes}× ${PRODUCTS[r.key]?.short||r.key}`);
+  const topTeam = currentSport==='baseball'?'LAD':currentSport==='nba'?'DAL':'TEN';
+  const topEV = getSlotEV(topTeam, rows, pm);
+  summary.innerHTML = `<strong style="color:var(--white)">${parts.join(' + ')}</strong> · ${rows.reduce((s,r)=>s+r.boxes,0)} total boxes<br/><span style="color:var(--muted)">Sample: ${currentSport==='baseball'?'LAD':currentSport==='nba'?'DAL/SAS':'TEN/NYG'} top slot ~$${topEV} at this phase</span>`;
+}
+
+// ══════════════════════════════════════════
+// STEP NAV
+// ══════════════════════════════════════════
+function setStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('step'+i).classList.toggle('hidden',i!==n);
+    const tab = document.getElementById('step'+i+'tab');
+    tab.className='step-tab '+(i<n?'done':i===n?'active':'');
+  });
+}
+function onFormatChange(){ document.getElementById('spotsWrap').style.display=document.getElementById('s-format').value==='team'?'':'none'; }
+function goStep1(){ setStep(1); }
+
+function goStep2(){
+  const rows = getRows();
+  if(!rows.length){ alert('Add at least one product first.'); return; }
+  cfg.format = document.getElementById('s-format').value;
+  cfg.phase = getPhase();
+  cfg.spots = +document.getElementById('s-spots').value;
+  cfg.mult = getPM();
+  cfg.rows = rows;
+  setStep(2);
+
+  if(cfg.format==='team'){
+    document.getElementById('teamConfirmCard').style.display='';
+    document.getElementById('playerPoolCard').style.display='none';
+    // Show edit pairings button only for combined
+    const editRow = document.getElementById('pairingEditRow');
+    if(editRow) editRow.style.display = currentSport==='combined' ? '' : 'none';
+    const prodLabel = rows.map(r=>`${r.boxes}× ${PRODUCTS[r.key]?.short||r.key}`).join(' + ');
+
+    if(currentSport==='combined'){
+      const pairs = getActivePairs();
+      const nflRows = rows.filter(r=>!r.key.startsWith('nba_')&&!r.key.startsWith('mlb_'));
+      const nbaRows = rows.filter(r=>r.key.startsWith('nba_'));
+      document.getElementById('teamConfirmTitle').textContent = `Multi Break — ${prodLabel} · ${pairs.length} Paired Slots`;
+      document.getElementById('teamConfirmSub').textContent = `${pairs.length} city pairings loaded. Each slot = NFL + NBA team together.`;
+      document.getElementById('teamPreviewGrid').innerHTML = pairs.map(p=>{
+        const nflEV = nflRows.length ? getSlotEV(p.nfl, nflRows, cfg.mult) : 0;
+        const nbaEV = nbaRows.length ? getSlotEV(p.nba, nbaRows, cfg.mult) : 0;
+        const totalEV = nflEV + nbaEV;
+        return `<div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:8px 10px">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--white);line-height:1.3">${p.label}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--gold)">$${totalEV}</div>
+          <div style="font-size:9px;color:var(--muted)">🏈$${nflEV} · 🏀$${nbaEV}</div>
+        </div>`;
+      }).join('');
     } else {
-      pwi.textContent = `→ Single spin and stash/pass EV are nearly equal — ${nChase} chase name${nChase!==1?'s':''} left`;
-      pwi.style.background = 'rgba(255,255,255,.05)';
-      pwi.style.color = 'var(--muted)';
+      const teams = getTeams();
+      const sport = currentSport==='nba'?'NBA':currentSport==='baseball'?'MLB':'NFL';
+      document.getElementById('teamConfirmTitle').textContent = `Team Break — ${prodLabel} · ${teams.length} Slots`;
+      document.getElementById('teamConfirmSub').textContent = `All ${teams.length} ${sport} teams loaded. Ready to go live.`;
+      document.getElementById('teamPreviewGrid').innerHTML = teams.map(t=>{
+        const ev = getSlotEV(t.id, rows, cfg.mult);
+        const c = t.tier==='s'?'var(--green)':t.tier==='a'?'var(--gold)':t.tier==='c'?'rgba(255,255,255,.2)':'var(--muted)';
+        return `<div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:8px 10px;border-left:3px solid ${c}"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;color:var(--white)">${t.name}</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--gold)">$${ev}</div></div>`;
+      }).join('');
     }
+  } else {
+    document.getElementById('teamConfirmCard').style.display='none';
+    document.getElementById('playerPoolCard').style.display='';
+    checkedPlayers.clear();
+    renderPoolBuilder('');
+    updatePoolCount();
   }
-  const mySpend = claimed.filter(c=>c.mine).reduce((s,c)=>s+c.paid,0);
-  document.getElementById('psSpend').textContent = '$'+mySpend;
-
-  const rec = document.getElementById('bidRec');
-  const amt = document.getElementById('bidAmount');
-  const sub = document.getElementById('bidSub');
-  const range = document.getElementById('bidRange');
-  const why = document.getElementById('bidWhy');
-
-  if(!stats.count){
-    amt.textContent='—'; sub.textContent='Break complete — all slots assigned!'; range.textContent=''; why.textContent='';
-    return;
-  }
-
-  // Recommend bid for the AVERAGE remaining slot
-  const bid = bidFor(stats.avg);
-  const highBid = bidFor(stats.high);
-  const lowBid = bidFor(stats.low);
-
-  // Color coding
-  // Color based on deal zone vs fair zone vs hard no
-  rec.className='bid-rec neutral'; amt.style.color='var(--red)';
-
-  amt.textContent = '$'+bid;
-  sub.textContent = `${stats.count} slots left · avg EV $${stats.avg}`;
-  range.textContent = `Best slot left → 🟢 Deal ≤$${Math.round(stats.high*0.65)} · 🟡 Fair ≤$${Math.round(stats.high*0.90)}`;
-  why.textContent = `Deal = 65% of slot EV · Fair = 90% of slot EV · Hard No = above fair ceiling`;
 }
 
-// ── SLOT INTERACTION ──
-function claimSlot(id, mine, paid){
-  const slot = pool.find(s=>s.id===id);
-  if(!slot || slot.status!=='available') return;
-  slot.status = mine ? 'mine' : 'claimed';
-  claimed.push({id, name:slot.name, ev:slot.ev, mine, paid: mine?paid:0});
+// ══════════════════════════════════════════
+// POOL BUILDER
+// ══════════════════════════════════════════
+function renderPoolBuilder(filter){
+  const f = filter.toLowerCase();
+  const sorted = [...ALL_PLAYERS].sort((a,b)=>({s:0,a:1,b:2}[a.tier]-{s:0,a:1,b:2}[b.tier]||b.ev-a.ev));
+  document.getElementById('playerCheckGrid').innerHTML = sorted
+    .filter(p=>!f||p.name.toLowerCase().includes(f)||p.pos.toLowerCase().includes(f))
+    .map(p=>`<div class="pcheck tier-${p.tier} ${checkedPlayers.has(p.id)?'checked':''}" onclick="togglePlayer('${p.id}')" id="pc_${p.id}">
+      <div class="check-mark">✓</div>
+      <div class="pc-name">${p.name}</div>
+      <div class="pc-ev">$${Math.round(p.ev*(cfg.rows||[{boxes:1}]).reduce((s,r)=>s+r.boxes,0)*(cfg.mult||1))}</div>
+    </div>`).join('');
+}
+
+function togglePlayer(id){
+  checkedPlayers.has(id)?checkedPlayers.delete(id):checkedPlayers.add(id);
+  const el=document.getElementById('pc_'+id);
+  if(el)el.classList.toggle('checked',checkedPlayers.has(id));
+  updatePoolCount();
+}
+function updatePoolCount(){
+  const n=checkedPlayers.size;
+  document.getElementById('poolCount').textContent=n+' selected';
+  const btn=document.getElementById('goLiveBtn');
+  btn.disabled=n<2; btn.style.opacity=n<2?'.4':'1';
+}
+function filterPool(v){ renderPoolBuilder(v); }
+function selectTier(t){ ALL_PLAYERS.filter(p=>p.tier===t).forEach(p=>checkedPlayers.add(p.id)); renderPoolBuilder(document.getElementById('poolSearch').value); updatePoolCount(); }
+function clearAll(){ checkedPlayers.clear(); renderPoolBuilder(document.getElementById('poolSearch').value); updatePoolCount(); }
+
+// ══════════════════════════════════════════
+// GO LIVE
+// ══════════════════════════════════════════
+function goLive(){
+  const rows = cfg.rows || getRows();
+  if(cfg.format==='team'){
+    if(currentSport==='combined'){
+      // Build paired slots
+      const pairs = getActivePairs();
+      const nflRows = rows.filter(r=>!r.key.startsWith('nba_')&&!r.key.startsWith('mlb_'));
+      const nbaRows = rows.filter(r=>r.key.startsWith('nba_'));
+      const mlbRows = rows.filter(r=>r.key.startsWith('mlb_'));
+      pool = pairs.map(p=>{
+        const nflEV = nflRows.length ? getSlotEV(p.nfl, nflRows, cfg.mult) : 0;
+        const nbaEV = nbaRows.length ? getSlotEV(p.nba, nbaRows, cfg.mult) : 0;
+        const mlbEV = mlbRows.length ? getSlotEV(p.mlb||'', mlbRows, cfg.mult) : 0;
+        const totalEV = nflEV + nbaEV + mlbEV;
+        const nflTeam = NFL_TEAMS.find(t=>t.id===p.nfl)||{name:p.nfl,tier:'b'};
+        const nbaTeam = NBA_TEAMS.find(t=>t.id===p.nba)||{name:p.nba,tier:'b'};
+        // Chase if EITHER team is a chase team
+        const isChase = NFL_STASH.has(p.nfl)||NBA_STASH.has(p.nba);
+        // Tier = best of the two
+        const tierOrder={s:0,a:1,b:2,c:3};
+        const tier = tierOrder[nflTeam.tier]<=tierOrder[nbaTeam.tier]?nflTeam.tier:nbaTeam.tier;
+        return {
+          id: p.id,
+          name: p.label,
+          nflName: nflTeam.name,
+          nbaName: nbaTeam.name,
+          nflEV, nbaEV, mlbEV,
+          ev: totalEV,
+          tier,
+          isChase,
+          combined: true,
+          status: 'available',
+          paid: 0,
+          note: `${nflTeam.name}: $${nflEV} · ${nbaTeam.name}: $${nbaEV}`
+        };
+      });
+      const prodLabel = rows.map(r=>`${r.boxes}× ${PRODUCTS[r.key]?.short||r.key}`).join(' + ');
+      document.getElementById('gridTitle').textContent = `Pool — ${prodLabel} · Tap When Wheel Lands`;
+    } else {
+      let base = getTeams();
+      if(cfg.spots===64) base=[...base,...base.map(t=>({...t,id:t.id+'_2'}))];
+      pool = base.map(t=>({...t,ev:getSlotEV(t.id.replace('_2',''),rows,cfg.mult),status:'available',paid:0}));
+      const prodLabel = rows.map(r=>`${r.boxes}× ${PRODUCTS[r.key]?.short||r.key}`).join(' + ');
+      document.getElementById('gridTitle').textContent = `Pool — ${prodLabel} · Tap When Wheel Lands`;
+    }
+  } else {
+    if(checkedPlayers.size<2){alert('Select at least 2 players.');return;}
+    const boxes = rows.reduce((s,r)=>s+r.boxes,0);
+    pool = ALL_PLAYERS.filter(p=>checkedPlayers.has(p.id)).map(p=>({...p,ev:Math.round(p.ev*boxes*cfg.mult),status:'available',paid:0}));
+  }
+  claimed=[];
+  setStep(3);
   renderSlots();
   updateBidRec();
-  updateLog();
-  updateMySummary();
 }
 
-function ebaySearch(slotName){
-  // Build a targeted eBay completed sales search for this player/team
-  const product = '2025 Topps Cosmic Chrome Football';
-  const query = encodeURIComponent(`${slotName} ${product} auto`);
-  const url = `https://www.ebay.com/sch/i.html?_nkw=${query}&LH_Complete=1&LH_Sold=1&_sop=13`;
-  window.open(url, '_blank');
-}
-
-// ── TOOLTIP BUILDER ──
-function buildTooltip(slot){
-  const stats = getStats();
-  const decision = getStashPass(slot);
-  const isStash = decision === 'stash';
-  const dealCeil  = Math.round(slot.ev * 0.65);
-  const fairCeil  = Math.round(slot.ev * 0.90);
-  const spIcon = isStash ? '📦 STASH' : '❌ PASS';
-  const spColor = isStash ? 'var(--green)' : 'var(--red)';
-
-  // Ceiling cards
-  const ceilCards = TOOLTIP_DATA[slot.id.replace('_2','')] || [];
-  const ceilHtml = ceilCards.length
-    ? ceilCards.map(c=>`<div style="display:flex;justify-content:space-between"><span>${c.c}</span><span style="color:var(--gold);font-weight:700">${c.r}</span></div>`).join('')
-    : '<div style="color:var(--muted)">Check eBay for comps</div>';
-
-  return `<div class="slot-tooltip">
-    <h5>${slot.name}${slot.pp ? " 💫" : ""}</h5>
-    <div style="margin-bottom:6px">
-      <span style="color:${spColor};font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:13px">${spIcon}</span>
-      <span style="float:right">🟢 Deal ≤$${dealCeil} · 🟡 Fair ≤$${fairCeil}</span>
-    </div>
-    <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:6px;margin-top:4px">${ceilHtml}</div>
-    <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:6px;margin-top:6px;color:rgba(255,255,255,.35);font-size:10px">Tap to mark claimed · Long press = I won it</div>
-  </div>`;
-}
-
-// ── QUICK CLAIM — single tap ──
-// Short tap = someone else got it (most common action)
-// Long press = I won it (set timer)
-const tapTimers = {};
-
+// ══════════════════════════════════════════
+// CLAIM FLOW — CLEAN POPUP
+// ══════════════════════════════════════════
 function quickClaim(id){
   const slot = pool.find(s=>s.id===id);
   if(!slot) return;
-
-  // If already claimed/passed (not mine) — restore to available on tap
-  if(slot.status === 'claimed' || slot.status === 'passed'){
-    slot.status = 'available';
-    // Remove from claimed log
-    const idx = claimed.findIndex(c=>c.id===id);
-    if(idx !== -1) claimed.splice(idx,1);
-    renderSlots();
-    updateBidRec();
-    updateLog();
+  // Tap claimed/passed/mine = restore
+  if(slot.status!=='available'){
+    if(!confirm(`Restore "${slot.name}" to available?`)) return;
+    slot.status='available'; slot.paid=0;
+    const idx=claimed.findIndex(c=>c.id===id);
+    if(idx!==-1)claimed.splice(idx,1);
+    renderSlots(); updateBidRec(); updateLog(); updateMySummary();
     return;
   }
-
-  // If mine — also allow unclaiming
-  if(slot.status === 'mine'){
-    if(!confirm(`Remove "${slot.name}" from your won slots?`)) return;
-    slot.status = 'available';
-    const idx = claimed.findIndex(c=>c.id===id);
-    if(idx !== -1) claimed.splice(idx,1);
-    renderSlots();
-    updateBidRec();
-    updateLog();
-    updateMySummary();
-    return;
-  }
-
-  // Available — default: someone else got it (quick tap)
-  claimSlot(id, false, 0);
+  showClaimPopup(slot);
 }
 
-function startLongPress(id){
-  tapTimers[id] = setTimeout(()=>{
-    delete tapTimers[id];
-    // Long press = I won it
-    const slot = pool.find(s=>s.id===id);
-    if(!slot||slot.status!=='available') return;
-    const stats = getStats();
-    const dealCeil = Math.round(slot.ev * 0.65);
-    const fairCeil = Math.round(slot.ev * 0.90);
-    showWinPanel(id, dealCeil, fairCeil, slot);
-  }, 600);
-}
+function showClaimPopup(slot){
+  const existing=document.getElementById('claim-popup');
+  if(existing)existing.remove();
+  const dealCeil=Math.round(slot.ev*0.65);
+  const fairCeil=Math.round(slot.ev*0.90);
+  const isChase=isChaseSlot(slot);
+  const spIcon=isChase?'📦 STASH IT':'❌ PASS — SPIN AGAIN';
+  const spColor=isChase?'var(--green)':'var(--red)';
+  const spBorder=isChase?'var(--green)':'var(--red)';
 
-function cancelLongPress(id){
-  if(tapTimers[id]){
-    clearTimeout(tapTimers[id]);
-    delete tapTimers[id];
-  }
-}
-
-function showWinPanel(id, dealCeil, fairCeil, slot){
-  const existing = document.getElementById('win-panel');
-  if(existing) existing.remove();
-
-  const panel = document.createElement('div');
-  panel.id = 'win-panel';
-  panel.style.cssText = `position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0d1e35;border:2px solid var(--green);border-radius:10px;padding:24px 28px;z-index:2000;box-shadow:0 8px 40px rgba(0,0,0,.8);min-width:300px;text-align:center`;
-  panel.innerHTML = `
-    <div style="font-size:28px;margin-bottom:8px">✅</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;color:var(--white);margin-bottom:4px">You Won ${slot.name}!</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:16px">What did you pay?</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">
-      <button onclick="winAt(${JSON.stringify(id)},${dealCeil})" style="background:rgba(50,200,100,.15);color:var(--green);border:2px solid var(--green);padding:12px 6px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-transform:uppercase">🟢<br/>$${dealCeil}<br/><span style="font-size:10px">Deal</span></button>
-      <button onclick="winAt(${JSON.stringify(id)},${fairCeil})" style="background:rgba(245,166,35,.12);color:var(--gold);border:2px solid var(--gold);padding:12px 6px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-transform:uppercase">🟡<br/>$${fairCeil}<br/><span style="font-size:10px">Fair</span></button>
-      <button onclick="winCustom(${JSON.stringify(id)})" style="background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);padding:12px 6px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-transform:uppercase">✏️<br/>Custom<br/><span style="font-size:10px">Enter</span></button>
-    </div>
-    <button onclick="closeWinPanel()" style="background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);padding:8px 20px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;cursor:pointer;width:100%">Cancel</button>
-  `;
-  document.body.appendChild(panel);
-}
-
-function winAt(id, amount){
-  closeWinPanel();
-  claimSlot(id, true, amount);
-}
-
-function winCustom(id){
-  closeWinPanel();
-  const slot = pool.find(s=>s.id===id);
-  const paid = prompt(`You won "${slot.name}"! What did you pay?`, Math.round(slot.ev * 0.65));
-  if(paid !== null) claimSlot(id, true, +paid||0);
-}
-
-function closeWinPanel(){
-  const p = document.getElementById('win-panel');
-  if(p) p.remove();
-}
-
-// Tooltip ceiling data per team
-const TOOLTIP_DATA = {
-  TEN:[{c:"Cam Ward EQA SF 1/1",r:"$18k–32k"},{c:"Ward PP Pluto",r:"$6k–16k"},{c:"Ward CCA Orange /25",r:"$4k–8k"}],
-  NYG:[{c:"Jaxson Dart EQA SF 1/1",r:"$14k–26k"},{c:"Dart PP Pluto",r:"$5k–12k"},{c:"Skattebo CCA SF",r:"$2.5k–7k"}],
-  TB:[{c:"Tom Brady EQA SF 1/1",r:"$16k–28k"},{c:"Egbuka EQA SF 1/1",r:"$6k–14k"},{c:"Egbuka CCA /25",r:"$800–2k"}],
-  BUF:[{c:"Josh Allen EQA SF 1/1",r:"$18k–30k"},{c:"Allen PP Pluto",r:"$4k–8k"}],
-  JAX:[{c:"Travis Hunter EQA SF 1/1",r:"$12k–24k"},{c:"Hunter CCA /25",r:"$1.5k–3.5k"}],
-  KC:[{c:"Mahomes EQA SF 1/1",r:"$14k–24k"},{c:"Mahomes PP Pluto",r:"$5k–10k"}],
-  LV:[{c:"Jeanty EQA SF ⚠️COOLING",r:"$5k–14k"},{c:"Jeanty PP Pluto",r:"$3k–8k"}],
-  SF:[{c:"Jerry Rice EQA SF 1/1",r:"$16k–28k"},{c:"Rice SFS SF 1/1",r:"$12k–22k"},{c:"Joe Montana LY",r:"$800–2k"}],
-  PHI:[{c:"Jalen Hurts EQA SF 1/1",r:"$12k–22k"},{c:"Saquon Barkley EQA SF",r:"$5k–12k"}],
-  CHI:[{c:"Caleb Williams EQA SF 1/1",r:"$14k–24k"},{c:"Luther Burden CCA SF",r:"$4k–9k"}],
-  NE:[{c:"Tom Brady EQA SF 1/1",r:"$16k–28k"},{c:"Drake Maye EQA SF",r:"$5k–11k"}],
-  CLE:[{c:"Shedeur Sanders CCA SF",r:"$10k–22k"},{c:"Judkins EQA SF",r:"$2k–5k"}],
-  BAL:[{c:"Derrick Henry EQA SF",r:"$5k–10k"},{c:"Ray Lewis SF insert",r:"$1.5k–3.5k"}],
-  LAC:[{c:"Justin Herbert EQA SF",r:"$10k–20k"},{c:"Omarion Hampton EQA SF",r:"$3k–8k"}],
-  DAL:[{c:"Emmitt Smith EQA SF",r:"$8k–18k"},{c:"CeeDee Lamb CD SF",r:"$800–1.2k"}],
-  IND:[{c:"Peyton Manning EQA SF",r:"$9k–18k"},{c:"Tyler Warren EQA SF",r:"$3k–7k"}],
-  CIN:[{c:"Joe Burrow SFS SF",r:"$10k–18k"},{c:"Chad Johnson LY",r:"$600–1.5k"}],
-  DEN:[{c:"Peyton Manning SFS SF",r:"$8k–16k"},{c:"John Elway LY",r:"$500–1k"}],
-  DET:[{c:"Barry Sanders SFS SF",r:"$6k–14k"},{c:"Gibbs CCA SF",r:"$1.5k–4k"}],
-  GB:[{c:"Brett Favre SFS SF",r:"$6k–13k"},{c:"Woodson LY",r:"$400–900"}],
-  WSH:[{c:"Jayden Daniels EQA SF",r:"$7k–15k"},{c:"McLaurin SFS SF",r:"$1.5k–4k"}],
-  MIN:[{c:"Justin Jefferson PP Pluto",r:"$3k–7k"},{c:"Randy Moss LY",r:"$700–1.5k"}],
-  PIT:[{c:"Aaron Rodgers SFS SF",r:"$6k–14k"},{c:"Troy Polamalu LY",r:"$400–900"}],
-  HOU:[{c:"CJ Stroud EQA SF",r:"$5k–11k"},{c:"Earl Campbell LY",r:"$300–700"}],
-  MIA:[{c:"Dan Marino LY",r:"$800–1.8k"},{c:"Achane EQA SF",r:"$2.5k–6k"}],
-  CAR:[{c:"Tetairoa McMillan EQA SF",r:"$6k–14k"},{c:"Bryce Young SFS SF",r:"$3k–7k"}],
-  ARI:[{c:"Trey McBride CCA SF",r:"$1.5k–3.5k"}],
-  NO:[{c:"Tyler Shough SFS SF",r:"$2k–6k"}],
-  NYJ:[{c:"Mason Taylor CCA SF",r:"$1k–3k"}],
-  LAR:[{c:"Cooper Kupp SFS SF",r:"$3k–7k"},{c:"Aaron Donald LY",r:"$500–1k"}],
-  SEA:[{c:"Jalen Milroe CCA SF",r:"$1k–3k"},{c:"Kupp SFS SF",r:"$2.5k–6k"}],
-  ATL:[{c:"Michael Penix Jr. EQA SF",r:"$1.5k–4k"}],
-};
-
-// ── STASH / PASS LOGIC ──
-// Stash list updated from real break data — teams that commanded $180+ at auction
-const STASH_TEAMS = new Set(["TEN","NYG","TB","BUF","KC","CHI","LV","NE","NO","CAR","DEN","CLE","PHI","WSH","JAX","SF"]);
-const STASH_PLAYERS = new Set(["ward","dart","hunter","egbuka","brady","rice","allen","mahomes","manning","barkley","hurts","skattebo","hampton","shedeur","maye","kittle","warren"]);
-
-function getStashPass(slot){
-  const stats = getStats();
-  const baseId = slot.id.replace('_2','');
-  let isStash = cfg.format === 'team'
-    ? STASH_TEAMS.has(baseId)
-    : STASH_PLAYERS.has(slot.id);
-  // EV overrides
-  if(slot.ev < stats.avg * 0.75) isStash = false;
-  if(slot.ev >= stats.high * 0.90) isStash = true;
-  return isStash ? 'stash' : 'pass';
-}
-
-function tapSlot(id){
-  const slot = pool.find(s=>s.id===id);
-  if(!slot || slot.status!=='available') return;
-  const bid = bidFor(slot.ev);
-  const stats = getStats();
-  let quality = '';
-  if(slot.ev >= stats.high * 0.9) quality = '🔥 BEST remaining!';
-  else if(slot.ev >= stats.avg * 1.2) quality = '✅ Above average';
-  else if(slot.ev <= stats.avg * 0.8) quality = '⬇️ Below average';
-  else quality = '→ Average slot';
-  showSlotPanel(slot, bid, quality);
-}
-
-function showSlotPanel(slot, bid, quality){
-  const existing = document.getElementById('slot-panel');
-  if(existing) existing.remove();
-
-  const stats = getStats();
-  const decision = getStashPass(slot);
-  const isStash = decision === 'stash';
-
-  // ── THREE PRICE ZONES ──
-  // DEAL: up to 65% of slot EV — clear value, bid confidently
-  // FAIR: 65–90% of slot EV — at market, no edge but not overpaying
-  // HARD NO: above 90% of slot EV — you're chasing, let it go
-  const dealCeiling  = Math.round(slot.ev * 0.65);
-  const fairCeiling  = Math.round(slot.ev * 0.90);
-  const hardNo       = fairCeiling; // anything above fair ceiling = hard no
-
-  // Stash/Pass context
-  const spColor  = isStash ? 'var(--green)' : 'var(--red)';
-  const spBg     = isStash ? 'rgba(50,200,100,.15)' : 'rgba(255,107,107,.15)';
-  const spBorder = isStash ? 'var(--green)' : 'var(--red)';
-  const spIcon   = isStash ? '📦' : '❌';
-  const spLabel  = isStash ? 'STASH IT' : 'PASS — SPIN AGAIN';
-  const spReason = isStash
-    ? `Chase name — EV $${slot.ev} vs pool avg $${stats.avg}. Keep it.`
-    : `Below average — EV $${slot.ev} vs pool avg $${stats.avg}. Take your second spin.`;
-
-  const panel = document.createElement('div');
-  panel.id = 'slot-panel';
-  panel.style.cssText = `position:fixed;bottom:0;left:0;right:0;background:#0a1628;border-top:3px solid ${spBorder};padding:16px 20px 20px;z-index:1000;box-shadow:0 -8px 32px rgba(0,0,0,.7)`;
-
-  panel.innerHTML = `
-    <div style="max-width:900px;margin:0 auto">
-
-      <!-- TOP ROW: slot name + stash/pass -->
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px">
+  const overlay=document.createElement('div');
+  overlay.id='claim-popup';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:2000;display:flex;align-items:flex-end;justify-content:center';
+  overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};
+  overlay.innerHTML=`
+    <div style="background:#0d1e35;border-top:3px solid ${spBorder};border-radius:16px 16px 0 0;padding:20px 20px 32px;width:100%;max-width:500px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
         <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:3px">Wheel landed on</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;text-transform:uppercase;color:var(--white);line-height:1">${slot.name}</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:3px">EV ~$${slot.ev} · ${quality}</div>
+          <div style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px">Wheel landed on</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;text-transform:uppercase;color:var(--white)">${slot.name}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">EV ~$${slot.ev} · 🟢 Deal ≤$${dealCeil} · 🟡 Fair ≤$${fairCeil}</div>
         </div>
-        <div style="text-align:center;background:${spBg};border:2px solid ${spBorder};border-radius:8px;padding:10px 16px;min-width:120px;flex-shrink:0">
-          <div style="font-size:20px;margin-bottom:2px">${spIcon}</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:${spColor};letter-spacing:.06em">${spLabel}</div>
-          <div style="font-size:10px;color:#8BAFC6;margin-top:3px;line-height:1.4">${spReason}</div>
+        <div style="background:rgba(255,255,255,.06);border:1.5px solid ${spBorder};border-radius:6px;padding:8px 12px;text-align:center;flex-shrink:0;margin-left:12px">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:${spColor};text-transform:uppercase">${spIcon}</div>
         </div>
       </div>
-
-      <!-- THREE PRICE ZONES -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
-        <div style="background:rgba(50,200,100,.1);border:2px solid var(--green);border-radius:6px;padding:12px;text-align:center">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:4px">🟢 Deal</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--green);line-height:1">$${dealCeiling}</div>
-          <div style="font-size:10px;color:#8BAFC6;margin-top:4px">Bid up to here confidently</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--white);margin-bottom:12px;text-align:center">Did you win this slot?</div>
+      <div style="background:rgba(50,200,100,.07);border:1.5px solid rgba(50,200,100,.25);border-radius:8px;padding:14px;margin-bottom:10px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;margin-bottom:10px">✅ Yes — I Won It</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <button onclick="winAt('${slot.id}',${dealCeil})" style="background:rgba(50,200,100,.2);color:var(--green);border:2px solid var(--green);padding:13px 8px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;cursor:pointer;text-transform:uppercase">🟢 $${dealCeil}<div style="font-size:10px;margin-top:2px">Deal Price</div></button>
+          <button onclick="winAt('${slot.id}',${fairCeil})" style="background:rgba(245,166,35,.15);color:var(--gold);border:2px solid var(--gold);padding:13px 8px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;cursor:pointer;text-transform:uppercase">🟡 $${fairCeil}<div style="font-size:10px;margin-top:2px">Fair Price</div></button>
         </div>
-        <div style="background:rgba(245,166,35,.08);border:2px solid var(--gold);border-radius:6px;padding:12px;text-align:center">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">🟡 Fair</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--gold);line-height:1">$${fairCeiling}</div>
-          <div style="font-size:10px;color:#8BAFC6;margin-top:4px">At market — no edge, not overpaying</div>
-        </div>
-        <div style="background:rgba(255,107,107,.08);border:2px solid var(--red);border-radius:6px;padding:12px;text-align:center">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:4px">🔴 Hard No</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--red);line-height:1">$${hardNo+1}+</div>
-          <div style="font-size:10px;color:#8BAFC6;margin-top:4px">You're chasing — let it go</div>
+        <div style="display:flex;gap:8px">
+          <input type="number" id="customBid" placeholder="Custom amount..." min="1" style="flex:1;padding:10px 12px;background:rgba(255,255,255,.07);border:1.5px solid var(--border);border-radius:5px;font-family:'Barlow',sans-serif;font-size:16px;color:var(--white);outline:none"/>
+          <button onclick="winCustom('${slot.id}')" style="background:var(--green);color:var(--navy);border:none;padding:10px 16px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;cursor:pointer;text-transform:uppercase;white-space:nowrap">Log It</button>
         </div>
       </div>
-
-      ${!isStash ? `
-      <div style="background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);border-radius:5px;padding:9px 12px;margin-bottom:12px;font-size:12px;color:#8BAFC6;line-height:1.5">
-        ❌ <strong style="color:var(--white)">Pass this one.</strong> Your second spin is yours no matter what. Stash names still in pool:
-        <span id="remainingStash" style="display:inline"></span>
-      </div>` : ''}
-
-      <!-- eBay + ACTION BUTTONS -->
-      <div style="display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:8px;align-items:stretch">
-        <button onclick="panelEbay('${slot.name}')" style="background:rgba(245,166,35,.12);color:var(--gold);border:1px solid var(--gold);padding:12px 14px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;cursor:pointer;white-space:nowrap">🔍 eBay</button>
-        <button onclick="panelStash('${slot.id}')" style="background:rgba(50,200,100,.15);color:var(--green);border:2px solid var(--green);padding:12px 8px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;cursor:pointer">📦 Stash — Keep It</button>
-        <button onclick="panelPass('${slot.id}')" style="background:rgba(255,107,107,.12);color:var(--red);border:2px solid var(--red);padding:12px 8px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;cursor:pointer">❌ Pass — Spin Again</button>
-        <button onclick="closePanel()" style="background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border);padding:12px 8px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;cursor:pointer">✕ Close</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <button onclick="gottenByOther('${slot.id}')" style="background:rgba(255,255,255,.06);color:var(--white);border:1px solid var(--border);padding:14px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-transform:uppercase">👥 Someone Else</button>
+        <button onclick="document.getElementById('claim-popup').remove()" style="background:rgba(255,255,255,.03);color:var(--muted);border:1px solid var(--border);padding:14px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-transform:uppercase">✕ Cancel</button>
       </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}
 
-    </div>
-  `;
+function winAt(id,amount){
+  document.getElementById('claim-popup')?.remove();
+  doClaimMine(id,amount);
+}
+function winCustom(id){
+  const inp=document.getElementById('customBid');
+  const amt=inp?+inp.value:0;
+  if(!amt){if(inp)inp.style.borderColor='var(--red)';return;}
+  document.getElementById('claim-popup')?.remove();
+  doClaimMine(id,amt);
+}
+function gottenByOther(id){
+  document.getElementById('claim-popup')?.remove();
+  doClaimOther(id);
+}
 
-  document.body.appendChild(panel);
+function doClaimMine(id,paid){
+  const slot=pool.find(s=>s.id===id);
+  if(!slot||slot.status!=='available')return;
+  slot.status='mine'; slot.paid=paid;
+  claimed.push({id,name:slot.name,ev:slot.ev,mine:true,paid});
+  const isSteal = paid<=slot.ev*0.65;
+  renderSlots(); updateBidRec(); updateLog(); updateMySummary();
+  if(isSteal) showStealBanner(slot.name,paid,slot.ev);
+}
+function doClaimOther(id){
+  const slot=pool.find(s=>s.id===id);
+  if(!slot||slot.status!=='available')return;
+  slot.status='claimed';
+  claimed.push({id,name:slot.name,ev:slot.ev,mine:false,paid:0});
+  renderSlots(); updateBidRec(); updateLog();
+}
 
-  // Populate stash names if passing
-  if(!isStash){
-    const stashRemaining = pool.filter(s=>{
-      if(s.status !== 'available' || s.id === slot.id) return false;
-      const baseId = s.id.replace('_2','');
-      const activeStash2 = currentSport === 'nba' ? NBA_STASH_TEAMS : currentSport === 'baseball' ? MLB_STASH_TEAMS : STASH_TEAMS;
-      return cfg.format === 'team' ? activeStash2.has(baseId) : STASH_PLAYERS.has(s.id);
-    }).sort((a,b)=>b.ev-a.ev).slice(0,6);
+function showStealBanner(name,paid,ev){
+  document.getElementById('steal-banner')?.remove();
+  document.querySelectorAll('.steal-confetti').forEach(el=>el.remove());
+  const saved=ev-paid;
+  const pct=Math.round((saved/ev)*100);
 
-    const container = document.getElementById('remainingStash');
-    if(container){
-      if(stashRemaining.length){
-        container.innerHTML = ' ' + stashRemaining.map(s=>
-          `<span style="background:rgba(50,200,100,.1);border:1px solid rgba(50,200,100,.3);color:var(--green);padding:1px 7px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;margin-left:3px">${s.name}</span>`
-        ).join('');
-      } else {
-        container.innerHTML = ' <span style="color:var(--muted)">None left — consider keeping this one.</span>';
-      }
-    }
+  // Haptic vibration (PWA/mobile)
+  if(navigator.vibrate) navigator.vibrate([80,40,80,40,200]);
+
+  // Confetti burst
+  const colors=['#FFD700','#32C864','#FF6B6B','#00C9C9','#F5A623','#ffffff'];
+  for(let i=0;i<18;i++){
+    const dot=document.createElement('div');
+    dot.className='steal-confetti';
+    const size=Math.random()*8+5;
+    const left=Math.random()*100;
+    const delay=Math.random()*0.4;
+    const dur=Math.random()*0.8+0.8;
+    dot.style.cssText=`position:fixed;top:80px;left:${left}vw;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>0.5?'50%':'2px'};z-index:2999;pointer-events:none;animation:confettiFall ${dur}s ${delay}s ease-in forwards`;
+    document.body.appendChild(dot);
+    setTimeout(()=>dot.remove(),(dur+delay)*1000+100);
   }
-}
-function panelStash(id){
-  closePanel();
-  const slot = pool.find(s=>s.id===id);
-  const bid = bidFor(slot.ev);
-  const paid = prompt(`Stashing "${slot.name}"!\nWhat did you pay?\n(Bid ceiling: $${bid})`, bid);
-  if(paid !== null) claimSlot(id, true, +paid||bid);
+
+  // Banner
+  const b=document.createElement('div');
+  b.id='steal-banner';
+  b.style.cssText=`position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:3000;min-width:280px;max-width:90vw;border-radius:14px;padding:16px 28px;text-align:center;box-shadow:0 0 40px rgba(50,200,100,.6),0 8px 32px rgba(0,0,0,.5);animation:bannerPop .5s cubic-bezier(.34,1.56,.64,1) forwards;cursor:pointer;background:linear-gradient(135deg,#1a9e50,#32C864)`;
+  b.innerHTML=`
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:.06em;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.3)">🔥 STEAL! ${name}</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:rgba(255,255,255,.9);margin-top:4px;letter-spacing:.04em">PAID $${paid} · SAVED $${saved} · ${pct}% UNDER EV</div>
+    <div style="margin-top:8px;display:flex;justify-content:center;gap:6px">
+      <span style="background:rgba(0,0,0,.2);border-radius:20px;padding:3px 12px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:#fff;text-transform:uppercase">EV: $${ev}</span>
+      <span style="background:rgba(255,255,255,.25);border-radius:20px;padding:3px 12px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:#fff;text-transform:uppercase">✅ Logged</span>
+    </div>`;
+  b.onclick=()=>b.remove();
+  document.body.appendChild(b);
+  setTimeout(()=>{ if(b.parentNode) b.remove(); },4000);
 }
 
-function panelPass(id){
-  closePanel();
-  const slot = pool.find(s=>s.id===id);
-  if(!slot) return;
-  slot.status = 'passed';
-  claimed.push({id, name:slot.name, ev:slot.ev, mine:false, paid:0, passed:true});
-  renderSlots();
-  updateBidRec();
-  updateLog();
-  setTimeout(()=>alert(`Passed on "${slot.name}". Tap your second spin when the wheel lands.`), 150);
-}
-
-function panelEbay(name){
-  const product = currentSport === 'nba' ? '2025-26 Topps Cosmic Chrome Basketball auto' : currentSport === 'baseball' ? '2026 Topps Chrome Platinum Baseball auto' : '2025 Topps Cosmic Chrome Football auto';
-  const query = encodeURIComponent(`${name} ${product}`);
-  window.open(`https://www.ebay.com/sch/i.html?_nkw=${query}&LH_Complete=1&LH_Sold=1&_sop=13`,'_blank');
-}
-
-function closePanel(){
-  const p = document.getElementById('slot-panel');
-  if(p) p.remove();
-}
-
-// Quick buttons use the HIGHEST remaining EV slot as the "current" one
-function quickOther(){
-  const avail = getAvail().sort((a,b)=>b.ev-a.ev);
-  if(!avail.length) return;
-  // Ask which slot — show a quick pick
-  const top3 = avail.slice(0,5).map(s=>`${s.name} ($${s.ev})`).join('\n');
-  const name = prompt(`Which slot was just assigned to someone else?\n\nTop remaining:\n${top3}\n\nType the slot name or leave blank to mark top slot:`);
-  if(name === null) return;
-  const match = avail.find(s=>s.name.toLowerCase().includes((name||'').toLowerCase())) || avail[0];
-  claimSlot(match.id, false, 0);
-}
-
-function quickMine(){
-  const avail = getAvail().sort((a,b)=>b.ev-a.ev);
-  if(!avail.length) return;
-  const top3 = avail.slice(0,5).map(s=>`${s.name} ($${s.ev})`).join('\n');
-  const name = prompt(`Which slot did you win?\n\nTop remaining:\n${top3}\n\nType the slot name or leave blank for top slot:`);
-  if(name === null) return;
-  const match = avail.find(s=>s.name.toLowerCase().includes((name||'').toLowerCase())) || avail[0];
-  const bid = bidFor(match.ev);
-  const paid = prompt(`You won "${match.name}"! (EV: $${match.ev})\nWhat did you pay?\n(Preset recommendation: $${bid})`, bid);
-  if(paid !== null) claimSlot(match.id, true, +paid||bid);
-}
-
+// ══════════════════════════════════════════
+// RENDER SLOTS
+// ══════════════════════════════════════════
 function renderSlots(){
-  const grid = document.getElementById('slotGrid');
-  const tierIcon = {s:'🟢',a:'🟡',b:'⬜'};
-  const sorted = [...pool].sort((a,b)=>{
-    if(a.status==='available' && b.status!=='available') return -1;
-    if(a.status!=='available' && b.status==='available') return 1;
-    if(currentSort === 'name'){
-      return (a.name||'').localeCompare(b.name||'');
-    }
-    return b.ev-a.ev; // default: price high to low
+  const stash=getStash();
+  const pp=getPP();
+  const sorted=[...pool].sort((a,b)=>{
+    if(a.status==='available'&&b.status!=='available')return -1;
+    if(a.status!=='available'&&b.status==='available')return 1;
+    if(currentSort==='name')return(a.name||'').localeCompare(b.name||'');
+    return b.ev-a.ev;
   });
-  grid.innerHTML = sorted.map(s=>{
-    const isMine = s.status==='mine';
-    const isClaimed = s.status==='claimed';
-    const isPassed = s.status==='passed';
-    const isUnavail = false; // all slots are tappable — claimed = unclaim
-    const cls = isMine?'mine':isUnavail?'claimed':'available';
-    const badge = isMine?'✅':isClaimed?'✕':isPassed?'❌':(tierIcon[s.tier]||'');
-    const passedLabel = isPassed ? `<div style="font-size:9px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-top:2px">Passed</div>` : '';
+  document.getElementById('slotGrid').innerHTML=sorted.map(s=>{
+    const baseId=s.id.replace('_2','');
+    // Chase logic: combined slots have pre-computed isChase
+    const isChase=s.combined ? s.isChase : (cfg.format==='team'?stash.has(baseId):STASH_PLAYERS.has(s.id));
+    const hasPP=s.combined ? false : (pp.has(baseId)||s.pp);
+    let badge='';
+    if(s.status==='mine')badge='✅';
+    else if(s.status==='claimed')badge='✕';
+    else if(s.status==='passed')badge='❌';
+    else badge=isChase?'🔥':'❄️';
+    const cls='slot-card '+s.status+(hasPP&&s.status==='available'?' pp-team':'')+(s.combined?' combined-slot':'');
+    const paidLabel=s.status==='mine'&&s.paid?`<div class="slot-paid">Paid $${s.paid}</div>`:'';
+    const ppBadge=hasPP&&s.status==='available'?'<div class="pp-badge">💫 PP</div>':'';
 
-    // Build tooltip content for hover
-    const tooltip = !isUnavail ? buildTooltip(s) : '';
+    if(s.combined && s.status==='available'){
+      // Combined slot: show both team names and split EV
+      return `<div class="${cls}" onclick="quickClaim('${s.id}')" data-slot-id="${s.id}">
+        <div class="slot-badge">${badge}</div>
+        <div class="slot-combined-names">${s.nflName}<br/><span style="color:var(--teal)">+ ${s.nbaName}</span></div>
+        <div class="slot-combined-ev">$${s.ev}</div>
+        <div class="slot-combined-split">🏈 $${s.nflEV} · 🏀 $${s.nbaEV}</div>
+        ${paidLabel}
+      </div>`;
+    }
 
-    const activePP = currentSport === 'nba' ? NBA_PP_TEAMS : null;
-    const hasPP = activePP ? activePP.has(s.id.replace('_2','')) : s.pp;
-    const ppClass = hasPP && !isUnavail ? ' pp-team' : '';
-    const ppBadge = hasPP && !isUnavail ? '<div class="pp-badge">💫 PP</div>' : '';
-    return `<div class="slot-card ${cls}${ppClass}" onclick="quickClaim('${s.id}')" >
+    // Standard slot
+    const note=s.status==='available'?(s.note||''):'';
+    return `<div class="${cls}" onclick="quickClaim('${s.id}')" data-slot-id="${s.id}">
       <div class="slot-badge">${badge}</div>
       <div class="slot-name">${s.name}</div>
       <div class="slot-ev">$${s.ev}</div>
-      <div class="slot-note">${s.note||''}</div>
-      ${ppBadge}
-      ${passedLabel}
-      ${tooltip}
+      ${note?`<div class="slot-note">${note}</div>`:''}
+      ${paidLabel}${ppBadge}
     </div>`;
   }).join('');
 }
 
+// ══════════════════════════════════════════
+// BID REC + STATS
+// ══════════════════════════════════════════
+function updateBidRec(){
+  const stats=getStats();
+  const total=pool.length;
+  const claimedCt=total-stats.count;
+  document.getElementById('claimedCount').textContent=claimedCt;
+  document.getElementById('remainCount').textContent=stats.count;
+  document.getElementById('progFill').style.width=total?Math.round((claimedCt/total)*100)+'%':'0%';
+  document.getElementById('psAvg').textContent=stats.avg?'$'+stats.avg:'—';
+  // Remaining market value
+  const rmv=getAvail().reduce((s,sl)=>s+sl.ev,0);
+  document.getElementById('remainingValue').textContent=rmv?'$'+rmv.toLocaleString():'—';
+
+  // Stash/Pass EV
+  const avail=getAvail();
+  const n=avail.length;
+  const chase=avail.filter(s=>isChaseSlot(s));
+  const nonChase=avail.filter(s=>!isChaseSlot(s));
+  const nC=chase.length,nN=nonChase.length;
+  const avgC=nC?Math.round(chase.reduce((s,sl)=>s+sl.ev,0)/nC):0;
+  const avgN=nN?Math.round(nonChase.reduce((s,sl)=>s+sl.ev,0)/nN):0;
+  let spEV=stats.avg;
+  if(n>1){
+    const pC=nC/n,pN=nN/n;
+    const nRem=n-1,nRC=nC,nRN=Math.max(0,nN-1);
+    const evSpin2=nRem>0?Math.round((nRC*avgC+nRN*avgN)/nRem):avgC;
+    spEV=Math.round(pC*avgC+pN*evSpin2);
+  }
+  document.getElementById('psStashEv').textContent=spEV?'$'+spEV:'—';
+
+  const mySpend=claimed.filter(c=>c.mine).reduce((s,c)=>s+c.paid,0);
+  document.getElementById('psSpend').textContent='$'+mySpend;
+
+  // Pass Worth It line
+  const pwi=document.getElementById('passWorthIt');
+  const diff=spEV-stats.avg;
+  if(n<=1){pwi.textContent='⚠️ Last slot — no second spin';pwi.style.background='rgba(245,166,35,.1)';pwi.style.color='var(--gold)';}
+  else if(nC===0){pwi.textContent='No chase names left — stash/pass = same as single spin';pwi.style.background='rgba(255,255,255,.04)';pwi.style.color='var(--muted)';}
+  else if(diff>stats.avg*0.15){
+    const names=chase.sort((a,b)=>b.ev-a.ev).slice(0,3).map(s=>s.name).join(', ');
+    pwi.textContent=`🔥 Stash/Pass adds +$${diff} — ${nC} chase left: ${names}`;
+    pwi.style.background='rgba(50,200,100,.08)';pwi.style.color='var(--green)';
+  } else {
+    pwi.textContent=`→ Stash/Pass adds +$${diff} · ${nC} chase name${nC!==1?'s':''} remaining`;
+    pwi.style.background='rgba(255,255,255,.04)';pwi.style.color='var(--muted)';
+  }
+
+  // Big bid number
+  if(!stats.count){
+    document.getElementById('bidAmount').textContent='—';
+    document.getElementById('bidSub').textContent='Break complete!';
+    document.getElementById('bidRange').textContent='';
+    return;
+  }
+  const bid=Math.round(stats.avg*0.65);
+  document.getElementById('bidAmount').textContent='$'+bid;
+  document.getElementById('bidSub').textContent=`${stats.count} slots left · avg EV $${stats.avg}`;
+  document.getElementById('bidRange').textContent=`🟢 Deal ≤$${Math.round(stats.high*0.65)} · 🟡 Fair ≤$${Math.round(stats.high*0.90)} (top slot $${stats.high})`;
+}
+
+// ══════════════════════════════════════════
+// SORT
+// ══════════════════════════════════════════
+function sortSlots(mode){
+  currentSort=mode;
+  document.getElementById('sort-ev').classList.toggle('active',mode==='ev');
+  document.getElementById('sort-az').classList.toggle('active',mode==='name');
+  renderSlots();
+}
+
+// ══════════════════════════════════════════
+// QUICK BUTTONS
+// ══════════════════════════════════════════
+function quickOther(){
+  const avail=getAvail().sort((a,b)=>b.ev-a.ev);
+  if(!avail.length)return;
+  const choices=avail.slice(0,6).map(s=>`${s.name} ($${s.ev})`).join('\n');
+  const input=prompt(`Which slot? Top remaining:\n${choices}\n\n(Leave blank = highest value slot)`);
+  if(input===null)return;
+  const match=avail.find(s=>s.name.toLowerCase().includes((input||'').toLowerCase()))||avail[0];
+  doClaimOther(match.id);
+}
+function quickMine(){
+  const avail=getAvail().sort((a,b)=>b.ev-a.ev);
+  if(!avail.length)return;
+  const choices=avail.slice(0,6).map(s=>`${s.name} ($${s.ev})`).join('\n');
+  const input=prompt(`Which slot did you win?\n${choices}\n\n(Leave blank = highest value slot)`);
+  if(input===null)return;
+  const match=avail.find(s=>s.name.toLowerCase().includes((input||'').toLowerCase()))||avail[0];
+  showClaimPopup(match);
+}
+
+// ══════════════════════════════════════════
+// LOG + SUMMARY
+// ══════════════════════════════════════════
 function updateLog(){
-  const wrap = document.getElementById('logWrap');
+  const wrap=document.getElementById('logWrap');
   if(!claimed.length){wrap.style.display='none';return;}
   wrap.style.display='block';
-  document.getElementById('logChips').innerHTML = claimed.map(c=>
-    `<span class="log-chip ${c.mine?'chip-mine':c.passed?'chip-passed':'chip-other'}">${c.name}${c.mine?' ✅ $'+c.paid:c.passed?' ❌ passed':''}</span>`
+  document.getElementById('logChips').innerHTML=claimed.map(c=>
+    `<span class="log-chip ${c.mine?'chip-mine':'chip-other'}">${c.name}${c.mine?' ✅ $'+c.paid:' ✕'}</span>`
   ).join('');
 }
 
 function updateMySummary(){
-  const mine = claimed.filter(c=>c.mine);
-  const wrap = document.getElementById('myWrap');
+  const mine=claimed.filter(c=>c.mine);
+  const wrap=document.getElementById('myWrap');
   if(!mine.length){wrap.style.display='none';return;}
   wrap.style.display='block';
-  const totalSpend = mine.reduce((s,c)=>s+c.paid,0);
-  const totalEv = mine.reduce((s,c)=>s+c.ev,0);
-  const roi = totalEv - totalSpend;
-  document.getElementById('myList').innerHTML = mine.map(c=>`
-    <div class="my-row">
-      <span class="my-row-name">${c.name}</span>
-      <span class="my-row-ev">Paid $${c.paid} · EV $${c.ev}</span>
-    </div>
-  `).join('');
-  document.getElementById('myTotalSpend').textContent =
-    '$'+totalSpend+' · EV $'+totalEv+' · '+(roi>=0?'+':'')+'$'+roi+' est.';
+  const totalSpend=mine.reduce((s,c)=>s+c.paid,0);
+  const totalEV=mine.reduce((s,c)=>s+c.ev,0);
+  const roi=totalEV-totalSpend;
+  document.getElementById('myList').innerHTML=mine.map(c=>{
+    const diff=c.ev-c.paid;
+    const tag=diff>=c.ev*0.35?'🔥 Steal':diff<0?'🔴 Overpaid':'✅ Fair';
+    return `<div class="my-row"><span style="color:var(--white);font-weight:600">${c.name} <span style="font-size:10px;color:var(--muted)">${tag}</span></span><span style="color:var(--green);font-family:'Barlow Condensed',sans-serif;font-weight:700">Paid $${c.paid} · EV $${c.ev}</span></div>`;
+  }).join('');
+  const withPaid=mine.filter(c=>c.paid>0);
+  let extra='';
+  if(withPaid.length){
+    const best=withPaid.reduce((b,c)=>c.ev-c.paid>b.ev-b.paid?c:b);
+    const worst=withPaid.reduce((w,c)=>c.ev-c.paid<w.ev-w.paid?c:w);
+    extra+=`<div style="font-size:11px;color:var(--green);margin-top:6px">🔥 Best: ${best.name} — saved $${best.ev-best.paid}</div>`;
+    if(worst.paid>worst.ev) extra+=`<div style="font-size:11px;color:var(--red);margin-top:3px">⚠️ Overpaid: ${worst.name} by $${worst.paid-worst.ev}</div>`;
+  }
+  document.getElementById('myExtra').innerHTML=extra;
+  document.getElementById('myTotalSpend').textContent='$'+totalSpend+' · EV $'+totalEV+' · '+(roi>=0?'+':'')+'$'+roi+' est.';
 }
 
 function doReset(){
-  if(!confirm('Reset the break? Clears all claimed slots.')) return;
-  pool.forEach(s=>s.status='available');
+  if(!confirm('Reset break? Clears all claimed slots.'))return;
+  pool.forEach(s=>{s.status='available';s.paid=0;});
   claimed=[];
   document.getElementById('logWrap').style.display='none';
   document.getElementById('myWrap').style.display='none';
-  renderSlots();
-  updateBidRec();
+  renderSlots(); updateBidRec();
 }
 
-// ── AI PARSE ──
+// ══════════════════════════════════════════
+// AI PARSE
+// ══════════════════════════════════════════
 async function parseWithAI(){
-  const text = document.getElementById('pasteBox').value.trim();
-  if(!text){ alert('Paste a player list first.'); return; }
-
-  const btn = document.getElementById('parseBtn');
-  const status = document.getElementById('parseStatus');
-  btn.disabled = true;
-  btn.textContent = '🤖 Parsing...';
-  status.style.display = 'block';
-  status.style.background = 'rgba(108,63,197,.15)';
-  status.style.border = '1px solid var(--purple)';
-  status.style.color = '#A78BF5';
-  status.textContent = 'AI is reading the list...';
-
-  // Build the full player name list for context
-  const playerList = ALL_PLAYERS.map(p => p.name).join(', ');
-
-  const prompt = `You are parsing a sports card break player list. The user pasted the following text from a Whatnot stream, Discord, or chat:
-
----
-${text}
----
-
-Your job: identify which players from this EXACT list appear in the pasted text.
-
-AVAILABLE PLAYERS: ${playerList}
-
-Rules:
-- Match by last name, first name, or common nickname (e.g. "Mahomes" = "Pat Mahomes", "Brady" = "Tom Brady", "Ward" = "Cam Ward")
-- Only return players from the AVAILABLE PLAYERS list above
-- Ignore any players not on the list
-- Return ONLY a JSON array of matched player names exactly as they appear in the AVAILABLE PLAYERS list
-- Example output: ["Cam Ward","Jaxson Dart","Tom Brady","Josh Allen"]
-- No explanation, no markdown, just the JSON array`;
-
+  const text=document.getElementById('pasteBox').value.trim();
+  if(!text){alert('Paste a player list first.');return;}
+  const btn=document.getElementById('parseBtn');
+  const status=document.getElementById('parseStatus');
+  btn.disabled=true; btn.textContent='🤖 Parsing...';
+  status.style.display='block';
+  status.style.cssText='display:block;margin-top:10px;padding:10px 14px;border-radius:5px;font-size:13px;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;text-transform:uppercase;background:rgba(108,63,197,.15);border:1px solid var(--purple);color:#A78BF5';
+  status.textContent='AI is reading the list...';
+  const playerList=ALL_PLAYERS.map(p=>p.name).join(', ');
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:500,messages:[{role:'user',content:`Parse this break list and return ONLY a JSON array of matched player names from: ${playerList}\n\nList:\n${text}`}]})});
+    const data=await res.json();
+    const raw=data.content?.[0]?.text||'';
+    const match=raw.match(/\[.*\]/s);
+    if(!match)throw new Error('No list found');
+    const parsed=JSON.parse(match[0]);
+    let matched=0;
+    parsed.forEach(name=>{
+      const p=ALL_PLAYERS.find(pl=>pl.name.toLowerCase()===name.toLowerCase()||pl.name.toLowerCase().split(' ').pop()===name.toLowerCase().split(' ').pop());
+      if(p&&!checkedPlayers.has(p.id)){checkedPlayers.add(p.id);matched++;}
     });
-
-    const data = await response.json();
-    const raw = data.content?.[0]?.text || '';
-
-    // Extract JSON array from response
-    const match = raw.match(/\[.*\]/s);
-    if(!match) throw new Error('No valid list found in response');
-
-    const parsed = JSON.parse(match[0]);
-    if(!Array.isArray(parsed) || !parsed.length) throw new Error('No players identified');
-
-    // Match to our player IDs
-    let matched = 0;
-    parsed.forEach(name => {
-      const player = ALL_PLAYERS.find(p =>
-        p.name.toLowerCase() === name.toLowerCase() ||
-        p.name.toLowerCase().includes(name.toLowerCase().split(' ').pop()) ||
-        name.toLowerCase().includes(p.name.toLowerCase().split(' ').pop())
-      );
-      if(player && !checkedPlayers.has(player.id)){
-        checkedPlayers.add(player.id);
-        matched++;
-      }
-    });
-
-    renderPoolBuilder('');
-    updatePoolCount();
-
-    status.style.background = 'rgba(50,200,100,.12)';
-    status.style.border = '1px solid var(--green)';
-    status.style.color = 'var(--green)';
-    status.textContent = `✅ Found ${matched} player${matched!==1?'s':''} — review below and add any missed ones manually`;
-
-  } catch(err) {
-    status.style.background = 'rgba(255,107,107,.12)';
-    status.style.border = '1px solid var(--red)';
-    status.style.color = 'var(--red)';
-    status.textContent = `❌ Parse failed — ${err.message}. Use manual selection below.`;
+    renderPoolBuilder(''); updatePoolCount();
+    status.style.background='rgba(50,200,100,.12)';status.style.border='1px solid var(--green)';status.style.color='var(--green)';
+    status.textContent=`✅ Found ${matched} player${matched!==1?'s':''} — check below`;
+  } catch(err){
+    status.style.background='rgba(255,107,107,.12)';status.style.border='1px solid var(--red)';status.style.color='var(--red)';
+    status.textContent=`❌ Parse failed — use manual selection`;
   }
-
-  btn.disabled = false;
-  btn.textContent = '🤖 Parse with AI — Auto-Select Players';
+  btn.disabled=false; btn.textContent='🤖 Parse with AI';
 }
 
-// ── SORT ──
-let currentSort = 'ev'; // default: price high to low
-
-function sortSlots(mode){
-  currentSort = mode;
-  // Update button styles
-  const evBtn = document.getElementById('sort-ev');
-  const nameBtn = document.getElementById('sort-name');
-  if(mode === 'ev'){
-    evBtn.style.background='rgba(245,166,35,.15)';evBtn.style.color='var(--gold)';evBtn.style.borderColor='var(--gold)';
-    nameBtn.style.background='rgba(255,255,255,.06)';nameBtn.style.color='var(--muted)';nameBtn.style.borderColor='var(--border)';
-  } else {
-    nameBtn.style.background='rgba(0,201,201,.15)';nameBtn.style.color='var(--teal)';nameBtn.style.borderColor='var(--teal)';
-    evBtn.style.background='rgba(255,255,255,.06)';evBtn.style.color='var(--muted)';evBtn.style.borderColor='var(--border)';
-  }
-  renderSlots();
+// ══════════════════════════════════════════
+// PAIRING MODAL
+// ══════════════════════════════════════════
+function openPairingModal(){
+  const pairs = getActivePairs();
+  const nflMap = {}; NFL_TEAMS.forEach(t=>nflMap[t.id]=t.name);
+  const nbaMap = {}; NBA_TEAMS.forEach(t=>nbaMap[t.id]=t.name);
+  const nbaOptions = NBA_TEAMS.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+  document.getElementById('pairingList').innerHTML = pairs.map((p,i)=>`
+    <div style="background:rgba(255,255,255,.04);border:1px solid ${p.anomaly?'rgba(245,166,35,.3)':' var(--border)'};border-radius:6px;padding:12px;display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center">
+      <div>
+        <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">🏈 NFL</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:var(--white)">${nflMap[p.nfl]||p.nfl}</div>
+      </div>
+      <div style="text-align:center;font-size:18px">⟷</div>
+      <div>
+        <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">🏀 NBA ${p.anomaly?'<span style="color:var(--gold)">✎ edit</span>':''}</div>
+        <select onchange="updatePairing(${i},'nba',this.value)" style="width:100%;padding:6px 8px;background:rgba(255,255,255,.07);border:1.5px solid ${p.anomaly?'var(--gold)':'var(--border)'};border-radius:4px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--white);outline:none">
+          ${NBA_TEAMS.map(t=>`<option value="${t.id}" ${t.id===p.nba?'selected':''}>${t.name}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('pairingModal').style.display='block';
 }
 
-// Init
+function updatePairing(idx, field, value){
+  if(!activePairs) activePairs = [...getActivePairs()];
+  activePairs[idx][field] = value;
+  // Update label
+  const nflTeam = NFL_TEAMS.find(t=>t.id===activePairs[idx].nfl);
+  const nbaTeam = NBA_TEAMS.find(t=>t.id===value);
+  if(nflTeam&&nbaTeam) activePairs[idx].label = `${nflTeam.name} + ${nbaTeam.name}`;
+}
+
+function closePairingModal(){
+  document.getElementById('pairingModal').style.display='none';
+}
+
+function resetPairings(){
+  activePairs = null;
+  openPairingModal();
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
 onFormatChange();
-initCombinedPairs(); // pre-calculate combined NFL+NBA EVs
-setSport('nfl'); // initialize default sport + product row + button state
+setSport('nfl');
 </script>
 </body>
 </html>
+
