@@ -729,6 +729,10 @@ function calcSnake(){
 }
 
 function solveSpot(boxes, boxCost, spots, feePct, shipPer, targetMargin){
+  const fixed = boxes*boxCost + spots*shipPer;
+  const denom = 1 - feePct/100 - targetMargin/100;
+  return denom > 0.01 ? Math.ceil((fixed/denom)/spots) : Math.ceil(fixed/spots * 1.5);
+}
 
 function getMargin(spotPrice, boxes, boxCost, spots, feePct, shipPer){
   const gross = spots*spotPrice;
@@ -863,3 +867,4 @@ document.getElementById('snake-inputs').classList.add('hidden');
 </script>
 </body>
 </html>
+Done
