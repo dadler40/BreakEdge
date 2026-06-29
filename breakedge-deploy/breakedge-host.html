@@ -240,6 +240,8 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);m
 <div class="mode-tabs">
   <button class="mode-tab active" id="tab-team" onclick="setMode('team')">🏟️ Team Break</button>
   <button class="mode-tab" id="tab-player" onclick="setMode('player')">🎯 Player Break</button>
+  <button class="mode-tab" id="tab-tiered" onclick="setMode('tiered')">📋 Tiered Pricing</button>
+  <button class="mode-tab" id="tab-snake" onclick="setMode('snake')">🐍 Snake Draft</button>
 </div>
 
 <!-- TEAM BREAK INPUTS -->
@@ -305,7 +307,77 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);m
   </div>
 </div>
 
-<!-- TEAM RESULTS -->
+<!-- TIERED PRICING -->
+<div id="tiered-inputs" class="hidden">
+  <div class="card">
+    <div class="card-title">📋 Tiered Price Sheet Generator</div>
+    <p style="font-size:13px;color:#8BAFC6;margin-bottom:14px">Select a product and margin target. BreakEdge generates a pre-priced team list you can screenshot and post before your break. Top EVs = higher prices, floor teams = cheaper.</p>
+    <div class="g3">
+      <div class="fg">
+        <label>Sport / Product</label>
+        <select id="tier-product" onchange="renderTieredSheet()">
+          <optgroup label="⚾ Baseball">
+            <option value="mlb_chrome_plat">Chrome Platinum (12-box)</option>
+            <option value="mlb_tier_one">Tier One (6-box)</option>
+            <option value="mlb_dynasty">Dynasty (5-box)</option>
+            <option value="mlb_inception">Inception (8-box)</option>
+          </optgroup>
+          <optgroup label="🏀 NBA">
+            <option value="nba_cosmic">NBA Cosmic Chrome (8-box)</option>
+            <option value="nba_cactus">Cactus Jack (12-box)</option>
+            <option value="nba_signature">Signature Class (12-box)</option>
+          </optgroup>
+          <optgroup label="🏈 NFL">
+            <option value="nfl_cosmic">NFL Cosmic Chrome (1-box)</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Boxes in Break</label>
+        <input type="number" id="tier-boxes" value="12" min="1" max="24" oninput="renderTieredSheet()"/>
+      </div>
+      <div class="fg">
+        <label>Margin Target %</label>
+        <input type="number" id="tier-margin" value="20" min="0" max="60" oninput="renderTieredSheet()"/>
+      </div>
+    </div>
+    <div class="fg" style="margin-bottom:12px">
+      <label>Platform Fee %</label>
+      <input type="number" id="tier-fee" value="10" min="0" max="30" oninput="renderTieredSheet()" style="max-width:120px"/>
+    </div>
+    <button class="btn" onclick="copyTieredSheet()" style="margin-bottom:12px">📋 Copy Price Sheet to Clipboard</button>
+  </div>
+  <div class="card" id="tieredSheetCard">
+    <div class="card-title">Price Sheet Preview</div>
+    <div id="tieredSheet" style="font-family:'Barlow Condensed',sans-serif"></div>
+  </div>
+</div>
+
+<!-- SNAKE DRAFT -->
+<div id="snake-inputs" class="hidden">
+  <div class="card">
+    <div class="card-title">🐍 Snake Draft Calculator</div>
+    <p style="font-size:13px;color:#8BAFC6;margin-bottom:14px">Sell X spots, then host a live snake draft. Each spot holder picks one team per round. Price per spot = total cost ÷ spots + your margin.</p>
+    <div class="g3">
+      <div class="fg"><label>Number of Boxes</label><input type="number" id="sn-boxes" value="1" min="1" max="12" oninput="calcSnake()"/></div>
+      <div class="fg"><label>Box Cost ($)</label><input type="number" id="sn-boxcost" value="140" min="1" oninput="calcSnake()"/><div class="hint">Chrome Platinum = ~$140/box</div></div>
+      <div class="fg"><label>Draft Spots to Sell</label><input type="number" id="sn-spots" value="10" min="2" max="30" oninput="calcSnake()"/></div>
+    </div>
+    <div class="g3">
+      <div class="fg"><label>Platform Fee %</label><input type="number" id="sn-fee" value="10" min="0" max="30" oninput="calcSnake()"/></div>
+      <div class="fg"><label>Shipping Per Spot ($)</label><input type="number" id="sn-ship" value="8" min="0" oninput="calcSnake()"/></div>
+      <div class="fg"><label>Target Margin %</label><input type="number" id="sn-margin" value="20" min="0" max="60" oninput="calcSnake()"/></div>
+    </div>
+    <div class="results-strip" id="snakeResults" style="display:none;margin-top:12px">
+      <div class="sbox gold"><div class="snum" id="sn-spotprice">$0</div><div class="slbl">Price Per Spot</div></div>
+      <div class="sbox"><div class="snum" id="sn-gross">$0</div><div class="slbl">Gross Revenue</div></div>
+      <div class="sbox"><div class="snum" id="sn-profit">$0</div><div class="slbl">Net Profit</div></div>
+      <div class="sbox"><div class="snum" id="sn-margin-out">0%</div><div class="slbl">Actual Margin</div></div>
+    </div>
+    <div id="snakeBreakdown" style="margin-top:12px;font-size:12px;color:#8BAFC6;background:rgba(255,255,255,.04);border-radius:5px;padding:12px;display:none"></div>
+    <button class="btn" onclick="calcSnake()" style="margin-top:12px">⚡ Calculate Snake Draft</button>
+  </div>
+</div>
 <div id="team-results" class="hidden">
   <div class="results-strip">
     <div class="sbox gold"><div class="snum" id="tr-recspot">$0</div><div class="slbl">Rec. Spot Price</div></div>
@@ -431,9 +503,227 @@ function setMode(m){
   document.getElementById('player-inputs').className = m==='player' ? '' : 'hidden';
   document.getElementById('team-results').className = 'hidden';
   document.getElementById('player-results').className = 'hidden';
+  document.getElementById('tiered-inputs').className = m==='tiered' ? '' : 'hidden';
+  document.getElementById('snake-inputs').className = m==='snake' ? '' : 'hidden';
+  document.getElementById('tab-tiered').className = 'mode-tab' + (m==='tiered'?' active':'');
+  document.getElementById('tab-snake').className = 'mode-tab' + (m==='snake'?' active':'');
+  if(m==='tiered') renderTieredSheet();
+  if(m==='snake') calcSnake();
 }
 
-function solveSpot(boxes, boxCost, spots, feePct, shipPer, targetMargin){
+// ── TIERED PRICING DATA ──
+const TIERED_PRODUCTS = {
+  mlb_chrome_plat:{name:"Chrome Platinum Baseball",caseBoxes:12,teams:[
+    {name:"Dodgers",ev:650},{name:"Yankees",ev:300},{name:"Athletics",ev:300},
+    {name:"Nationals",ev:180},{name:"Braves",ev:160},{name:"Mariners",ev:150},
+    {name:"Red Sox",ev:130},{name:"Orioles",ev:120},{name:"Royals",ev:120},
+    {name:"Pirates",ev:120},{name:"Cubs",ev:90},{name:"Astros",ev:90},
+    {name:"Mets",ev:90},{name:"Tigers",ev:90},{name:"Brewers",ev:75},
+    {name:"Phillies",ev:75},{name:"Giants",ev:75},{name:"Cardinals",ev:75},
+    {name:"Angels",ev:70},{name:"Rangers",ev:65},{name:"Reds",ev:60},
+    {name:"Blue Jays",ev:55},{name:"Twins",ev:55},{name:"Padres",ev:50},
+    {name:"Guardians",ev:40},{name:"White Sox",ev:40},{name:"D-backs",ev:30},
+    {name:"Rays",ev:30},{name:"Marlins",ev:20},{name:"Rockies",ev:20}
+  ]},
+  mlb_tier_one:{name:"Tier One Baseball",caseBoxes:6,teams:[
+    {name:"Dodgers",ev:350},{name:"Yankees",ev:300},{name:"White Sox",ev:260},
+    {name:"Brewers",ev:160},{name:"Athletics",ev:160},{name:"Red Sox",ev:150},
+    {name:"Pirates",ev:145},{name:"Braves",ev:140},{name:"Royals",ev:140},
+    {name:"Mets",ev:130},{name:"Phillies",ev:130},{name:"Mariners",ev:130},
+    {name:"Reds",ev:125},{name:"Cubs",ev:110},{name:"Angels",ev:110},
+    {name:"Nationals",ev:100},{name:"Tigers",ev:95},{name:"Giants",ev:95},
+    {name:"Astros",ev:90},{name:"Orioles",ev:90},{name:"Cardinals",ev:75},
+    {name:"Blue Jays",ev:70},{name:"Twins",ev:55},{name:"Padres",ev:55},
+    {name:"Rangers",ev:55},{name:"Rockies",ev:50},{name:"Rays",ev:45},
+    {name:"D-backs",ev:40},{name:"Guardians",ev:35},{name:"Marlins",ev:30}
+  ]},
+  mlb_dynasty:{name:"Dynasty Baseball",caseBoxes:5,teams:[
+    {name:"Dodgers",ev:2850},{name:"Yankees",ev:1450},{name:"Angels",ev:990},
+    {name:"Athletics",ev:700},{name:"Braves",ev:650},{name:"Mariners",ev:650},
+    {name:"Nationals",ev:650},{name:"Pirates",ev:500},{name:"Giants",ev:400},
+    {name:"Red Sox",ev:375},{name:"Royals",ev:375},{name:"Phillies",ev:370},
+    {name:"Mets",ev:370},{name:"Cubs",ev:370},{name:"Astros",ev:340},
+    {name:"Orioles",ev:350},{name:"Tigers",ev:320},{name:"Padres",ev:230},
+    {name:"Cardinals",ev:230},{name:"Rangers",ev:225},{name:"Brewers",ev:200},
+    {name:"Twins",ev:150},{name:"Reds",ev:120},{name:"Guardians",ev:120},
+    {name:"Marlins",ev:120},{name:"Rays",ev:120},{name:"Blue Jays",ev:120},
+    {name:"D-backs",ev:120},{name:"Rockies",ev:80},{name:"White Sox",ev:50}
+  ]},
+  mlb_inception:{name:"Inception Baseball",caseBoxes:8,teams:[
+    {name:"Athletics",ev:250},{name:"Nationals",ev:140},{name:"Dodgers",ev:130},
+    {name:"Yankees",ev:90},{name:"Pirates",ev:60},{name:"Astros",ev:60},
+    {name:"Rangers",ev:45},{name:"Braves",ev:45},{name:"Royals",ev:30},
+    {name:"Angels",ev:30},{name:"Mets",ev:30},{name:"Giants",ev:30},
+    {name:"Orioles",ev:40},{name:"Red Sox",ev:40},{name:"Cubs",ev:40},
+    {name:"Reds",ev:40},{name:"Rays",ev:25},{name:"Tigers",ev:25},
+    {name:"Phillies",ev:25},{name:"Mariners",ev:25},{name:"Cardinals",ev:25},
+    {name:"Brewers",ev:20},{name:"Twins",ev:20},{name:"Blue Jays",ev:20},
+    {name:"Guardians",ev:20},{name:"White Sox",ev:20},{name:"Marlins",ev:20},
+    {name:"Rockies",ev:15},{name:"D-backs",ev:15},{name:"Padres",ev:30}
+  ]},
+  nba_cosmic:{name:"NBA Cosmic Chrome",caseBoxes:8,teams:[
+    {name:"Spurs",ev:1499},{name:"Mavericks",ev:1299},{name:"Lakers",ev:699},
+    {name:"Warriors",ev:499},{name:"Hornets",ev:399},{name:"Thunder",ev:329},
+    {name:"Jazz",ev:225},{name:"76ers",ev:225},{name:"Nuggets",ev:200},
+    {name:"Celtics",ev:165},{name:"Grizzlies",ev:165},{name:"Pelicans",ev:150},
+    {name:"Timberwolves",ev:115},{name:"Nets",ev:115},{name:"Bucks",ev:100},
+    {name:"Pistons",ev:100},{name:"Rockets",ev:100},{name:"Cavaliers",ev:100},
+    {name:"Raptors",ev:100},{name:"Bulls",ev:55},{name:"Pacers",ev:65},
+    {name:"Knicks",ev:65},{name:"Magic",ev:65},{name:"Heat",ev:50},
+    {name:"Suns",ev:50},{name:"Blazers",ev:50},{name:"Wizards",ev:50},
+    {name:"Hawks",ev:40},{name:"Clippers",ev:40},{name:"Kings",ev:55}
+  ]},
+  nba_cactus:{name:"Cactus Jack Basketball",caseBoxes:12,teams:[
+    {name:"Mavericks",ev:425},{name:"Spurs",ev:345},{name:"Hornets",ev:235},
+    {name:"Lakers",ev:185},{name:"Warriors",ev:135},{name:"Jazz",ev:100},
+    {name:"76ers",ev:100},{name:"Celtics",ev:90},{name:"Thunder",ev:90},
+    {name:"Nuggets",ev:85},{name:"Grizzlies",ev:70},{name:"Pelicans",ev:65},
+    {name:"Nets",ev:50},{name:"Pistons",ev:50},{name:"Bulls",ev:40},
+    {name:"Bucks",ev:40},{name:"Timberwolves",ev:40},{name:"Rockets",ev:40},
+    {name:"Cavaliers",ev:40},{name:"Raptors",ev:40},{name:"Pacers",ev:40},
+    {name:"Magic",ev:30},{name:"Knicks",ev:25},{name:"Wizards",ev:25},
+    {name:"Heat",ev:25},{name:"Suns",ev:25},{name:"Blazers",ev:25},
+    {name:"Hawks",ev:20},{name:"Clippers",ev:20},{name:"Kings",ev:20}
+  ]},
+  nba_signature:{name:"Signature Class Basketball",caseBoxes:12,teams:[
+    {name:"Mavericks",ev:1550},{name:"Spurs",ev:950},{name:"Hornets",ev:550},
+    {name:"Lakers",ev:450},{name:"Warriors",ev:350},{name:"Thunder",ev:350},
+    {name:"Jazz",ev:230},{name:"76ers",ev:140},{name:"Pelicans",ev:130},
+    {name:"Knicks",ev:130},{name:"Grizzlies",ev:120},{name:"Nets",ev:115},
+    {name:"Timberwolves",ev:105},{name:"Bucks",ev:95},{name:"Celtics",ev:95},
+    {name:"Nuggets",ev:95},{name:"Kings",ev:90},{name:"Pistons",ev:75},
+    {name:"Rockets",ev:75},{name:"Pacers",ev:70},{name:"Cavaliers",ev:60},
+    {name:"Magic",ev:60},{name:"Wizards",ev:60},{name:"Bulls",ev:45},
+    {name:"Heat",ev:50},{name:"Raptors",ev:50},{name:"Blazers",ev:50},
+    {name:"Suns",ev:40},{name:"Hawks",ev:40},{name:"Clippers",ev:40}
+  ]},
+  nfl_cosmic:{name:"NFL Cosmic Chrome (1-box)",caseBoxes:1,teams:[
+    {name:"Titans",ev:60},{name:"Giants",ev:52},{name:"Bucs",ev:52},
+    {name:"Bills",ev:55},{name:"Chiefs",ev:48},{name:"Bears",ev:48},
+    {name:"Raiders",ev:48},{name:"Jaguars",ev:50},{name:"49ers",ev:50},
+    {name:"Eagles",ev:48},{name:"Browns",ev:45},{name:"Chargers",ev:40},
+    {name:"Patriots",ev:42},{name:"Ravens",ev:42},{name:"Colts",ev:32},
+    {name:"Bengals",ev:32},{name:"Commanders",ev:28},{name:"Packers",ev:28},
+    {name:"Panthers",ev:28},{name:"Cowboys",ev:34},{name:"Lions",ev:30},
+    {name:"Vikings",ev:30},{name:"Broncos",ev:30},{name:"Texans",ev:26},
+    {name:"Steelers",ev:26},{name:"Dolphins",ev:26},{name:"Cardinals",ev:22},
+    {name:"Rams",ev:18},{name:"Seahawks",ev:18},{name:"Jets",ev:18},
+    {name:"Falcons",ev:16},{name:"Saints",ev:16}
+  ]}
+};
+
+function renderTieredSheet(){
+  const prodKey = document.getElementById('tier-product').value;
+  const boxes = +document.getElementById('tier-boxes').value || 12;
+  const marginPct = +document.getElementById('tier-margin').value || 20;
+  const feePct = +document.getElementById('tier-fee').value || 10;
+  const prod = TIERED_PRODUCTS[prodKey];
+  if(!prod) return;
+
+  const caseBoxes = prod.caseBoxes;
+  // Scale EVs by box count
+  const teams = prod.teams.map(t=>({
+    name: t.name,
+    ev: Math.round(t.ev * (boxes/caseBoxes))
+  })).sort((a,b)=>b.ev-a.ev);
+
+  // Convert EV to price: price = ev * (1 + margin/100) / (1 - fee/100)
+  const feeMultiplier = 1 / (1 - feePct/100);
+  const marginMultiplier = 1 + marginPct/100;
+
+  // Tier boundaries
+  const maxEV = teams[0].ev;
+  const tier1cut = maxEV * 0.50;
+  const tier2cut = maxEV * 0.20;
+  const tier3cut = maxEV * 0.07;
+
+  let html = `<div style="font-size:11px;color:var(--muted);margin-bottom:12px">${prod.name} · ${boxes} boxes · ${marginPct}% margin · ${feePct}% platform fee</div>`;
+
+  let currentTier = '';
+  teams.forEach(t=>{
+    const price = Math.ceil(t.ev * marginMultiplier * feeMultiplier / 5) * 5; // round to nearest $5
+    let tier = t.ev >= tier1cut ? '🔥 PREMIUM' : t.ev >= tier2cut ? '🟡 MID' : t.ev >= tier3cut ? '⬜ VALUE' : '❄️ FLOOR';
+    let tierColor = t.ev >= tier1cut ? 'var(--red)' : t.ev >= tier2cut ? 'var(--gold)' : t.ev >= tier3cut ? 'var(--muted)' : '#4B5E7A';
+
+    if(tier !== currentTier){
+      currentTier = tier;
+      html += `<div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:${tierColor};margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)">${tier}</div>`;
+    }
+    html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-radius:4px;margin-bottom:3px;background:rgba(255,255,255,.03);border:1px solid var(--border)">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;color:var(--white)">${t.name}</span>
+      <div style="text-align:right">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--gold)">$${price}</span>
+        <span style="font-size:10px;color:var(--muted);margin-left:8px">EV ~$${t.ev}</span>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('tieredSheet').innerHTML = html;
+}
+
+function copyTieredSheet(){
+  const prodKey = document.getElementById('tier-product').value;
+  const boxes = +document.getElementById('tier-boxes').value || 12;
+  const marginPct = +document.getElementById('tier-margin').value || 20;
+  const feePct = +document.getElementById('tier-fee').value || 10;
+  const prod = TIERED_PRODUCTS[prodKey];
+  if(!prod) return;
+
+  const caseBoxes = prod.caseBoxes;
+  const teams = prod.teams.map(t=>({name:t.name,ev:Math.round(t.ev*(boxes/caseBoxes))})).sort((a,b)=>b.ev-a.ev);
+  const feeMultiplier = 1/(1-feePct/100);
+  const marginMultiplier = 1+marginPct/100;
+  const maxEV = teams[0].ev;
+  const tier1cut = maxEV*0.50, tier2cut = maxEV*0.20, tier3cut = maxEV*0.07;
+
+  let text = `📋 ${prod.name} — ${boxes}-Box Break Prices\n`;
+  text += `(${marginPct}% margin · ${feePct}% platform fee)\n\n`;
+  let currentTier = '';
+  teams.forEach(t=>{
+    const price = Math.ceil(t.ev*marginMultiplier*feeMultiplier/5)*5;
+    const tier = t.ev>=tier1cut?'🔥 PREMIUM':t.ev>=tier2cut?'🟡 MID':t.ev>=tier3cut?'⬜ VALUE':'❄️ FLOOR';
+    if(tier!==currentTier){currentTier=tier;text+=`\n${tier}\n`;}
+    text+=`${t.name.padEnd(16)} $${price}\n`;
+  });
+  text += '\nPrices generated by BreakEdge — break-edge.vercel.app';
+  navigator.clipboard.writeText(text).then(()=>alert('✅ Price sheet copied to clipboard!')).catch(()=>alert('Copy failed — select and copy manually'));
+}
+
+// ── SNAKE DRAFT ──
+function calcSnake(){
+  const boxes = +document.getElementById('sn-boxes').value||1;
+  const boxCost = +document.getElementById('sn-boxcost').value||140;
+  const spots = +document.getElementById('sn-spots').value||10;
+  const feePct = +document.getElementById('sn-fee').value||10;
+  const shipPer = +document.getElementById('sn-ship').value||8;
+  const targetMargin = +document.getElementById('sn-margin').value||20;
+
+  const totalCost = boxes*boxCost + spots*shipPer;
+  const denom = 1 - feePct/100 - targetMargin/100;
+  const spotPrice = denom>0.01 ? Math.ceil((totalCost/denom)/spots) : Math.ceil(totalCost/spots*1.5);
+  const gross = spotPrice*spots;
+  const platformFee = gross*(feePct/100);
+  const shipping = spots*shipPer;
+  const netRevenue = gross - platformFee;
+  const profit = netRevenue - totalCost + shipping; // shipping already in cost
+  const actualMargin = gross>0 ? Math.round((profit/gross)*100) : 0;
+
+  document.getElementById('sn-spotprice').textContent = '$'+spotPrice;
+  document.getElementById('sn-gross').textContent = '$'+gross.toLocaleString();
+  document.getElementById('sn-profit').textContent = '$'+Math.round(profit);
+  document.getElementById('sn-margin-out').textContent = actualMargin+'%';
+  document.getElementById('snakeResults').style.display = '';
+  document.getElementById('snakeBreakdown').style.display = '';
+  document.getElementById('snakeBreakdown').innerHTML = `
+    <strong style="color:var(--white);font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:12px;letter-spacing:.08em">Breakdown</strong><br/>
+    ${boxes} box${boxes!==1?'es':''} × $${boxCost} = $${boxes*boxCost} product cost<br/>
+    ${spots} spots × $${shipPer} shipping = $${spots*shipPer}<br/>
+    Total cost: $${totalCost}<br/>
+    Gross (${spots} × $${spotPrice}): $${gross}<br/>
+    Platform fee (${feePct}%): -$${Math.round(platformFee)}<br/>
+    Net profit: $${Math.round(profit)} (${actualMargin}% margin)
+  `;
+}
   const fixed = boxes*boxCost + spots*shipPer;
   const denom = 1 - feePct/100 - targetMargin/100;
   return denom > 0.01 ? Math.ceil((fixed/denom)/spots) : Math.ceil(fixed/spots * 1.5);
@@ -565,6 +855,10 @@ function copyIt(id, btn){
     btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='Copy Caption',2000);
   });
 }
+
+// Init — hide new sections
+document.getElementById('tiered-inputs').classList.add('hidden');
+document.getElementById('snake-inputs').classList.add('hidden');
 </script>
 </body>
 </html>
