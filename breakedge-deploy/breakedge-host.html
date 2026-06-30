@@ -315,6 +315,9 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);m
   <div class="card">
     <div class="card-title">📋 Tiered Price Sheet Generator</div>
     <p style="font-size:13px;color:#8BAFC6;margin-bottom:14px">Select a product and margin target. BreakEdge generates a pre-priced team list you can screenshot and post before your break. Top EVs = higher prices, floor teams = cheaper.</p>
+    <div style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#8BAFC6;line-height:1.6">
+      ℹ️ <strong style="color:var(--gold)">Blasters, Megas & Hangers:</strong> These retail-tier boxes are typically sold as flat-rate blind boxes (not team-priced PYT slots), since they rarely carry a guaranteed auto worth bidding on a specific team for. Real market data: Mega boxes ~$85, Hanger boxes ~$35, NBA Blasters ~$75 (flat, per box). If you're mixing retail boxes into a hobby PYT break, price them as a flat add-on to your spot price rather than factoring them into per-team EV below.
+    </div>
     <div class="g3">
       <div class="fg">
         <label>Sport / Product</label>
@@ -462,38 +465,38 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--white);m
 
 <script>
 const TEAM_EV = [
-  {t:"Tennessee Titans",tier:"hot",note:"Cam Ward RC — ALL 4 auto sets + every insert"},
-  {t:"New York Giants",tier:"hot",note:"Jaxson Dart RC + Cam Skattebo RC + 4 RCs total"},
-  {t:"Tampa Bay Buccaneers",tier:"hot",note:"Emeka Egbuka RC all 4 sets + Tom Brady EQA"},
-  {t:"Buffalo Bills",tier:"hot",note:"Josh Allen EQA + 14 insert sets"},
-  {t:"Jacksonville Jaguars",tier:"hot",note:"Travis Hunter RC — most insert-stacked rookie"},
-  {t:"Kansas City Chiefs",tier:"hot",note:"Mahomes EQA + in every insert set"},
-  {t:"Las Vegas Raiders",tier:"hot",note:"Ashton Jeanty RC — every set (⚠️ market cooling)"},
-  {t:"San Francisco 49ers",tier:"hot",note:"Jerry Rice EQA + Joe Montana LY"},
-  {t:"Philadelphia Eagles",tier:"hot",note:"Hurts EQA + Saquon Barkley EQA — two on-card autos"},
-  {t:"New England Patriots",tier:"hot",note:"Tom Brady EQA + Drake Maye EQA + Rob Gronk LY"},
-  {t:"Chicago Bears",tier:"hot",note:"Caleb Williams EQA + 4 auto signers + Walter Payton LY"},
-  {t:"Cleveland Browns",tier:"hot",note:"Shedeur Sanders + Quinshon Judkins + Dillon Gabriel RCs"},
-  {t:"Los Angeles Chargers",tier:"warm",note:"Omarion Hampton RC + Justin Herbert EQA"},
-  {t:"Baltimore Ravens",tier:"warm",note:"Lamar Jackson 9 inserts + Derrick Henry EQA"},
-  {t:"Dallas Cowboys",tier:"warm",note:"Emmitt Smith EQA + 3 legend auto signers"},
-  {t:"Carolina Panthers",tier:"warm",note:"Tetairoa McMillan RC — 9 insert sets"},
-  {t:"Indianapolis Colts",tier:"warm",note:"Peyton Manning EQA + Tyler Warren RC 3 sets"},
-  {t:"Cincinnati Bengals",tier:"warm",note:"Joe Burrow SFS + Ja'Marr Chase deep inserts"},
-  {t:"Denver Broncos",tier:"warm",note:"Peyton Manning LY + John Elway LY — two legends"},
-  {t:"Detroit Lions",tier:"warm",note:"Barry Sanders SFS + Jahmyr Gibbs CCA"},
-  {t:"Green Bay Packers",tier:"warm",note:"Brett Favre SFS + Charles Woodson LY"},
-  {t:"Washington Commanders",tier:"warm",note:"Jayden Daniels EQA + Jaylin Lane RC dual signer"},
-  {t:"Minnesota Vikings",tier:"warm",note:"Justin Jefferson 10 inserts + Randy Moss LY"},
-  {t:"Pittsburgh Steelers",tier:"warm",note:"Aaron Rodgers SFS + Troy Polamalu LY"},
-  {t:"Houston Texans",tier:"warm",note:"CJ Stroud EQA + Jayden Higgins RC + Earl Campbell LY"},
-  {t:"Miami Dolphins",tier:"warm",note:"Dan Marino LY + De'Von Achane EQA"},
-  {t:"Arizona Cardinals",tier:"avg",note:"Trey McBride CCA + MHJ base"},
-  {t:"New Orleans Saints",tier:"avg",note:"Tyler Shough RC 3 sets + Chris Olave EQA"},
-  {t:"New York Jets",tier:"avg",note:"Breece Hall base + Mason Taylor RC + Darrelle Revis LY"},
-  {t:"Los Angeles Rams",tier:"avg",note:"Aaron Donald LY + Cooper Kupp SFS"},
-  {t:"Seattle Seahawks",tier:"avg",note:"JSN base + Cooper Kupp SFS + Jalen Milroe RC"},
-  {t:"Atlanta Falcons",tier:"avg",note:"Michael Penix Jr. EQA + Bijan Robinson base"},
+  {t:"New York Giants",tier:"hot",note:"Dart + Skattebo RCs · PP · ✅ Real: $850 — #1 slot"},
+  {t:"Tennessee Titans",tier:"hot",note:"Cam Ward RC ALL 4 auto sets + every insert · PP · ✅ Real: $550"},
+  {t:"Tampa Bay Buccaneers",tier:"hot",note:"Emeka Egbuka RC all 4 sets + Tom Brady EQA · ✅ Real: $330"},
+  {t:"Buffalo Bills",tier:"hot",note:"Josh Allen EQA + 14 insert sets · PP · ✅ Real: $280"},
+  {t:"Kansas City Chiefs",tier:"hot",note:"Mahomes EQA + in every insert set · PP · ✅ Real: $280"},
+  {t:"Chicago Bears",tier:"hot",note:"Caleb Williams EQA + 4 auto signers · ✅ Real: $220"},
+  {t:"Las Vegas Raiders",tier:"hot",note:"Ashton Jeanty RC — every set · PP · ✅ Real: $220"},
+  {t:"New England Patriots",tier:"hot",note:"Tom Brady EQA + Drake Maye EQA · ✅ Real: $220"},
+  {t:"New Orleans Saints",tier:"hot",note:"Tyler Shough RC · ✅ Real: $220 — underrated, bid confidently"},
+  {t:"Carolina Panthers",tier:"hot",note:"Tetairoa McMillan RC — 9 insert sets · ✅ Real: $200"},
+  {t:"Denver Broncos",tier:"hot",note:"Peyton Manning LY + John Elway LY · ✅ Real: $200"},
+  {t:"Cleveland Browns",tier:"warm",note:"Shedeur Sanders + Quinshon Judkins + Dillon Gabriel RCs · ✅ Real: $180"},
+  {t:"Philadelphia Eagles",tier:"warm",note:"Hurts EQA + Saquon Barkley EQA · PP · ✅ Real: $180"},
+  {t:"Washington Commanders",tier:"warm",note:"Jayden Daniels EQA + Jaylin Lane RC · ✅ Real: $180"},
+  {t:"Cincinnati Bengals",tier:"warm",note:"Joe Burrow SFS + Ja'Marr Chase deep inserts · ✅ Real: $160"},
+  {t:"San Francisco 49ers",tier:"warm",note:"Jerry Rice EQA + Joe Montana LY · ✅ Real: $160"},
+  {t:"Jacksonville Jaguars",tier:"warm",note:"Travis Hunter RC — most insert-stacked rookie · PP · ✅ Real: $150"},
+  {t:"Detroit Lions",tier:"warm",note:"Barry Sanders SFS + Jahmyr Gibbs CCA · ✅ Real: $140"},
+  {t:"Baltimore Ravens",tier:"warm",note:"Lamar Jackson 9 inserts + Derrick Henry EQA · ✅ Real: $130"},
+  {t:"Dallas Cowboys",tier:"warm",note:"Emmitt Smith EQA + 3 legend auto signers · ✅ Real: $130"},
+  {t:"Minnesota Vikings",tier:"warm",note:"Justin Jefferson 10 inserts + Randy Moss LY · PP · ✅ Real: $130"},
+  {t:"Pittsburgh Steelers",tier:"warm",note:"Aaron Rodgers SFS + Troy Polamalu LY · ✅ Real: $130"},
+  {t:"Seattle Seahawks",tier:"warm",note:"JSN base + Cooper Kupp SFS · ✅ Real: $130"},
+  {t:"Green Bay Packers",tier:"warm",note:"Brett Favre SFS + Charles Woodson LY · ✅ Real: $120"},
+  {t:"Indianapolis Colts",tier:"warm",note:"Peyton Manning EQA + Tyler Warren RC 3 sets · ✅ Real: $120"},
+  {t:"Los Angeles Chargers",tier:"warm",note:"Omarion Hampton RC + Justin Herbert EQA · ✅ Real: $120"},
+  {t:"Atlanta Falcons",tier:"avg",note:"Michael Penix Jr. EQA + Bijan Robinson base · ✅ Real: $90"},
+  {t:"Houston Texans",tier:"avg",note:"CJ Stroud EQA + Jayden Higgins RC · ✅ Real: $90"},
+  {t:"Los Angeles Rams",tier:"avg",note:"Aaron Donald LY + Cooper Kupp SFS · ✅ Real: $90"},
+  {t:"Arizona Cardinals",tier:"avg",note:"Trey McBride CCA + MHJ base · ✅ Real: $80"},
+  {t:"Miami Dolphins",tier:"avg",note:"Dan Marino LY + De'Von Achane EQA · ✅ Real: $60"},
+  {t:"New York Jets",tier:"avg",note:"Breece Hall base + Mason Taylor RC · ✅ Real: $50"},
 ];
 
 let mode = 'team';
@@ -528,17 +531,17 @@ const TIERED_PRODUCTS = {
     {name:"Guardians",ev:40},{name:"White Sox",ev:40},{name:"D-backs",ev:30},
     {name:"Rays",ev:30},{name:"Marlins",ev:20},{name:"Rockies",ev:20}
   ]},
-  mlb_tier_one:{name:"Tier One Baseball",caseBoxes:6,teams:[
-    {name:"Dodgers",ev:350},{name:"Yankees",ev:300},{name:"White Sox",ev:260},
-    {name:"Brewers",ev:160},{name:"Athletics",ev:160},{name:"Red Sox",ev:150},
-    {name:"Pirates",ev:145},{name:"Braves",ev:140},{name:"Royals",ev:140},
-    {name:"Mets",ev:130},{name:"Phillies",ev:130},{name:"Mariners",ev:130},
-    {name:"Reds",ev:125},{name:"Cubs",ev:110},{name:"Angels",ev:110},
-    {name:"Nationals",ev:100},{name:"Tigers",ev:95},{name:"Giants",ev:95},
-    {name:"Astros",ev:90},{name:"Orioles",ev:90},{name:"Cardinals",ev:75},
-    {name:"Blue Jays",ev:70},{name:"Twins",ev:55},{name:"Padres",ev:55},
-    {name:"Rangers",ev:55},{name:"Rockies",ev:50},{name:"Rays",ev:45},
-    {name:"D-backs",ev:40},{name:"Guardians",ev:35},{name:"Marlins",ev:30}
+  mlb_tier_one:{name:"Tier One Baseball",caseBoxes:12,teams:[
+    {name:"Dodgers",ev:575},{name:"Yankees",ev:550},{name:"White Sox",ev:475},
+    {name:"Red Sox",ev:450},{name:"Royals",ev:350},{name:"Brewers",ev:275},
+    {name:"Braves",ev:250},{name:"Pirates",ev:240},{name:"Mets",ev:230},
+    {name:"Orioles",ev:200},{name:"Tigers",ev:200},{name:"Mariners",ev:190},
+    {name:"Cubs",ev:160},{name:"Reds",ev:160},{name:"Athletics",ev:185},
+    {name:"Cardinals",ev:150},{name:"Phillies",ev:150},{name:"Giants",ev:150},
+    {name:"Angels",ev:140},{name:"Astros",ev:120},{name:"Nationals",ev:90},
+    {name:"Rangers",ev:90},{name:"Guardians",ev:75},{name:"Blue Jays",ev:80},
+    {name:"Padres",ev:80},{name:"Twins",ev:60},{name:"Rays",ev:60},
+    {name:"D-backs",ev:50},{name:"Rockies",ev:50},{name:"Marlins",ev:40}
   ]},
   mlb_dynasty:{name:"Dynasty Baseball",caseBoxes:5,teams:[
     {name:"Dodgers",ev:2850},{name:"Yankees",ev:1450},{name:"Angels",ev:990},
@@ -600,18 +603,18 @@ const TIERED_PRODUCTS = {
     {name:"Heat",ev:50},{name:"Raptors",ev:50},{name:"Blazers",ev:50},
     {name:"Suns",ev:40},{name:"Hawks",ev:40},{name:"Clippers",ev:40}
   ]},
-  nfl_cosmic:{name:"NFL Cosmic Chrome (1-box)",caseBoxes:1,teams:[
-    {name:"Titans",ev:60},{name:"Giants",ev:52},{name:"Bucs",ev:52},
-    {name:"Bills",ev:55},{name:"Chiefs",ev:48},{name:"Bears",ev:48},
-    {name:"Raiders",ev:48},{name:"Jaguars",ev:50},{name:"49ers",ev:50},
-    {name:"Eagles",ev:48},{name:"Browns",ev:45},{name:"Chargers",ev:40},
-    {name:"Patriots",ev:42},{name:"Ravens",ev:42},{name:"Colts",ev:32},
-    {name:"Bengals",ev:32},{name:"Commanders",ev:28},{name:"Packers",ev:28},
-    {name:"Panthers",ev:28},{name:"Cowboys",ev:34},{name:"Lions",ev:30},
-    {name:"Vikings",ev:30},{name:"Broncos",ev:30},{name:"Texans",ev:26},
-    {name:"Steelers",ev:26},{name:"Dolphins",ev:26},{name:"Cardinals",ev:22},
-    {name:"Rams",ev:18},{name:"Seahawks",ev:18},{name:"Jets",ev:18},
-    {name:"Falcons",ev:16},{name:"Saints",ev:16}
+  nfl_cosmic:{name:"NFL Cosmic Chrome (Full Case)",caseBoxes:1,teams:[
+    {name:"Giants",ev:875},{name:"Titans",ev:525},{name:"Bucs",ev:415},
+    {name:"Bears",ev:360},{name:"Patriots",ev:360},{name:"Bills",ev:355},
+    {name:"Chiefs",ev:315},{name:"Raiders",ev:285},{name:"Browns",ev:265},
+    {name:"Bengals",ev:255},{name:"Saints",ev:235},{name:"Commanders",ev:230},
+    {name:"Broncos",ev:225},{name:"Panthers",ev:215},{name:"Eagles",ev:205},
+    {name:"Lions",ev:185},{name:"Packers",ev:175},{name:"Jaguars",ev:165},
+    {name:"49ers",ev:155},{name:"Cowboys",ev:155},{name:"Colts",ev:150},
+    {name:"Steelers",ev:140},{name:"Vikings",ev:130},{name:"Seahawks",ev:130},
+    {name:"Chargers",ev:125},{name:"Ravens",ev:115},{name:"Texans",ev:110},
+    {name:"Rams",ev:95},{name:"Falcons",ev:80},{name:"Cardinals",ev:65},
+    {name:"Dolphins",ev:65},{name:"Jets",ev:50}
   ]}
 };
 
@@ -867,4 +870,3 @@ document.getElementById('snake-inputs').classList.add('hidden');
 </script>
 </body>
 </html>
-Done
